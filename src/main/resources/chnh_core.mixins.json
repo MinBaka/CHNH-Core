@@ -1,13 +1,11 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.MinBaka.CHNHcore.mixin",
+  "package": "com.minbaka.chnhcore.mixin",
   "compatibilityLevel": "JAVA_21",
   "refmap": "chnh_core.refmap.json",
-  "mixins": [
-  ],
-  "client": [
-  ],
+  "mixins": [],
+  "client": [],
   "injectors": {
     "defaultRequire": 1
   },

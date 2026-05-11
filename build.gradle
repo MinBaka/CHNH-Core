@@ -3,22 +3,19 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    // 使用主人指定的 7.1.25 版本喵
-    id 'net.neoforged.gradle.userdev' version '7.1.25'
+    id 'net.neoforged.gradle.userdev' version '7.0.145'
 }
 
-// 喵！这里换成了属于主人的新包名
 group = 'com.minbaka.chnhcore'
-version = '1.0.0'
+version = mod_version
 
 base {
-    // 喵！打包出来的 jar 包名字现在叫 chnh-core 了
     archivesName = 'chnh-core'
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
-// 喵！如果主人没有这个文件，记得在前面加 // 注释掉，防止哈希报错喵
+// 如果你没有 accesstransformer.cfg 文件，请注释掉下面这一行
 // minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
 
 runs {
@@ -32,36 +29,36 @@ runs {
     }
     server {
         systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
-        // 喵！这里已经帮主人改成了 arguments
-        arguments '--nogui'
+        programArgument '--nogui'
     }
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    implementation "net.neoforged:neoforge:21.1.116"
+    implementation "net.neoforged:neoforge:${neo_version}"
 
-    // 喵！最务实的自动加载 libs 文件夹下所有 jar 包的写法
+    // 加载 libs 里的 ApricityUI
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 
+// 替换 neoforge.mods.toml 中的占位符
 tasks.withType(ProcessResources).configureEach {
     var replaceProperties = [
-            minecraft_version   : minecraft_version,
-            minecraft_version_range: minecraft_version_range,
-            neo_version         : neo_version,
-            neo_version_range   : neo_version_range,
-            loader_version_range: loader_version_range,
-            mod_id              : mod_id,
-            mod_name            : mod_name,
-            mod_license         : mod_license,
-            mod_version         : mod_version,
-            mod_authors         : mod_authors,
-            mod_description     : mod_description
+            minecraft_version        : minecraft_version,
+            minecraft_version_range  : minecraft_version_range,
+            neo_version              : neo_version,
+            neo_version_range        : neo_version_range,
+            loader_version_range     : loader_version_range,
+            mod_id                   : mod_id,
+            mod_name                 : mod_name,
+            mod_license              : mod_license,
+            mod_version              : mod_version,
+            mod_authors              : mod_authors,
+            mod_description          : mod_description
     ]
     inputs.properties replaceProperties
-    // 喵！这里会把您的 mods.toml 或 neoforge.mods.toml 里的变量都替换掉
+    // 注意：这里必须包含完整的路径 "META-INF/neoforge.mods.toml"
     filesMatching(['META-INF/mods.toml', 'META-INF/neoforge.mods.toml']) {
         expand replaceProperties
     }
@@ -72,13 +69,5 @@ publishing {
         register('mavenJava', MavenPublication) {
             from components.java
         }
-    }
-    // 这里的 Maven 仓库可以根据主人的需要修改喵
-}
-
-// 喵！保留这个好用的检查任务，方便主人随时查看库加载情况
-tasks.register('checkMyJar') {
-    doLast {
-        configurations.compileClasspath.each { println "喵！找到了库: " + it.name }
     }
 }

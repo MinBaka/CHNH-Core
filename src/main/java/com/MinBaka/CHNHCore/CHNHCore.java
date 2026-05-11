@@ -1,9 +1,8 @@
-package com.MinBaka.CHNHCore;
+package com.minbaka.chnhcore;
 
 import net.neoforged.fml.common.Mod;
 
-@Mod(CHNHCore.MODID)
+@Mod(CHNHCore.MODID) // 喵！这里必须是 chnh_core
 public class CHNHCore {
-    // 喵！这里换成了符合规范的小写下划线 ID
     public static final String MODID = "chnh_core";
 }
