@@ -77,7 +77,7 @@ publishing {
     }
 }
 
-systemProp.http.proxyHost=127.0.0.1
+systemProp.http.proxyHost=192.168.1.201
 systemProp.http.proxyPort=10808
-systemProp.https.proxyHost=127.0.0.1
+systemProp.https.proxyHost=192.168.1.201
 systemProp.https.proxyPort=10808
