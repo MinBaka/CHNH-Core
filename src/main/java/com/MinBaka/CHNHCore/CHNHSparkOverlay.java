@@ -1,7 +1,6 @@
-package com.sighs.baeffect;
+package com.MinBaka.CHNHCore;
 
 import com.sighs.apricityui.render.Graph;
-import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -12,8 +11,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-@EventBusSubscriber(modid = Baeffect.MODID, value = Dist.CLIENT)
-public class BASparkOverlay {
+// 喵！订阅器的 ID 也要同步更新
+@EventBusSubscriber(modid = CHNHCore.MODID, value = Dist.CLIENT)
+public class CHNHSparkOverlay {
     private static final List<Spark> SPARKS = new ArrayList<>();
 
     @SubscribeEvent
@@ -24,7 +24,6 @@ public class BASparkOverlay {
         Iterator<Spark> it = SPARKS.iterator();
         while (it.hasNext()) {
             Spark s = it.next();
-            // 使用 Graph 类里的 drawFillRect 喵！
             Graph.drawFillRect(matrix, (float)s.x, (float)s.y, 4f, 4f, 0xFF2DAFFF);
             s.life--;
             if (s.life <= 0) it.remove();

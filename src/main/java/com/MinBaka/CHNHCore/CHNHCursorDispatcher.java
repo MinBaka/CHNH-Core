@@ -1,9 +1,8 @@
-package com.sighs.baeffect;
+package com.MinBaka.CHNHCore;
 
 import com.sighs.apricityui.instance.Client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractButton;
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
@@ -14,11 +13,12 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RenderTooltipEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
 
-@EventBusSubscriber(modid = Baeffect.MODID, value = Dist.CLIENT)
-public final class BAEffectCursorDispatcher {
+// 喵！这里的 modid 指向了新的 CHNHCore
+@EventBusSubscriber(modid = CHNHCore.MODID, value = Dist.CLIENT)
+public final class CHNHCursorDispatcher {
     private static boolean itemTooltipVisibleThisFrame = false;
 
-    private BAEffectCursorDispatcher() {}
+    private CHNHCursorDispatcher() {}
 
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Post event) {
@@ -44,29 +44,29 @@ public final class BAEffectCursorDispatcher {
         Minecraft minecraft = Minecraft.getInstance();
         Screen screen = minecraft.screen;
         if (screen == null) {
-            BAEffectCursorController.hide();
+            CHNHCursorController.hide();
             if (minecraft.level != null && !minecraft.mouseHandler.isMouseGrabbed()) {
                 minecraft.mouseHandler.grabMouse();
             }
             return;
         }
-        BAEffectCursorController.ensure();
-        BAEffectCursorController.setCursorStyle(resolveCursorStyle(screen));
+        CHNHCursorController.ensure();
+        CHNHCursorController.setCursorStyle(resolveCursorStyle(screen));
     }
 
-    private static BAEffectCursorController.CursorStyle resolveCursorStyle(Screen screen) {
+    private static CHNHCursorController.CursorStyle resolveCursorStyle(Screen screen) {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player != null && !minecraft.player.containerMenu.getCarried().isEmpty()) {
-            return BAEffectCursorController.CursorStyle.MOVE;
+            return CHNHCursorController.CursorStyle.MOVE;
         }
-        if (itemTooltipVisibleThisFrame) return BAEffectCursorController.CursorStyle.LINK;
+        if (itemTooltipVisibleThisFrame) return CHNHCursorController.CursorStyle.LINK;
 
         GuiEventListener hovered = findHovered(screen);
-        if (hovered instanceof EditBox) return BAEffectCursorController.CursorStyle.TEXT;
+        if (hovered instanceof EditBox) return CHNHCursorController.CursorStyle.TEXT;
         if (hovered instanceof AbstractButton button) {
-            return button.active ? BAEffectCursorController.CursorStyle.LINK : BAEffectCursorController.CursorStyle.BLOCK;
+            return button.active ? CHNHCursorController.CursorStyle.LINK : CHNHCursorController.CursorStyle.BLOCK;
         }
-        return BAEffectCursorController.CursorStyle.NORMAL;
+        return CHNHCursorController.CursorStyle.NORMAL;
     }
 
     private static GuiEventListener findHovered(Screen screen) {

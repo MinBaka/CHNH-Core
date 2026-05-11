@@ -1,15 +1,14 @@
-package com.sighs.baeffect;
+package com.MinBaka.CHNHCore;
 
 import com.sighs.apricityui.init.Document;
 import com.sighs.apricityui.init.Element;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
-public class BAEffectCursorController {
-    public static final String DOCUMENT_PATH = "baeffect/cursor-overlay.html";
-    public static final String LAYER_ID = "baeffect-cursor-layer";
+public class CHNHCursorController {
+    // 喵！这里的资源路径也改成了新的 chnh_core 目录
+    public static final String DOCUMENT_PATH = "chnh_core/cursor-overlay.html";
+    public static final String LAYER_ID = "chnh_core-cursor-layer";
     private static final String BASE_CLASS = "cursor-layer";
 
     public static Document show(CursorStyle style) {

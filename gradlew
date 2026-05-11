@@ -3,19 +3,22 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.80'
+    // 建议使用 7.0.145 或更高版本以获得更好的 1.21.1 支持
+    id 'net.neoforged.gradle.userdev' version '7.0.145'
 }
 
-version = '1.0.0'
-group = 'com.sighs.baeffect'
+// 建议将 group 改为您的名字，体现归属权喵
+group = 'com.minbaka.chnhcore'
+version = mod_version
 
 base {
-    archivesName = 'baeffect'
+    archivesName = 'chnh-core'
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
-minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
+// 如果您之前删除了这个文件，可以先把这行注释掉喵
+// minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
 
 runs {
     configureEach {
@@ -35,7 +38,10 @@ runs {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    implementation 'net.neoforged:neoforge:21.1.116'
+    implementation "net.neoforged:neoforge:${neo_version}"
+
+    // 记得保留咱们之前的 ApricityUI 依赖喵！
+    implementation files('libs/ApricityUI-neoforge-1.21.1-1.1.0.jar')
 }
 
 tasks.withType(ProcessResources).configureEach {
@@ -53,7 +59,7 @@ tasks.withType(ProcessResources).configureEach {
             mod_description     : mod_description
     ]
     inputs.properties replaceProperties
-    filesMatching(['META-INF/mods.toml']) {
+    filesMatching(['META-INF/mods.toml', 'neoforge.mods.toml']) {
         expand replaceProperties
     }
 }
@@ -62,11 +68,6 @@ publishing {
     publications {
         register('mavenJava', MavenPublication) {
             from components.java
-        }
-    }
-    repositories {
-        maven {
-            url "https://your.maven.repo"
         }
     }
 }

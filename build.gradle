@@ -3,19 +3,23 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
+    // 使用主人指定的 7.1.25 版本喵
     id 'net.neoforged.gradle.userdev' version '7.1.25'
 }
 
+// 喵！这里换成了属于主人的新包名
+group = 'com.minbaka.chnhcore'
 version = '1.0.0'
-group = 'com.sighs.baeffect'
 
 base {
-    archivesName = 'baeffect'
+    // 喵！打包出来的 jar 包名字现在叫 chnh-core 了
+    archivesName = 'chnh-core'
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
-minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
+// 喵！如果主人没有这个文件，记得在前面加 // 注释掉，防止哈希报错喵
+// minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
 
 runs {
     configureEach {
@@ -24,12 +28,11 @@ runs {
         modSource project.sourceSets.main
     }
     client {
-        // 1.21.1 的新规范里这里通常可以保持为空，或者只加特定参数喵
         systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
     }
     server {
         systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
-        // 喵！这里把 programArgument 改成了 arguments
+        // 喵！这里已经帮主人改成了 arguments
         arguments '--nogui'
     }
 }
@@ -37,9 +40,9 @@ runs {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    implementation 'net.neoforged:neoforge:21.1.116'
+    implementation "net.neoforged:neoforge:21.1.116"
 
-    // 喵！改用这个写法，它会自动把 libs 文件夹下所有的 jar 包都加进来！
+    // 喵！最务实的自动加载 libs 文件夹下所有 jar 包的写法
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 
@@ -58,7 +61,8 @@ tasks.withType(ProcessResources).configureEach {
             mod_description     : mod_description
     ]
     inputs.properties replaceProperties
-    filesMatching(['META-INF/mods.toml']) {
+    // 喵！这里会把您的 mods.toml 或 neoforge.mods.toml 里的变量都替换掉
+    filesMatching(['META-INF/mods.toml', 'META-INF/neoforge.mods.toml']) {
         expand replaceProperties
     }
 }
@@ -69,12 +73,10 @@ publishing {
             from components.java
         }
     }
-    repositories {
-        maven {
-            url "https://your.maven.repo"
-        }
-    }
+    // 这里的 Maven 仓库可以根据主人的需要修改喵
 }
+
+// 喵！保留这个好用的检查任务，方便主人随时查看库加载情况
 tasks.register('checkMyJar') {
     doLast {
         configurations.compileClasspath.each { println "喵！找到了库: " + it.name }
