@@ -18,6 +18,10 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 // 如果你没有 accesstransformer.cfg 文件，请注释掉下面这一行
 // minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
 
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
 runs {
     configureEach {
         systemProperty 'forge.logging.markers', 'REGISTRIES'

@@ -1,16 +1,13 @@
 modLoader = "javafml"
 loaderVersion = "[4,)"
-license = "MIT"
+license = "AGPL-3.0-only"
 
 [[mods]]
 modId = "chnh_core"
 version = "1.0.0"
 displayName = "CHNH Core"
-authors = "你的名字"
-description = "自定义光标模组"
-
-[[mixins]]
-config = "chnh_core.mixins.json"
+authors = "MinBaka"
+description = "CHNH Core Custom Effects"
 
 [[dependencies.chnh_core]]
 modId = "neoforge"
@@ -22,7 +19,7 @@ side = "BOTH"
 [[dependencies.chnh_core]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21.1]"
+versionRange = "[1.21.1,1.22)"
 ordering = "NONE"
 side = "BOTH"
 
