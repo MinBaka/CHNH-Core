@@ -18,8 +18,7 @@ import net.neoforged.neoforge.client.event.ScreenEvent;
 public final class BAEffectCursorDispatcher {
     private static boolean itemTooltipVisibleThisFrame = false;
 
-    private BAEffectCursorDispatcher() {
-    }
+    private BAEffectCursorDispatcher() {}
 
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Post event) {
@@ -43,7 +42,6 @@ public final class BAEffectCursorDispatcher {
 
     private static void syncCursor() {
         Minecraft minecraft = Minecraft.getInstance();
-
         Screen screen = minecraft.screen;
         if (screen == null) {
             BAEffectCursorController.hide();
@@ -52,7 +50,6 @@ public final class BAEffectCursorDispatcher {
             }
             return;
         }
-
         BAEffectCursorController.ensure();
         BAEffectCursorController.setCursorStyle(resolveCursorStyle(screen));
     }
@@ -62,37 +59,13 @@ public final class BAEffectCursorDispatcher {
         if (minecraft.player != null && !minecraft.player.containerMenu.getCarried().isEmpty()) {
             return BAEffectCursorController.CursorStyle.MOVE;
         }
-
-        if (itemTooltipVisibleThisFrame) {
-            return BAEffectCursorController.CursorStyle.LINK;
-        }
+        if (itemTooltipVisibleThisFrame) return BAEffectCursorController.CursorStyle.LINK;
 
         GuiEventListener hovered = findHovered(screen);
-        if (hovered instanceof EditBox) {
-            return BAEffectCursorController.CursorStyle.TEXT;
-        }
+        if (hovered instanceof EditBox) return BAEffectCursorController.CursorStyle.TEXT;
         if (hovered instanceof AbstractButton button) {
-            return button.active
-                    ? BAEffectCursorController.CursorStyle.LINK
-                    : BAEffectCursorController.CursorStyle.BLOCK;
+            return button.active ? BAEffectCursorController.CursorStyle.LINK : BAEffectCursorController.CursorStyle.BLOCK;
         }
-        if (hovered instanceof AbstractWidget widget && !widget.active) {
-            return BAEffectCursorController.CursorStyle.BLOCK;
-        }
-
-        GuiEventListener focused = screen.getFocused();
-        if (focused instanceof EditBox) {
-            return BAEffectCursorController.CursorStyle.TEXT;
-        }
-        if (focused instanceof AbstractButton button) {
-            return button.active
-                    ? BAEffectCursorController.CursorStyle.ALTERNATE_SELECT
-                    : BAEffectCursorController.CursorStyle.BLOCK;
-        }
-        if (focused instanceof AbstractWidget widget && !widget.active) {
-            return BAEffectCursorController.CursorStyle.BLOCK;
-        }
-
         return BAEffectCursorController.CursorStyle.NORMAL;
     }
 

@@ -39,9 +39,8 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 dependencies {
     implementation 'net.neoforged:neoforge:21.1.116'
 
-    // 喵！这里就是我帮主人加上的本地依赖哦！
-    // 如果您的 jar 包名字不是这个，请务必把它改成您实际放进 libs 文件夹里的那个文件名喵！
-    implementation files('libs/ApricityUI-neoforge-1.21.1-1.1.0.jar')
+    // 喵！改用这个写法，它会自动把 libs 文件夹下所有的 jar 包都加进来！
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 
 tasks.withType(ProcessResources).configureEach {
@@ -76,8 +75,8 @@ publishing {
         }
     }
 }
-
-systemProp.http.proxyHost=192.168.1.201
-systemProp.http.proxyPort=10808
-systemProp.https.proxyHost=192.168.1.201
-systemProp.https.proxyPort=10808
+tasks.register('checkMyJar') {
+    doLast {
+        configurations.compileClasspath.each { println "喵！找到了库: " + it.name }
+    }
+}
