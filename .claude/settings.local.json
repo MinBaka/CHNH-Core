@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(jar tf *)",
+      "Bash(cp *)",
+      "Bash(mkdir -p src/main/resources/assets/apricityui/apricity/chnhcore)",
+      "Bash(cp -r 参考/main/resources/assets/apricityui/apricity/baeffect/* src/main/resources/assets/apricityui/apricity/chnhcore/)",
+      "Bash(xargs -I {} jar tf {})",
+      "Bash(./gradlew compileJava *)",
+      "Bash(./gradlew classes *)",
+      "Bash(git restore *)",
+      "Bash(wget https://raw.githubusercontent.com/gradle/gradle/master/gradle/wrapper/gradlew)",
+      "Bash(chmod +x gradlew)",
+      "Bash(gradle wrapper *)",
+      "Bash(export HTTPS_PROXY=\"http://172.19.240.1:10808\")",
+      "Bash(export HTTP_PROXY=\"http://172.19.240.1:10808\")",
+      "Bash(export GRADLE_OPTS=\"-Dhttps.proxyHost=172.19.240.1 -Dhttps.proxyPort=10808 -Dhttp.proxyHost=172.19.240.1 -Dhttp.proxyPort=10808\")"
+    ]
+  }
+}

@@ -79,7 +79,17 @@ public class CHNHSparkOverlay {
 
         guiGraphics.pose().pushPose();
         guiGraphics.pose().translate(0, 0, 400);
+
+        guiGraphics.flush();
+        com.mojang.blaze3d.systems.RenderSystem.enableBlend();
+        com.mojang.blaze3d.systems.RenderSystem.blendFunc(com.mojang.blaze3d.platform.GlStateManager.SourceFactor.SRC_ALPHA, com.mojang.blaze3d.platform.GlStateManager.DestFactor.ONE);
+
         render(guiGraphics);
+
+        guiGraphics.flush();
+        com.mojang.blaze3d.systems.RenderSystem.defaultBlendFunc();
+        com.mojang.blaze3d.systems.RenderSystem.disableBlend();
+
         guiGraphics.pose().popPose();
     }
 
@@ -156,9 +166,8 @@ public class CHNHSparkOverlay {
             int alpha = (int) (p.life * effectOpacity * 255);
             if (alpha <= 0) continue;
             int color = (alpha << 24) | (EFFECT_R << 16) | (EFFECT_G << 8) | EFFECT_B;
-            int size = (int) Math.max(1, 3.0 * visualScale * p.life);
-            guiGraphics.fill((int)p.x - size, (int)p.y - size,
-                    (int)p.x + size, (int)p.y + size, color);
+            double size = Math.max(1, 3.0 * visualScale * p.life);
+            fillCircle(guiGraphics, p.x, p.y, size, color);
         }
     }
 
@@ -169,11 +178,10 @@ public class CHNHSparkOverlay {
             double ease = 1.0 - Math.pow(1.0 - progress, 3.0);
             double radius = 26.0 * visualScale * ease;
             int alpha = (int) ((1.0 - progress) * effectOpacity * 255);
-            if (alpha <= 0) continue;
-
-            int fillColor = (alpha << 24) | (EFFECT_R << 16) | (EFFECT_G << 8) | EFFECT_B;
-            guiGraphics.fill((int)(wave.x - radius), (int)(wave.y - radius),
-                    (int)(wave.x + radius), (int)(wave.y + radius), fillColor);
+            if (alpha > 0) {
+                int fillColor = (alpha << 24) | (EFFECT_R << 16) | (EFFECT_G << 8) | EFFECT_B;
+                fillCircle(guiGraphics, wave.x, wave.y, radius, fillColor);
+            }
 
             double ringProgress = Math.min(1.0, wave.ring.life / wave.ring.maxLife);
             int ringAlpha = (int) ((1.0 - ringProgress) * effectOpacity * 255);
@@ -210,16 +218,18 @@ public class CHNHSparkOverlay {
         double sin = Math.sin(angle);
         double dx = width / 2 * -sin;
         double dy = width / 2 * cos;
-        int[] xPoints = new int[4];
-        int[] yPoints = new int[4];
-        xPoints[0] = (int)(x1 + dx); yPoints[0] = (int)(y1 + dy);
-        xPoints[1] = (int)(x1 - dx); yPoints[1] = (int)(y1 - dy);
-        xPoints[2] = (int)(x2 - dx); yPoints[2] = (int)(y2 - dy);
-        xPoints[3] = (int)(x2 + dx); yPoints[3] = (int)(y2 + dy);
-        for (int i = 0; i < 4; i++) {
-            int j = (i + 1) % 4;
-            gg.fill(xPoints[i], yPoints[i], xPoints[j], yPoints[j], color);
-        }
+
+        int x0 = (int) Math.round(x1 + dx);
+        int y0 = (int) Math.round(y1 + dy);
+        int x1p = (int) Math.round(x1 - dx);
+        int y1p = (int) Math.round(y1 - dy);
+        int x2p = (int) Math.round(x2 - dx);
+        int y2p = (int) Math.round(y2 - dy);
+        int x3p = (int) Math.round(x2 + dx);
+        int y3p = (int) Math.round(y2 + dy);
+
+        fillTriangle(gg, x0, y0, x1p, y1p, x2p, y2p, color);
+        fillTriangle(gg, x0, y0, x2p, y2p, x3p, y3p, color);
     }
 
     private static void renderSparks(GuiGraphics guiGraphics) {
@@ -228,14 +238,40 @@ public class CHNHSparkOverlay {
             if (alpha <= 0) continue;
             int color = (alpha << 24) | 0xFFFFFF;
             double size = s.s * 0.8;
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(s.x, s.y, 0);
-            guiGraphics.pose().mulPose(com.mojang.math.Axis.ZP.rotation((float) s.rot));
-            int x0 = 0, y0 = (int) -size;
-            int x1 = (int)(size * 0.6), y1 = (int)(size * 0.6);
-            int x2 = (int)(-size * 0.6), y2 = (int)(size * 0.6);
-            fillTriangle(guiGraphics, x0, y0, x1, y1, x2, y2, color);
-            guiGraphics.pose().popPose();
+
+            double cos = Math.cos(s.rot);
+            double sin = Math.sin(s.rot);
+
+            double tx0 = 0;
+            double ty0 = -size;
+            double tx1 = size * 0.6;
+            double ty1 = size * 0.6;
+            double tx2 = -size * 0.6;
+            double ty2 = size * 0.6;
+
+            int rx0 = (int) Math.round(s.x + tx0 * cos - ty0 * sin);
+            int ry0 = (int) Math.round(s.y + tx0 * sin + ty0 * cos);
+            int rx1 = (int) Math.round(s.x + tx1 * cos - ty1 * sin);
+            int ry1 = (int) Math.round(s.y + tx1 * sin + ty1 * cos);
+            int rx2 = (int) Math.round(s.x + tx2 * cos - ty2 * sin);
+            int ry2 = (int) Math.round(s.y + tx2 * sin + ty2 * cos);
+
+            fillTriangle(guiGraphics, rx0, ry0, rx1, ry1, rx2, ry2, color);
+        }
+    }
+
+    private static void fillCircle(GuiGraphics gg, double cx, double cy, double r, int color) {
+        if (r <= 0) return;
+        int top = (int) Math.round(cy - r);
+        int bottom = (int) Math.round(cy + r);
+        for (int y = top; y <= bottom; y++) {
+            double dy = y - cy;
+            double dx = Math.sqrt(Math.max(0, r * r - dy * dy));
+            int left = (int) Math.round(cx - dx);
+            int right = (int) Math.round(cx + dx);
+            if (left < right) {
+                gg.fill(left, y, right, y + 1, color);
+            }
         }
     }
 

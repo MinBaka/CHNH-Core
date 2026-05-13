@@ -1,0 +1,94 @@
+<body class="cursor-overlay-body">
+  <div id="chnhcore-cursor-layer" class="cursor-layer cursor-normal"></div>
+</body>
+
+<style>
+  body.cursor-overlay-body {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    pointer-events: none;
+    overflow: hidden;
+    transform: translateZ(30000px);
+  }
+
+  #chnhcore-cursor-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    pointer-events: auto;
+    cursor: url("/chnhcore/normal.cur");
+  }
+
+  #chnhcore-cursor-layer.cursor-normal {
+    cursor: url("/chnhcore/normal.cur");
+  }
+
+  #chnhcore-cursor-layer.cursor-help {
+    cursor: url("/chnhcore/help.cur");
+  }
+
+  #chnhcore-cursor-layer.cursor-loading {
+    cursor: url("/chnhcore/loading.ani");
+  }
+
+  #chnhcore-cursor-layer.cursor-background {
+    cursor: url("/chnhcore/background.ani");
+  }
+
+  #chnhcore-cursor-layer.cursor-link {
+    cursor: url("/chnhcore/link.cur");
+  }
+
+  #chnhcore-cursor-layer.cursor-move {
+    cursor: url("/chnhcore/move.cur");
+  }
+
+  #chnhcore-cursor-layer.cursor-text {
+    cursor: url("/chnhcore/text.ani");
+  }
+
+  #chnhcore-cursor-layer.cursor-pen {
+    cursor: url("/chnhcore/pen.cur");
+  }
+
+  #chnhcore-cursor-layer.cursor-block {
+    cursor: url("/chnhcore/block.cur");
+  }
+
+  #chnhcore-cursor-layer.cursor-area-select {
+    cursor: url("/chnhcore/areaselect.cur");
+  }
+
+  #chnhcore-cursor-layer.cursor-alternate-select {
+    cursor: url("/chnhcore/alternativeselect.cur");
+  }
+
+  #chnhcore-cursor-layer.cursor-resize-ns {
+    cursor: url("/chnhcore/resizeNS.cur");
+  }
+
+  #chnhcore-cursor-layer.cursor-resize-we {
+    cursor: url("/chnhcore/resizeWE.cur");
+  }
+
+  #chnhcore-cursor-layer.cursor-resize-diag1 {
+    cursor: url("/chnhcore/resizeDIAG1.cur");
+  }
+
+  #chnhcore-cursor-layer.cursor-resize-diag2 {
+    cursor: url("/chnhcore/resizeDIAG2.cur");
+  }
+
+  #chnhcore-cursor-layer.cursor-hidden {
+    cursor: none;
+  }
+</style>
