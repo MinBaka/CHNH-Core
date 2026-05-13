@@ -1,60 +1,77 @@
 package com.minbaka.chnhcore;
 
-import com.sighs.apricityui.init.Document;
-import com.sighs.apricityui.init.Element;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
+import com.mojang.blaze3d.platform.Window;
+import net.minecraft.client.Minecraft;
+import org.lwjgl.glfw.GLFW;
 
 public class CHNHCursorController {
-    // 喵！资源路径也要跟着改，否则会找不到 html 喵
-    public static final String DOCUMENT_PATH = "chnh_core/cursor-overlay.html";
-    public static final String LAYER_ID = "chnh_core-cursor-layer";
+    private static CursorStyle currentStyle = CursorStyle.NORMAL;
 
-    public static Document show(CursorStyle style) {
-        Document existing = getDocument();
-        if (existing != null) existing.remove();
-        Document document = Document.create(DOCUMENT_PATH);
-        if (document == null) return null;
-        document.setReloadPersistent(true);
-        applyCursorStyle(document, style);
-        return document;
+    private static final int GLFW_CURSOR_ARROW = GLFW.GLFW_ARROW_CURSOR;
+    private static final int GLFW_CURSOR_IBEAM = GLFW.GLFW_IBEAM_CURSOR;
+    private static final int GLFW_CURSOR_CROSSHAIR = GLFW.GLFW_CROSSHAIR_CURSOR;
+    private static final int GLFW_CURSOR_HAND = GLFW.GLFW_HAND_CURSOR;
+    private static final int GLFW_CURSOR_HRESIZE = GLFW.GLFW_HRESIZE_CURSOR;
+    private static final int GLFW_CURSOR_VRESIZE = GLFW.GLFW_VRESIZE_CURSOR;
+    private static final int GLFW_CURSOR_NWSE_RESIZE = GLFW.GLFW_RESIZE_NWSE_CURSOR;
+    private static final int GLFW_CURSOR_NESW_RESIZE = GLFW.GLFW_RESIZE_NESW_CURSOR;
+    private static final int GLFW_CURSOR_NOT_ALLOWED = GLFW.GLFW_NOT_ALLOWED_CURSOR;
+
+    private CHNHCursorController() {}
+
+    public static void show() {
+        setCursorStyle(CursorStyle.NORMAL);
+    }
+
+    public static void show(CursorStyle style) {
+        setCursorStyle(style);
     }
 
     public static void hide() {
-        ArrayList<Document> docs = Document.get(DOCUMENT_PATH);
-        for (Document document : docs) {
-            if (document != null) {
-                applyCursorStyle(document, CursorStyle.HIDDEN);
-                document.setReloadPersistent(false);
-                document.remove();
-            }
-        }
+        setCursorStyle(CursorStyle.NORMAL);
     }
 
-    public static Document ensure() {
-        Document document = getDocument();
-        return document != null ? document : show(CursorStyle.NORMAL);
+    public static void ensure() {
+        if (currentStyle == null) setCursorStyle(CursorStyle.NORMAL);
     }
 
     public static void setCursorStyle(CursorStyle style) {
-        Document document = ensure();
-        if (document != null) applyCursorStyle(document, style);
+        if (style == null) style = CursorStyle.NORMAL;
+        if (currentStyle == style) return;
+        currentStyle = style;
+        applyCursorStyle(style);
     }
 
-    private static void applyCursorStyle(Document document, CursorStyle style) {
-        Element layer = document.getElementById(LAYER_ID);
-        if (layer == null) return;
-        layer.setAttribute("class", "cursor-layer " + (style == null ? "cursor-normal" : style.className));
-    }
+    private static void applyCursorStyle(CursorStyle style) {
+        Minecraft mc = Minecraft.getInstance();
+        Window window = mc.getWindow();
+        if (window == null) return;
 
-    private static Document getDocument() {
-        ArrayList<Document> docs = Document.get(DOCUMENT_PATH);
-        return docs.isEmpty() ? null : docs.get(docs.size() - 1);
+        long handle = window.getWindow();
+        int glfwCursor = style.toGlfwCursor();
+        if (glfwCursor != -1) {
+            GLFW.glfwSetCursor(handle, GLFW.glfwCreateStandardCursor(glfwCursor));
+        }
+        // HIDDEN 无法通过标准光标实现隐藏，需要额外处理，暂不实现
     }
 
     public enum CursorStyle {
-        NORMAL("cursor-normal"), LINK("cursor-link"), MOVE("cursor-move"), TEXT("cursor-text"), BLOCK("cursor-block"), HIDDEN("cursor-hidden");
-        public final String className;
-        CursorStyle(String className) { this.className = className; }
+        NORMAL, HELP, LOADING, BACKGROUND, LINK, MOVE, TEXT, PEN, BLOCK,
+        AREA_SELECT, ALTERNATE_SELECT, RESIZE_NS, RESIZE_WE, RESIZE_DIAG1, RESIZE_DIAG2, HIDDEN;
+
+        public int toGlfwCursor() {
+            return switch (this) {
+                case NORMAL, BACKGROUND, LOADING -> GLFW_CURSOR_ARROW;
+                case HELP, LINK, MOVE, ALTERNATE_SELECT -> GLFW_CURSOR_HAND;
+                case TEXT -> GLFW_CURSOR_IBEAM;
+                case PEN, AREA_SELECT -> GLFW_CURSOR_CROSSHAIR;
+                case BLOCK -> GLFW_CURSOR_NOT_ALLOWED;
+                case RESIZE_NS -> GLFW_CURSOR_VRESIZE;
+                case RESIZE_WE -> GLFW_CURSOR_HRESIZE;
+                case RESIZE_DIAG1 -> GLFW_CURSOR_NWSE_RESIZE;
+                case RESIZE_DIAG2 -> GLFW_CURSOR_NESW_RESIZE;
+                case HIDDEN -> -1;
+            };
+        }
     }
 }

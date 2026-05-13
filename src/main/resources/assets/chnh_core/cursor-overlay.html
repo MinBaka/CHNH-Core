@@ -1,94 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body.cursor-overlay-body {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: transparent;
+      pointer-events: none;
+      overflow: hidden;
+      transform: translateZ(30000px);
+    }
+
+    #chnh_core-cursor-layer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      pointer-events: auto;
+      cursor: url("normal.cur"), auto;
+    }
+
+    #chnh_core-cursor-layer.cursor-normal { cursor: url("normal.cur"), auto; }
+    #chnh_core-cursor-layer.cursor-help { cursor: url("help.cur"), help; }
+    #chnh_core-cursor-layer.cursor-loading { cursor: url("loading.ani"), progress; }
+    #chnh_core-cursor-layer.cursor-background { cursor: url("background.ani"), wait; }
+    #chnh_core-cursor-layer.cursor-link { cursor: url("link.cur"), pointer; }
+    #chnh_core-cursor-layer.cursor-move { cursor: url("move.cur"), move; }
+    #chnh_core-cursor-layer.cursor-text { cursor: url("text.ani"), text; }
+    #chnh_core-cursor-layer.cursor-pen { cursor: url("pen.cur"), crosshair; }
+    #chnh_core-cursor-layer.cursor-block { cursor: url("block.cur"), not-allowed; }
+    #chnh_core-cursor-layer.cursor-area-select { cursor: url("areaselect.cur"), cell; }
+    #chnh_core-cursor-layer.cursor-alternate-select { cursor: url("alternativeselect.cur"), vertical-text; }
+    #chnh_core-cursor-layer.cursor-resize-ns { cursor: url("resizeNS.cur"), ns-resize; }
+    #chnh_core-cursor-layer.cursor-resize-we { cursor: url("resizeWE.cur"), ew-resize; }
+    #chnh_core-cursor-layer.cursor-resize-diag1 { cursor: url("resizeDIAG1.cur"), nwse-resize; }
+    #chnh_core-cursor-layer.cursor-resize-diag2 { cursor: url("resizeDIAG2.cur"), nesw-resize; }
+    #chnh_core-cursor-layer.cursor-hidden { cursor: none; }
+  </style>
+</head>
 <body class="cursor-overlay-body">
-  <div id="baeffect-cursor-layer" class="cursor-layer cursor-normal"></div>
+<div id="chnh_core-cursor-layer" class="cursor-layer cursor-normal"></div>
 </body>
-
-<style>
-  body.cursor-overlay-body {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: transparent;
-    pointer-events: none;
-    overflow: hidden;
-    transform: translateZ(30000px);
-  }
-
-  #baeffect-cursor-layer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    pointer-events: auto;
-    cursor: url("/baeffect/normal.cur");
-  }
-
-  #baeffect-cursor-layer.cursor-normal {
-    cursor: url("/baeffect/normal.cur");
-  }
-
-  #baeffect-cursor-layer.cursor-help {
-    cursor: url("/baeffect/help.cur");
-  }
-
-  #baeffect-cursor-layer.cursor-loading {
-    cursor: url("/baeffect/loading.ani");
-  }
-
-  #baeffect-cursor-layer.cursor-background {
-    cursor: url("/baeffect/background.ani");
-  }
-
-  #baeffect-cursor-layer.cursor-link {
-    cursor: url("/baeffect/link.cur");
-  }
-
-  #baeffect-cursor-layer.cursor-move {
-    cursor: url("/baeffect/move.cur");
-  }
-
-  #baeffect-cursor-layer.cursor-text {
-    cursor: url("/baeffect/text.ani");
-  }
-
-  #baeffect-cursor-layer.cursor-pen {
-    cursor: url("/baeffect/pen.cur");
-  }
-
-  #baeffect-cursor-layer.cursor-block {
-    cursor: url("/baeffect/block.cur");
-  }
-
-  #baeffect-cursor-layer.cursor-area-select {
-    cursor: url("/baeffect/areaselect.cur");
-  }
-
-  #baeffect-cursor-layer.cursor-alternate-select {
-    cursor: url("/baeffect/alternativeselect.cur");
-  }
-
-  #baeffect-cursor-layer.cursor-resize-ns {
-    cursor: url("/baeffect/resizeNS.cur");
-  }
-
-  #baeffect-cursor-layer.cursor-resize-we {
-    cursor: url("/baeffect/resizeWE.cur");
-  }
-
-  #baeffect-cursor-layer.cursor-resize-diag1 {
-    cursor: url("/baeffect/resizeDIAG1.cur");
-  }
-
-  #baeffect-cursor-layer.cursor-resize-diag2 {
-    cursor: url("/baeffect/resizeDIAG2.cur");
-  }
-
-  #baeffect-cursor-layer.cursor-hidden {
-    cursor: none;
-  }
-</style>
+</html>
