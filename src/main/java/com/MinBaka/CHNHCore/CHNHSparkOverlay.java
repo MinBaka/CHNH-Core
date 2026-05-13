@@ -20,8 +20,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class CHNHSparkOverlay {
     private static final double BASE_FRAME_MS = 1000.0 / 60.0;
     private static final double MAX_DELTA_MS = 100.0;
-    private static final double TRAIL_STEP = 2.0;
-    private static final int MAX_TRAIL_POINTS = 16;
+    private static final double TRAIL_STEP = 0.5;
+    private static final int MAX_TRAIL_POINTS = 40;
     private static final double EFFECT_RENDER_SCALE = 0.3;
 
     private static final List<WaveState> WAVES = new ArrayList<>();
@@ -110,7 +110,7 @@ public class CHNHSparkOverlay {
         TRAIL.add(new TrailPoint(pos.x, pos.y, 1.0));
         if (TRAIL.size() > MAX_TRAIL_POINTS) TRAIL.remove(0);
 
-        if (ThreadLocalRandom.current().nextDouble() < 0.3) {
+        if (ThreadLocalRandom.current().nextDouble() < 0.6) {
             spawnDriftSpark(pos.x, pos.y);
         }
         lastTrailPos = pos;
@@ -162,12 +162,33 @@ public class CHNHSparkOverlay {
     private static void renderTrail(GuiGraphics guiGraphics) {
         if (TRAIL.size() < 2) return;
         double visualScale = effectScale * EFFECT_RENDER_SCALE;
-        for (TrailPoint p : TRAIL) {
-            int alpha = (int) (p.life * effectOpacity * 255);
-            if (alpha <= 0) continue;
-            int color = (alpha << 24) | (EFFECT_R << 16) | (EFFECT_G << 8) | EFFECT_B;
-            double size = Math.max(1, 3.0 * visualScale * p.life);
-            fillCircle(guiGraphics, p.x, p.y, size, color);
+
+        // Draw the outer glow (thicker, lower alpha)
+        for (int i = 0; i < TRAIL.size() - 1; i++) {
+            TrailPoint p1 = TRAIL.get(i);
+            TrailPoint p2 = TRAIL.get(i + 1);
+            int alpha1 = (int) (p1.life * effectOpacity * 100);
+            int alpha2 = (int) (p2.life * effectOpacity * 100);
+            if (alpha1 <= 0 && alpha2 <= 0) continue;
+
+            int avgAlpha = (alpha1 + alpha2) / 2;
+            int color = (avgAlpha << 24) | (EFFECT_R << 16) | (EFFECT_G << 8) | EFFECT_B;
+            double size = Math.max(1, 6.0 * visualScale * ((p1.life + p2.life) / 2.0));
+            drawThickLine(guiGraphics, p1.x, p1.y, p2.x, p2.y, size, color);
+        }
+
+        // Draw the inner core (thinner, higher alpha)
+        for (int i = 0; i < TRAIL.size() - 1; i++) {
+            TrailPoint p1 = TRAIL.get(i);
+            TrailPoint p2 = TRAIL.get(i + 1);
+            int alpha1 = (int) (p1.life * effectOpacity * 255);
+            int alpha2 = (int) (p2.life * effectOpacity * 255);
+            if (alpha1 <= 0 && alpha2 <= 0) continue;
+
+            int avgAlpha = (alpha1 + alpha2) / 2;
+            int color = (avgAlpha << 24) | (255 << 16) | (255 << 8) | 255;
+            double size = Math.max(1, 2.0 * visualScale * ((p1.life + p2.life) / 2.0));
+            drawThickLine(guiGraphics, p1.x, p1.y, p2.x, p2.y, size, color);
         }
     }
 
