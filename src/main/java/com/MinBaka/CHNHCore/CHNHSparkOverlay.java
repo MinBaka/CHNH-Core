@@ -37,9 +37,9 @@ public class CHNHSparkOverlay {
     private static double effectScale = 1.5;
     private static double effectOpacity = 1.0;
     private static double effectSpeed = 1.0;
-    private static final int EFFECT_R = 30;
-    private static final int EFFECT_G = 130;
-    private static final int EFFECT_B = 200;
+    private static final int EFFECT_R = 75;
+    private static final int EFFECT_G = 170;
+    private static final int EFFECT_B = 255;
 
     private static class TrailPos { double x, y; TrailPos(double x, double y) { this.x=x; this.y=y; } }
 
