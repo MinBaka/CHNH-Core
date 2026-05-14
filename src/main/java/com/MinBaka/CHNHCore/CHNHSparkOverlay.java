@@ -37,9 +37,9 @@ public class CHNHSparkOverlay {
     private static double effectScale = 1.5;
     private static double effectOpacity = 1.0;
     private static double effectSpeed = 1.0;
-    private static final int EFFECT_R = 45;
-    private static final int EFFECT_G = 175;
-    private static final int EFFECT_B = 255;
+    private static final int EFFECT_R = 30;
+    private static final int EFFECT_G = 130;
+    private static final int EFFECT_B = 200;
 
     private static class TrailPos { double x, y; TrailPos(double x, double y) { this.x=x; this.y=y; } }
 
@@ -197,8 +197,8 @@ public class CHNHSparkOverlay {
         for (int i = 0; i < TRAIL.size() - 1; i++) {
             TrailPoint p1 = TRAIL.get(i);
             TrailPoint p2 = TRAIL.get(i + 1);
-            int alpha1 = (int) (p1.life * effectOpacity * 100);
-            int alpha2 = (int) (p2.life * effectOpacity * 100);
+            int alpha1 = (int) (p1.life * effectOpacity * 80);
+            int alpha2 = (int) (p2.life * effectOpacity * 80);
             if (alpha1 <= 0 && alpha2 <= 0) continue;
 
             int avgAlpha = (alpha1 + alpha2) / 2;
@@ -244,7 +244,7 @@ public class CHNHSparkOverlay {
             double progress = Math.min(1.0, wave.life / wave.max);
             double ease = 1.0 - Math.pow(1.0 - progress, 3.0);
             double radius = 26.0 * visualScale * ease;
-            int alpha = (int) ((1.0 - progress) * effectOpacity * 255);
+            int alpha = (int) ((1.0 - progress) * effectOpacity * 180);
             if (alpha > 0) {
                 addCircleVertices(bufferbuilder, matrix4f, wave.x, wave.y, radius, EFFECT_R, EFFECT_G, EFFECT_B, alpha);
                 hasVertices = true;

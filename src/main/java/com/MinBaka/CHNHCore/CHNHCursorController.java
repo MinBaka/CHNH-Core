@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class CHNHCursorController {
-    private static CursorStyle currentStyle = CursorStyle.NORMAL;
+    private static CursorStyle currentStyle = null;
     private static final Map<CursorStyle, CursorData> CURSORS = new HashMap<>();
     private static long currentTick = 0;
 
@@ -52,27 +52,25 @@ public class CHNHCursorController {
     public static void setCursorStyle(CursorStyle style) {
         if (style == null) style = CursorStyle.NORMAL;
         if (currentStyle == style) return;
-        currentStyle = style;
-        
+
         long windowHandle = Minecraft.getInstance().getWindow().getWindow();
         if (style == CursorStyle.HIDDEN) {
-            // hidden cursor fallback could be standard glfw hidden mode, but NeoForge Window might handle it.
-            // A simple trick is an empty cursor, but GLFW provides GLFW_CURSOR_HIDDEN mode for input mode, 
-            // though that captures mouse. 
-            // Actually, we will just set standard arrow if hidden is not fully supported, or a 1x1 transparent cursor.
+            currentStyle = style;
+            // hidden cursor logic...
             return;
         }
 
         CursorData data = getOrLoadCursor(style);
         if (data != null && data.handles.length > 0) {
-            // start at frame 0
             long handle = data.handles[0];
             if (handle != 0) {
                 GLFW.glfwSetCursor(windowHandle, handle);
+                currentStyle = style;
             }
         } else {
             // fallback
             GLFW.glfwSetCursor(windowHandle, GLFW.glfwCreateStandardCursor(GLFW.GLFW_ARROW_CURSOR));
+            // Don't set currentStyle to style if it's a fallback, so we retry loading next time
         }
     }
 
