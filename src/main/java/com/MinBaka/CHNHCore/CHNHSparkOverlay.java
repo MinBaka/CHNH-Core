@@ -211,8 +211,8 @@ public class CHNHSparkOverlay {
         for (int i = 0; i < TRAIL.size() - 1; i++) {
             TrailPoint p1 = TRAIL.get(i);
             TrailPoint p2 = TRAIL.get(i + 1);
-            int alpha1 = (int) (p1.life * effectOpacity * 255);
-            int alpha2 = (int) (p2.life * effectOpacity * 255);
+            int alpha1 = (int) (p1.life * effectOpacity * 180);
+            int alpha2 = (int) (p2.life * effectOpacity * 180);
             if (alpha1 <= 0 && alpha2 <= 0) continue;
 
             int avgAlpha = (alpha1 + alpha2) / 2;
@@ -244,14 +244,14 @@ public class CHNHSparkOverlay {
             double progress = Math.min(1.0, wave.life / wave.max);
             double ease = 1.0 - Math.pow(1.0 - progress, 3.0);
             double radius = 26.0 * visualScale * ease;
-            int alpha = (int) ((1.0 - progress) * effectOpacity * 255);
+            int alpha = (int) ((1.0 - progress) * effectOpacity * 140);
             if (alpha > 0) {
                 addCircleVertices(bufferbuilder, matrix4f, wave.x, wave.y, radius, EFFECT_R, EFFECT_G, EFFECT_B, alpha);
                 hasVertices = true;
             }
 
             double ringProgress = Math.min(1.0, wave.ring.life / wave.ring.maxLife);
-            int ringAlpha = (int) ((1.0 - ringProgress) * effectOpacity * 255);
+            int ringAlpha = (int) ((1.0 - ringProgress) * effectOpacity * 180);
             if (ringAlpha <= 0) continue;
             double ringRadius = radius + 3.0 * visualScale;
             for (RingSegment seg : wave.ring.segs) {
@@ -318,7 +318,7 @@ public class CHNHSparkOverlay {
         org.joml.Matrix4f matrix4f = guiGraphics.pose().last().pose();
 
         for (SparkState s : SPARKS) {
-            int alpha = (int) (s.a * effectOpacity * 255);
+            int alpha = (int) (s.a * effectOpacity * 180);
             if (alpha <= 0) continue;
             double size = s.s * 0.8;
 
