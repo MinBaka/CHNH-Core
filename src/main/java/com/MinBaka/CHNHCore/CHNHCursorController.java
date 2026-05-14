@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class CHNHCursorController {
-    private static CursorStyle currentStyle = null;
+    private static CursorStyle currentStyle = CursorStyle.NORMAL;
     private static final Map<CursorStyle, CursorData> CURSORS = new HashMap<>();
     private static long currentTick = 0;
 
