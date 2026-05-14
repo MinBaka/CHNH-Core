@@ -58,6 +58,22 @@ public class CHNHSparkOverlay {
     }
 
     @SubscribeEvent
+    public static void onScreenMousePress(ScreenEvent.MouseButtonPressed.Pre event) {
+        if (event.getButton() != 0) return;
+        TrailPos pos = getMousePosition();
+        mouseDown = true;
+        lastTrailPos = pos;
+        if (pos != null) spawnBurst(pos.x, pos.y);
+    }
+
+    @SubscribeEvent
+    public static void onScreenMouseRelease(ScreenEvent.MouseButtonReleased.Pre event) {
+        if (event.getButton() != 0) return;
+        mouseDown = false;
+        lastTrailPos = null;
+    }
+
+    @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Pre event) {
         if (lastFrameMs == 0L) lastFrameMs = System.nanoTime();
     }
@@ -83,7 +99,7 @@ public class CHNHSparkOverlay {
 
         guiGraphics.flush();
         com.mojang.blaze3d.systems.RenderSystem.enableBlend();
-        com.mojang.blaze3d.systems.RenderSystem.blendFunc(com.mojang.blaze3d.platform.GlStateManager.SourceFactor.SRC_ALPHA, com.mojang.blaze3d.platform.GlStateManager.DestFactor.ONE);
+        com.mojang.blaze3d.systems.RenderSystem.defaultBlendFunc();
         com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         com.mojang.blaze3d.systems.RenderSystem.disableDepthTest();
         com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
@@ -95,7 +111,6 @@ public class CHNHSparkOverlay {
         com.mojang.blaze3d.systems.RenderSystem.enableCull();
         com.mojang.blaze3d.systems.RenderSystem.depthMask(true);
         com.mojang.blaze3d.systems.RenderSystem.enableDepthTest();
-        com.mojang.blaze3d.systems.RenderSystem.defaultBlendFunc();
         com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 
         guiGraphics.pose().popPose();
