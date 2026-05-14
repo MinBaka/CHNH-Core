@@ -8,6 +8,7 @@ version = "1.0.0"
 displayName = "CHNH Core"
 authors = "MinBaka"
 description = "CHNH Core Custom Effects"
+logoFile = "logo.png"
 
 [[dependencies.chnh_core]]
 modId = "neoforge"
@@ -22,10 +23,3 @@ type = "required"
 versionRange = "[1.21.1,1.22)"
 ordering = "NONE"
 side = "BOTH"
-
-[[dependencies.chnh_core]]
-modId = "apricityui"
-type = "required"
-versionRange = "[1.1.0,)"
-ordering = "AFTER"
-side = "CLIENT"

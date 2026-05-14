@@ -20,6 +20,7 @@ public final class CHNHCursorDispatcher {
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Pre event) {
         syncCursor();
+        CHNHCursorController.tick();
     }
 
     @SubscribeEvent

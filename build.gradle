@@ -41,9 +41,6 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
-
-    // 加载 libs 里的 ApricityUI
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 
 // 替换 neoforge.mods.toml 中的占位符

@@ -14,7 +14,17 @@
       "Bash(gradle wrapper *)",
       "Bash(export HTTPS_PROXY=\"http://172.19.240.1:10808\")",
       "Bash(export HTTP_PROXY=\"http://172.19.240.1:10808\")",
-      "Bash(export GRADLE_OPTS=\"-Dhttps.proxyHost=172.19.240.1 -Dhttps.proxyPort=10808 -Dhttp.proxyHost=172.19.240.1 -Dhttp.proxyPort=10808\")"
+      "Bash(export GRADLE_OPTS=\"-Dhttps.proxyHost=172.19.240.1 -Dhttps.proxyPort=10808 -Dhttp.proxyHost=172.19.240.1 -Dhttp.proxyPort=10808\")",
+      "Bash(python3 *)",
+      "Bash(/tmp/venv/bin/pip install *)",
+      "Bash(/tmp/venv/bin/python /tmp/convert_cursors.py src/main/resources/assets/apricityui/apricity/chnhcore src/main/resources/assets/chnhcore/textures/cursor)",
+      "Bash(pkill -f gradle)",
+      "Bash(sudo apt-get update)",
+      "Bash(sudo apt-get install -y imagemagick pngquant)",
+      "Bash(/tmp/venv/bin/python /tmp/resize_cursors.py)",
+      "Bash(/tmp/venv2/bin/pip install *)",
+      "Bash(/tmp/venv2/bin/python /tmp/resize_cursors.py)",
+      "Bash(/tmp/venv2/bin/python /tmp/optimize_logo.py)"
     ]
   }
 }

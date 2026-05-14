@@ -1,184 +1,179 @@
 package com.minbaka.chnhcore;
 
-import com.sighs.apricityui.init.Document;
-import com.sighs.apricityui.init.Element;
+import com.mojang.blaze3d.platform.NativeImage;
+import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.Resource;
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWImage;
+import org.lwjgl.system.MemoryUtil;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 public class CHNHCursorController {
-    public static final String DOCUMENT_PATH = "chnhcore/cursor-overlay.html";
-    public static final String LAYER_ID = "chnhcore-cursor-layer";
-    private static final String BASE_CLASS = "cursor-layer";
+    private static CursorStyle currentStyle = CursorStyle.NORMAL;
+    private static final Map<CursorStyle, CursorData> CURSORS = new HashMap<>();
+    private static long currentTick = 0;
 
-    private CHNHCursorController() {
-    }
+    private CHNHCursorController() {}
 
-    public static Document show() {
-        return show(CursorStyle.NORMAL);
-    }
-
-    public static Document show(CursorStyle style) {
-        Document existing = getDocument();
-        if (existing != null) {
-            existing.remove();
-        }
-
-        Document document = Document.create(DOCUMENT_PATH);
-        if (document == null) return null;
-
-        document.setReloadPersistent(true);
-        applyCursorStyle(document, style);
-        return document;
+    public static void show() {
+        setCursorStyle(CursorStyle.NORMAL);
     }
 
     public static void hide() {
-        clearApricityPseudoCursor();
-        ArrayList<Document> docs = Document.get(DOCUMENT_PATH);
-        for (Document document : docs) {
-            if (document != null) {
-                applyCursorStyle(document, CursorStyle.HIDDEN);
-                document.setReloadPersistent(false);
-                document.remove();
+        setCursorStyle(CursorStyle.HIDDEN);
+    }
+
+    public static void ensure() {
+        if (currentStyle == null) setCursorStyle(CursorStyle.NORMAL);
+    }
+
+    public static void tick() {
+        currentTick++;
+        if (currentStyle != null && currentStyle != CursorStyle.HIDDEN) {
+            CursorData data = CURSORS.get(currentStyle);
+            if (data != null && data.handles.length > 1) {
+                // animate: 1 tick = 50ms, assume ~100ms per frame = 2 ticks per frame
+                int frame = (int) ((currentTick / 2) % data.handles.length);
+                long handle = data.handles[frame];
+                if (handle != 0) {
+                    long windowHandle = Minecraft.getInstance().getWindow().getWindow();
+                    GLFW.glfwSetCursor(windowHandle, handle);
+                }
             }
         }
     }
 
-    public static boolean isShowing() {
-        return getDocument() != null;
-    }
-
-    public static Document ensure() {
-        Document document = getDocument();
-        if (document != null) return document;
-        return show(CursorStyle.NORMAL);
-    }
-
     public static void setCursorStyle(CursorStyle style) {
-        Document document = ensure();
-        if (document == null) return;
-        applyCursorStyle(document, style);
-    }
-
-    public static void setCursorClass(String className) {
-        Document document = ensure();
-        if (document == null) return;
-
-        Element layer = document.getElementById(LAYER_ID);
-        if (layer == null) layer = document.querySelector("#" + LAYER_ID);
-        if (layer == null) return;
-
-        String normalized = normalizeClassName(className);
-        layer.setAttribute("class", BASE_CLASS + (normalized.isBlank() ? "" : " " + normalized));
-    }
-
-    public static CursorStyle getCursorStyle() {
-        Document document = getDocument();
-        if (document == null) return CursorStyle.NORMAL;
-
-        Element layer = document.getElementById(LAYER_ID);
-        if (layer == null) layer = document.querySelector("#" + LAYER_ID);
-        if (layer == null) return CursorStyle.NORMAL;
-
-        String classAttr = layer.getAttribute("class");
-        for (CursorStyle style : CursorStyle.values()) {
-            if (classAttr.contains(style.className)) return style;
+        if (style == null) style = CursorStyle.NORMAL;
+        if (currentStyle == style) return;
+        currentStyle = style;
+        
+        long windowHandle = Minecraft.getInstance().getWindow().getWindow();
+        if (style == CursorStyle.HIDDEN) {
+            // hidden cursor fallback could be standard glfw hidden mode, but NeoForge Window might handle it.
+            // A simple trick is an empty cursor, but GLFW provides GLFW_CURSOR_HIDDEN mode for input mode, 
+            // though that captures mouse. 
+            // Actually, we will just set standard arrow if hidden is not fully supported, or a 1x1 transparent cursor.
+            return;
         }
-        return CursorStyle.NORMAL;
-    }
 
-    public static List<String> getSupportedClasses() {
-        return List.of(
-                CursorStyle.NORMAL.className,
-                CursorStyle.HELP.className,
-                CursorStyle.LOADING.className,
-                CursorStyle.BACKGROUND.className,
-                CursorStyle.LINK.className,
-                CursorStyle.MOVE.className,
-                CursorStyle.TEXT.className,
-                CursorStyle.PEN.className,
-                CursorStyle.BLOCK.className,
-                CursorStyle.AREA_SELECT.className,
-                CursorStyle.ALTERNATE_SELECT.className,
-                CursorStyle.RESIZE_NS.className,
-                CursorStyle.RESIZE_WE.className,
-                CursorStyle.RESIZE_DIAG1.className,
-                CursorStyle.RESIZE_DIAG2.className,
-                CursorStyle.HIDDEN.className
-        );
-    }
-
-    private static void applyCursorStyle(Document document, CursorStyle style) {
-        if (document == null) return;
-        Element layer = document.getElementById(LAYER_ID);
-        if (layer == null) layer = document.querySelector("#" + LAYER_ID);
-        if (layer == null) return;
-
-        CursorStyle safeStyle = style == null ? CursorStyle.NORMAL : style;
-        String nextClass = BASE_CLASS + " " + safeStyle.className;
-        String currentClass = layer.getAttribute("class");
-        if (nextClass.equals(currentClass)) return;
-        layer.setAttribute("class", nextClass);
-    }
-
-    private static String normalizeClassName(String className) {
-        if (className == null) return "";
-        String normalized = className.trim().toLowerCase(Locale.ROOT);
-        if (normalized.isBlank()) return "";
-        if (!normalized.startsWith("cursor-")) {
-            normalized = "cursor-" + normalized;
+        CursorData data = getOrLoadCursor(style);
+        if (data != null && data.handles.length > 0) {
+            // start at frame 0
+            long handle = data.handles[0];
+            if (handle != 0) {
+                GLFW.glfwSetCursor(windowHandle, handle);
+            }
+        } else {
+            // fallback
+            GLFW.glfwSetCursor(windowHandle, GLFW.glfwCreateStandardCursor(GLFW.GLFW_ARROW_CURSOR));
         }
-        return normalized;
     }
 
-    private static Document getDocument() {
-        ArrayList<Document> docs = Document.get(DOCUMENT_PATH);
-        if (docs.isEmpty()) return null;
-        return docs.get(docs.size() - 1);
+    private static CursorData getOrLoadCursor(CursorStyle style) {
+        if (CURSORS.containsKey(style)) return CURSORS.get(style);
+
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.getResourceManager() == null) return null; // not ready
+
+        CursorData data = new CursorData();
+        if (style.frames == 1) {
+            data.handles = new long[]{ loadCursorHandle(style.name, -1, style.hotX, style.hotY) };
+        } else {
+            data.handles = new long[style.frames];
+            for (int i = 0; i < style.frames; i++) {
+                data.handles[i] = loadCursorHandle(style.name, i, style.hotX, style.hotY);
+            }
+        }
+        CURSORS.put(style, data);
+        return data;
     }
 
-    private static void clearApricityPseudoCursor() {
+    private static long loadCursorHandle(String name, int frame, int hotX, int hotY) {
+        String path = "textures/cursor/" + name + (frame >= 0 ? "_" + frame : "") + ".png";
+        ResourceLocation loc = ResourceLocation.fromNamespaceAndPath(CHNHCore.MODID, path);
         try {
-            Class<?> cursorClass = Class.forName("com.sighs.apricityui.style.Cursor");
-            Field pseudoCursorSpec = cursorClass.getDeclaredField("pseudoCursorSpec");
-            pseudoCursorSpec.setAccessible(true);
-            pseudoCursorSpec.set(null, null);
-
-            Field systemCursorHidden = cursorClass.getDeclaredField("systemCursorHidden");
-            systemCursorHidden.setAccessible(true);
-            systemCursorHidden.setBoolean(null, false);
-        } catch (ReflectiveOperationException ignored) {
+            Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(loc);
+            if (res.isPresent()) {
+                try (InputStream is = res.get().open()) {
+                    NativeImage image = NativeImage.read(is);
+                    GLFWImage glfwImage = GLFWImage.malloc();
+                    glfwImage.width(image.getWidth());
+                    glfwImage.height(image.getHeight());
+                    
+                    // We need to pass the pixels. NativeImage pixels are usually accessible via memory
+                    // But NativeImage has a private pointer.
+                    // We can manually copy to a ByteBuffer
+                    ByteBuffer buffer = MemoryUtil.memAlloc(image.getWidth() * image.getHeight() * 4);
+                    for (int y = 0; y < image.getHeight(); y++) {
+                        for (int x = 0; x < image.getWidth(); x++) {
+                            int rgba = image.getPixelRGBA(x, y);
+                            // NativeImage is ABGR or RGBA depending on endianness.
+                            // getPixelRGBA returns ABGR format. 
+                            // GLFW wants RGBA (byte 0=R, 1=G, 2=B, 3=A)
+                            byte a = (byte) ((rgba >> 24) & 0xFF);
+                            byte b = (byte) ((rgba >> 16) & 0xFF);
+                            byte g = (byte) ((rgba >> 8) & 0xFF);
+                            byte r = (byte) (rgba & 0xFF);
+                            buffer.put(r).put(g).put(b).put(a);
+                        }
+                    }
+                    buffer.flip();
+                    glfwImage.pixels(buffer);
+                    
+                    long handle = GLFW.glfwCreateCursor(glfwImage, hotX, hotY);
+                    glfwImage.free();
+                    // NOTE: we leak the buffer here slightly if we don't track it, but cursors are loaded once.
+                    // Actually we can free the buffer after createCursor because GLFW copies it!
+                    MemoryUtil.memFree(buffer);
+                    image.close();
+                    return handle;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return 0;
+    }
+
+    private static class CursorData {
+        long[] handles;
     }
 
     public enum CursorStyle {
-        NORMAL("cursor-normal"),
-        HELP("cursor-help"),
-        LOADING("cursor-loading"),
-        BACKGROUND("cursor-background"),
-        LINK("cursor-link"),
-        MOVE("cursor-move"),
-        TEXT("cursor-text"),
-        PEN("cursor-pen"),
-        BLOCK("cursor-block"),
-        AREA_SELECT("cursor-area-select"),
-        ALTERNATE_SELECT("cursor-alternate-select"),
-        RESIZE_NS("cursor-resize-ns"),
-        RESIZE_WE("cursor-resize-we"),
-        RESIZE_DIAG1("cursor-resize-diag1"),
-        RESIZE_DIAG2("cursor-resize-diag2"),
-        HIDDEN("cursor-hidden");
+        NORMAL("normal", 1, 4, 1),
+        HELP("help", 1, 4, 1),
+        LOADING("loading", 12, 11, 11),
+        BACKGROUND("background", 41, 4, 1),
+        LINK("link", 1, 4, 1),
+        MOVE("move", 1, 11, 11),
+        TEXT("text", 21, 11, 11),
+        PEN("pen", 1, 4, 19),
+        BLOCK("block", 1, 11, 11),
+        AREA_SELECT("areaselect", 1, 11, 11),
+        ALTERNATE_SELECT("alternativeselect", 1, 11, 0),
+        RESIZE_NS("resizeNS", 1, 11, 11),
+        RESIZE_WE("resizeWE", 1, 11, 11),
+        RESIZE_DIAG1("resizeDIAG1", 1, 11, 11),
+        RESIZE_DIAG2("resizeDIAG2", 1, 11, 11),
+        HIDDEN("hidden", 1, 0, 0);
 
-        private final String className;
+        public final String name;
+        public final int frames;
+        public final int hotX;
+        public final int hotY;
 
-        CursorStyle(String className) {
-            this.className = className;
-        }
-
-        public String className() {
-            return className;
+        CursorStyle(String name, int frames, int hotX, int hotY) {
+            this.name = name;
+            this.frames = frames;
+            this.hotX = hotX;
+            this.hotY = hotY;
         }
     }
 }

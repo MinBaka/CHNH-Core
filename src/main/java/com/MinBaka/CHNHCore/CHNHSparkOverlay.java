@@ -31,6 +31,7 @@ public class CHNHSparkOverlay {
     private static final List<SparkState> SPARK_POOL = new ArrayList<>();
 
     private static boolean mouseDown = false;
+    private static boolean alwaysTrailEnabled = false;
     private static TrailPos lastTrailPos = null;
     private static long lastFrameMs = 0L;
     private static double effectScale = 1.5;
@@ -83,10 +84,17 @@ public class CHNHSparkOverlay {
         guiGraphics.flush();
         com.mojang.blaze3d.systems.RenderSystem.enableBlend();
         com.mojang.blaze3d.systems.RenderSystem.blendFunc(com.mojang.blaze3d.platform.GlStateManager.SourceFactor.SRC_ALPHA, com.mojang.blaze3d.platform.GlStateManager.DestFactor.ONE);
+        com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        com.mojang.blaze3d.systems.RenderSystem.disableDepthTest();
+        com.mojang.blaze3d.systems.RenderSystem.depthMask(false);
+        com.mojang.blaze3d.systems.RenderSystem.disableCull();
 
         render(guiGraphics);
 
         guiGraphics.flush();
+        com.mojang.blaze3d.systems.RenderSystem.enableCull();
+        com.mojang.blaze3d.systems.RenderSystem.depthMask(true);
+        com.mojang.blaze3d.systems.RenderSystem.enableDepthTest();
         com.mojang.blaze3d.systems.RenderSystem.defaultBlendFunc();
         com.mojang.blaze3d.systems.RenderSystem.disableBlend();
 
@@ -96,7 +104,7 @@ public class CHNHSparkOverlay {
     private static void updateTrailFromCursor() {
         TrailPos pos = getMousePosition();
         if (pos == null) return;
-        if (!mouseDown) return;
+        if (!mouseDown && !alwaysTrailEnabled) return;
 
         if (lastTrailPos == null) {
             lastTrailPos = pos;
@@ -120,7 +128,8 @@ public class CHNHSparkOverlay {
         Iterator<TrailPoint> trailIt = TRAIL.iterator();
         while (trailIt.hasNext()) {
             TrailPoint p = trailIt.next();
-            p.life -= 0.085 * frameScale;
+            double fade = alwaysTrailEnabled ? 0.085 : (mouseDown ? 0.085 : 0.18);
+            p.life -= fade * frameScale;
             if (p.life <= 0) trailIt.remove();
         }
 
@@ -163,6 +172,12 @@ public class CHNHSparkOverlay {
         if (TRAIL.size() < 2) return;
         double visualScale = effectScale * EFFECT_RENDER_SCALE;
 
+        boolean hasVertices = false;
+
+        com.mojang.blaze3d.vertex.Tesselator tesselator = com.mojang.blaze3d.vertex.Tesselator.getInstance();
+        com.mojang.blaze3d.vertex.BufferBuilder bufferbuilder = tesselator.begin(com.mojang.blaze3d.vertex.VertexFormat.Mode.QUADS, com.mojang.blaze3d.vertex.DefaultVertexFormat.POSITION_COLOR);
+        org.joml.Matrix4f matrix4f = guiGraphics.pose().last().pose();
+
         // Draw the outer glow (thicker, lower alpha)
         for (int i = 0; i < TRAIL.size() - 1; i++) {
             TrailPoint p1 = TRAIL.get(i);
@@ -172,9 +187,9 @@ public class CHNHSparkOverlay {
             if (alpha1 <= 0 && alpha2 <= 0) continue;
 
             int avgAlpha = (alpha1 + alpha2) / 2;
-            int color = (avgAlpha << 24) | (EFFECT_R << 16) | (EFFECT_G << 8) | EFFECT_B;
             double size = Math.max(1, 6.0 * visualScale * ((p1.life + p2.life) / 2.0));
-            drawThickLine(guiGraphics, p1.x, p1.y, p2.x, p2.y, size, color);
+            addThickLineVertices(bufferbuilder, matrix4f, p1.x, p1.y, p2.x, p2.y, size, EFFECT_R, EFFECT_G, EFFECT_B, avgAlpha);
+            hasVertices = true;
         }
 
         // Draw the inner core (thinner, higher alpha)
@@ -186,39 +201,62 @@ public class CHNHSparkOverlay {
             if (alpha1 <= 0 && alpha2 <= 0) continue;
 
             int avgAlpha = (alpha1 + alpha2) / 2;
-            int color = (avgAlpha << 24) | (255 << 16) | (255 << 8) | 255;
             double size = Math.max(1, 2.0 * visualScale * ((p1.life + p2.life) / 2.0));
-            drawThickLine(guiGraphics, p1.x, p1.y, p2.x, p2.y, size, color);
+            addThickLineVertices(bufferbuilder, matrix4f, p1.x, p1.y, p2.x, p2.y, size, 255, 255, 255, avgAlpha);
+            hasVertices = true;
         }
+
+        if (!hasVertices) {
+            // Cancel the build explicitly if nothing was added
+            return;
+        }
+
+        com.mojang.blaze3d.systems.RenderSystem.setShader(net.minecraft.client.renderer.GameRenderer::getRendertypeGuiShader);
+        com.mojang.blaze3d.vertex.BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
     }
 
     private static void renderWaves(GuiGraphics guiGraphics) {
+        if (WAVES.isEmpty()) return;
         double visualScale = effectScale * EFFECT_RENDER_SCALE;
+
+        boolean hasVertices = false;
+
+        com.mojang.blaze3d.vertex.Tesselator tesselator = com.mojang.blaze3d.vertex.Tesselator.getInstance();
+        com.mojang.blaze3d.vertex.BufferBuilder bufferbuilder = tesselator.begin(com.mojang.blaze3d.vertex.VertexFormat.Mode.QUADS, com.mojang.blaze3d.vertex.DefaultVertexFormat.POSITION_COLOR);
+        org.joml.Matrix4f matrix4f = guiGraphics.pose().last().pose();
+
         for (WaveState wave : WAVES) {
             double progress = Math.min(1.0, wave.life / wave.max);
             double ease = 1.0 - Math.pow(1.0 - progress, 3.0);
             double radius = 26.0 * visualScale * ease;
             int alpha = (int) ((1.0 - progress) * effectOpacity * 255);
             if (alpha > 0) {
-                int fillColor = (alpha << 24) | (EFFECT_R << 16) | (EFFECT_G << 8) | EFFECT_B;
-                fillCircle(guiGraphics, wave.x, wave.y, radius, fillColor);
+                addCircleVertices(bufferbuilder, matrix4f, wave.x, wave.y, radius, EFFECT_R, EFFECT_G, EFFECT_B, alpha);
+                hasVertices = true;
             }
 
             double ringProgress = Math.min(1.0, wave.ring.life / wave.ring.maxLife);
             int ringAlpha = (int) ((1.0 - ringProgress) * effectOpacity * 255);
             if (ringAlpha <= 0) continue;
-            int ringColor = (ringAlpha << 24) | 0xF5F8FC;
             double ringRadius = radius + 3.0 * visualScale;
             for (RingSegment seg : wave.ring.segs) {
                 double shrink = Math.max(0, 1.0 - ringProgress);
                 double len = seg.len * shrink;
                 double startAng = wave.ring.ang + seg.off;
-                drawArc(guiGraphics, wave.x, wave.y, ringRadius, startAng, startAng + len, 2.5f * visualScale, ringColor);
+                addArcVertices(bufferbuilder, matrix4f, wave.x, wave.y, ringRadius, startAng, startAng + len, 2.5f * visualScale, 245, 248, 252, ringAlpha);
+                hasVertices = true;
             }
         }
+
+        if (!hasVertices) {
+            return;
+        }
+
+        com.mojang.blaze3d.systems.RenderSystem.setShader(net.minecraft.client.renderer.GameRenderer::getRendertypeGuiShader);
+        com.mojang.blaze3d.vertex.BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
     }
 
-    private static void drawArc(GuiGraphics gg, double cx, double cy, double r, double startRad, double endRad, double strokeWidth, int color) {
+    private static void addArcVertices(com.mojang.blaze3d.vertex.BufferBuilder builder, org.joml.Matrix4f matrix, double cx, double cy, double r, double startRad, double endRad, double strokeWidth, int rC, int gC, int bC, int aC) {
         if (startRad >= endRad) return;
         int steps = Math.max(8, (int)((endRad - startRad) * 10));
         double prevX = cx + r * Math.cos(startRad);
@@ -228,36 +266,45 @@ public class CHNHSparkOverlay {
             double rad = startRad + (endRad - startRad) * t;
             double x = cx + r * Math.cos(rad);
             double y = cy + r * Math.sin(rad);
-            drawThickLine(gg, prevX, prevY, x, y, strokeWidth, color);
+            addThickLineVertices(builder, matrix, prevX, prevY, x, y, strokeWidth, rC, gC, bC, aC);
             prevX = x; prevY = y;
         }
     }
 
-    private static void drawThickLine(GuiGraphics gg, double x1, double y1, double x2, double y2, double width, int color) {
+    private static void addThickLineVertices(com.mojang.blaze3d.vertex.BufferBuilder builder, org.joml.Matrix4f matrix, double x1, double y1, double x2, double y2, double width, int r, int g, int b, int a) {
         double angle = Math.atan2(y2 - y1, x2 - x1);
         double cos = Math.cos(angle);
         double sin = Math.sin(angle);
         double dx = width / 2 * -sin;
         double dy = width / 2 * cos;
 
-        int x0 = (int) Math.round(x1 + dx);
-        int y0 = (int) Math.round(y1 + dy);
-        int x1p = (int) Math.round(x1 - dx);
-        int y1p = (int) Math.round(y1 - dy);
-        int x2p = (int) Math.round(x2 - dx);
-        int y2p = (int) Math.round(y2 - dy);
-        int x3p = (int) Math.round(x2 + dx);
-        int y3p = (int) Math.round(y2 + dy);
+        float x0 = (float) (x1 + dx);
+        float y0 = (float) (y1 + dy);
+        float x1p = (float) (x1 - dx);
+        float y1p = (float) (y1 - dy);
+        float x2p = (float) (x2 - dx);
+        float y2p = (float) (y2 - dy);
+        float x3p = (float) (x2 + dx);
+        float y3p = (float) (y2 + dy);
 
-        fillTriangle(gg, x0, y0, x1p, y1p, x2p, y2p, color);
-        fillTriangle(gg, x0, y0, x2p, y2p, x3p, y3p, color);
+        builder.addVertex(matrix, x0, y0, 0).setColor(r, g, b, a);
+        builder.addVertex(matrix, x1p, y1p, 0).setColor(r, g, b, a);
+        builder.addVertex(matrix, x2p, y2p, 0).setColor(r, g, b, a);
+        builder.addVertex(matrix, x3p, y3p, 0).setColor(r, g, b, a);
     }
 
     private static void renderSparks(GuiGraphics guiGraphics) {
+        if (SPARKS.isEmpty()) return;
+
+        boolean hasVertices = false;
+
+        com.mojang.blaze3d.vertex.Tesselator tesselator = com.mojang.blaze3d.vertex.Tesselator.getInstance();
+        com.mojang.blaze3d.vertex.BufferBuilder bufferbuilder = tesselator.begin(com.mojang.blaze3d.vertex.VertexFormat.Mode.TRIANGLES, com.mojang.blaze3d.vertex.DefaultVertexFormat.POSITION_COLOR);
+        org.joml.Matrix4f matrix4f = guiGraphics.pose().last().pose();
+
         for (SparkState s : SPARKS) {
             int alpha = (int) (s.a * effectOpacity * 255);
             if (alpha <= 0) continue;
-            int color = (alpha << 24) | 0xFFFFFF;
             double size = s.s * 0.8;
 
             double cos = Math.cos(s.rot);
@@ -270,50 +317,46 @@ public class CHNHSparkOverlay {
             double tx2 = -size * 0.6;
             double ty2 = size * 0.6;
 
-            int rx0 = (int) Math.round(s.x + tx0 * cos - ty0 * sin);
-            int ry0 = (int) Math.round(s.y + tx0 * sin + ty0 * cos);
-            int rx1 = (int) Math.round(s.x + tx1 * cos - ty1 * sin);
-            int ry1 = (int) Math.round(s.y + tx1 * sin + ty1 * cos);
-            int rx2 = (int) Math.round(s.x + tx2 * cos - ty2 * sin);
-            int ry2 = (int) Math.round(s.y + tx2 * sin + ty2 * cos);
+            float rx0 = (float) (s.x + tx0 * cos - ty0 * sin);
+            float ry0 = (float) (s.y + tx0 * sin + ty0 * cos);
+            float rx1 = (float) (s.x + tx1 * cos - ty1 * sin);
+            float ry1 = (float) (s.y + tx1 * sin + ty1 * cos);
+            float rx2 = (float) (s.x + tx2 * cos - ty2 * sin);
+            float ry2 = (float) (s.y + tx2 * sin + ty2 * cos);
 
-            fillTriangle(guiGraphics, rx0, ry0, rx1, ry1, rx2, ry2, color);
+            bufferbuilder.addVertex(matrix4f, rx0, ry0, 0).setColor(255, 255, 255, alpha);
+            bufferbuilder.addVertex(matrix4f, rx1, ry1, 0).setColor(255, 255, 255, alpha);
+            bufferbuilder.addVertex(matrix4f, rx2, ry2, 0).setColor(255, 255, 255, alpha);
+            hasVertices = true;
         }
+
+        if (!hasVertices) {
+            return;
+        }
+
+        com.mojang.blaze3d.systems.RenderSystem.setShader(net.minecraft.client.renderer.GameRenderer::getRendertypeGuiShader);
+        com.mojang.blaze3d.vertex.BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
     }
 
-    private static void fillCircle(GuiGraphics gg, double cx, double cy, double r, int color) {
+    private static void addCircleVertices(com.mojang.blaze3d.vertex.BufferBuilder builder, org.joml.Matrix4f matrix, double cx, double cy, double r, int rc, int gc, int bc, int ac) {
         if (r <= 0) return;
-        int top = (int) Math.round(cy - r);
-        int bottom = (int) Math.round(cy + r);
-        for (int y = top; y <= bottom; y++) {
-            double dy = y - cy;
-            double dx = Math.sqrt(Math.max(0, r * r - dy * dy));
-            int left = (int) Math.round(cx - dx);
-            int right = (int) Math.round(cx + dx);
-            if (left < right) {
-                gg.fill(left, y, right, y + 1, color);
-            }
-        }
-    }
+        int segments = Math.max(12, (int)(r * 2));
+        float doublePi = (float) (Math.PI * 2.0);
 
-    private static void fillTriangle(GuiGraphics gg, int x0, int y0, int x1, int y1, int x2, int y2, int color) {
-        int minX = Math.min(x0, Math.min(x1, x2));
-        int maxX = Math.max(x0, Math.max(x1, x2));
-        for (int x = minX; x <= maxX; x++) {
-            List<Integer> ys = new ArrayList<>();
-            for (int[] edge : new int[][]{{x0,y0,x1,y1},{x1,y1,x2,y2},{x2,y2,x0,y0}}) {
-                int xA = edge[0], yA = edge[1], xB = edge[2], yB = edge[3];
-                if ((xA <= x && xB > x) || (xB <= x && xA > x)) {
-                    double t = (x - xA) / (double)(xB - xA);
-                    int y = (int)(yA + t * (yB - yA));
-                    ys.add(y);
-                }
-            }
-            if (ys.size() >= 2) {
-                int yMin = Math.min(ys.get(0), ys.get(1));
-                int yMax = Math.max(ys.get(0), ys.get(1));
-                gg.fill(x, yMin, x + 1, yMax, color);
-            }
+        // Use QUADS by treating center + 2 edge points + center as a quad
+        for (int i = 0; i < segments; i++) {
+            float angle1 = (i / (float) segments) * doublePi;
+            float angle2 = ((i + 1) / (float) segments) * doublePi;
+
+            float x1 = (float) (cx + r * Math.cos(angle1));
+            float y1 = (float) (cy + r * Math.sin(angle1));
+            float x2 = (float) (cx + r * Math.cos(angle2));
+            float y2 = (float) (cy + r * Math.sin(angle2));
+
+            builder.addVertex(matrix, (float) cx, (float) cy, 0).setColor(rc, gc, bc, ac);
+            builder.addVertex(matrix, x1, y1, 0).setColor(rc, gc, bc, ac);
+            builder.addVertex(matrix, x2, y2, 0).setColor(rc, gc, bc, ac);
+            builder.addVertex(matrix, (float) cx, (float) cy, 0).setColor(rc, gc, bc, ac);
         }
     }
 
