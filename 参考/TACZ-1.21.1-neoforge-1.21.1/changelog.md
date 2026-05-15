@@ -1,0 +1,1 @@
+- Fixed charging weapons not working

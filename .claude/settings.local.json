@@ -24,7 +24,20 @@
       "Bash(/tmp/venv/bin/python /tmp/resize_cursors.py)",
       "Bash(/tmp/venv2/bin/pip install *)",
       "Bash(/tmp/venv2/bin/python /tmp/resize_cursors.py)",
-      "Bash(/tmp/venv2/bin/python /tmp/optimize_logo.py)"
+      "Bash(/tmp/venv2/bin/python /tmp/optimize_logo.py)",
+      "Bash(./gradlew --stop)",
+      "Bash(./gradlew clean *)",
+      "Bash(sudo rm -rf build)",
+      "Bash(mkdir -p /tmp/create_jar)",
+      "Read(//tmp/**)",
+      "Bash(unzip -q /home/min/.gradle/caches/modules-2/files-2.1/curse.maven/create-328085/7149903/3ebd84d405d0c86f79a21a559ee78133b04df703/create-328085-7149903.jar)",
+      "WebFetch(domain:maven.createmod.net)",
+      "Bash(curl -s \"https://maven.createmod.net/net/createmod/ponders/Ponders/\")",
+      "Bash(curl -s \"https://maven.createmod.net/net/createmod/catnip/Catnip/\")",
+      "WebSearch",
+      "Bash(curl *)",
+      "WebFetch(domain:create.wiki)",
+      "Bash(./gradlew dependencies *)"
     ]
   }
 }

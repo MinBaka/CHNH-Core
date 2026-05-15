@@ -39,8 +39,26 @@ runs {
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
+repositories {
+    maven {
+        url "https://maven.createmod.net"
+    }
+    maven {
+        url "https://maven.tterrag.com/"
+    }
+    maven {
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+}
+
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
+    implementation "com.simibubi.create:create-1.21.1:6.0.11-288"
+    compileOnly "curse.maven:tacz-1-21-1-1353462:7374584"
+    implementation "net.createmod.catnip:Catnip-NeoForge-1.21.1:0.8.54"
 }
 
 // 替换 neoforge.mods.toml 中的占位符
