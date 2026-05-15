@@ -9,7 +9,7 @@ import com.minbaka.chnhcore.precisemanufacturing.lib.Reference;
 import com.simibubi.create.content.kinetics.deployer.DeployerApplicationRecipe;
 import com.simibubi.create.content.kinetics.press.PressingRecipe;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeBuilder;
-import net.createmod.catnip.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -20,7 +20,7 @@ public class SequencedAmmoRecipeBuilder {
     protected final SequencedAssemblyRecipeBuilder builder;
     protected SequencedAmmoRecipeBuilder(ItemEntry<? extends Item> baseCartridgePiece, ItemEntry<Item> transitionItem, String namespaceId, String ammoId) {
         this.baseCartridgePiece = baseCartridgePiece;
-        this.builder = new SequencedAssemblyRecipeBuilder(new ResourceLocation(namespaceId, String.format("sequenced_assembly/ammo/%s", ammoId)))
+        this.builder = new SequencedAssemblyRecipeBuilder(ResourceLocation.fromNamespaceAndPath(namespaceId, String.format("sequenced_assembly/ammo/%s", ammoId)))
                 .require(baseCartridgePiece.get())
                 .transitionTo(transitionItem.get())
                 .loops(1);

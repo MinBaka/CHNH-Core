@@ -3,7 +3,7 @@ package com.minbaka.chnhcore.precisemanufacturing.foundation;
 import com.minbaka.chnhcore.precisemanufacturing.PreciseManufacturing;
 import com.minbaka.chnhcore.precisemanufacturing.foundation.utility.ResourceHelper;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import net.createmod.catnip.registrate.util.entry.FluidEntry;
+import com.tterrag.registrate.util.entry.FluidEntry;
 import net.minecraft.resources.ResourceLocation;
 
 public class PrmaFluids {

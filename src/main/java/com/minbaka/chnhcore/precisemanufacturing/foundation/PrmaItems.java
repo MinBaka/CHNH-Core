@@ -13,8 +13,8 @@ import com.minbaka.chnhcore.precisemanufacturing.foundation.neo.simple.item.Simp
 import com.minbaka.chnhcore.precisemanufacturing.foundation.neo.simple.recipe.SimpleCartridgeBuilder;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import net.createmod.catnip.registrate.builders.ItemBuilder;
-import net.createmod.catnip.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.builders.ItemBuilder;
+import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.item.Item;
 
 import java.util.ArrayList;

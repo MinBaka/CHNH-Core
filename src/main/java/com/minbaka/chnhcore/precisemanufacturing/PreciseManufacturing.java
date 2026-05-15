@@ -10,14 +10,14 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.fml.InterModComms;
+import net.neoforged.fml.InterModComms;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.InterModEnqueueEvent;
 import net.neoforged.fml.event.lifecycle.InterModProcessEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import net.neoforged.neoforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.fml.common.EventBusSubscriber;
 import org.slf4j.Logger;
 
 import java.util.stream.Collectors;
@@ -30,17 +30,15 @@ public class PreciseManufacturing {
     public static final Logger LOGGER = LogUtils.getLogger();
     public static final PreciseManufacturingRegistrate REGISTRATE = PreciseManufacturingRegistrate.create(Reference.MOD_ID);
 
-    public PreciseManufacturing() {
-        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
+    public PreciseManufacturing(IEventBus eventBus) {
         registerEntries(eventBus);
 
         // Register the setup method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        eventBus.addListener(this::setup);
         // Register the enqueueIMC method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
+        eventBus.addListener(this::enqueueIMC);
         // Register the processIMC method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
+        eventBus.addListener(this::processIMC);
 
         // Register ourselves for server and other game events we are interested in
         NeoForge.EVENT_BUS.register(this);
@@ -64,19 +62,19 @@ public class PreciseManufacturing {
     private void setup(final FMLCommonSetupEvent event) {
         // Some preinit code
         LOGGER.info("HELLO FROM PREINIT");
-        event.enqueueWork(PacketHandler::register);
+//        event.enqueueWork(PacketHandler::register);
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {
         // Some example code to dispatch IMC to another mod
-        InterModComms.sendTo("prma", "helloworld", () -> { LOGGER.info("Hello world from the MDK"); return "Hello world";});
+//        InterModComms.sendTo("prma", "helloworld", () -> { LOGGER.info("Hello world from the MDK"); return "Hello world";});
     }
 
     private void processIMC(final InterModProcessEvent event) {
         // Some example code to receive and process InterModComms from other mods
-        LOGGER.info("Got IMC {}", event.getIMCStream().
-                map(m->m.messageSupplier().get()).
-                collect(Collectors.toList()));
+//        LOGGER.info("Got IMC {}", event.getIMCStream().
+//                map(m->m.messageSupplier().get()).
+//                collect(Collectors.toList()));
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
@@ -86,7 +84,7 @@ public class PreciseManufacturing {
         LOGGER.info("HELLO from server starting");
     }
 
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = Reference.MOD_ID, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = Reference.MOD_ID, value = Dist.CLIENT)
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(final FMLClientSetupEvent event) {

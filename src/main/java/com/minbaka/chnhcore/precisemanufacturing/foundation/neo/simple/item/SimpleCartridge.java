@@ -12,7 +12,7 @@ import com.minbaka.chnhcore.precisemanufacturing.foundation.neo.simple.content.t
 import com.minbaka.chnhcore.precisemanufacturing.foundation.neo.simple.recipe.SimpleCartridgeRecipeBuilder;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeBuilder;
-import net.createmod.catnip.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;

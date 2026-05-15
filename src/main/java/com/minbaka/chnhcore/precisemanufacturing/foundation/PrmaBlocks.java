@@ -1,14 +1,13 @@
 package com.minbaka.chnhcore.precisemanufacturing.foundation;
 
 import com.minbaka.chnhcore.precisemanufacturing.PreciseManufacturing;
-import com.minbaka.chnhcore.precisemanufacturing.foundation.neo.complex.content.processing.casting_basin.CastingBasinBlock;
 import com.simibubi.create.AllDisplaySources;
 import com.simibubi.create.content.processing.AssemblyOperatorBlockItem;
 import com.simibubi.create.content.redstone.displayLink.source.ItemNameDisplaySource;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
-import net.createmod.catnip.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.world.level.material.MapColor;
 
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
@@ -30,17 +29,17 @@ public class PrmaBlocks {
 //            .transform(ModelGen.customItemModel())
 //            .register();
 
-    public static final BlockEntry<CastingBasinBlock> CASTING_BASIN = PreciseManufacturing.REGISTRATE
-            .block("casting_basin", CastingBasinBlock::new)
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
-            .transform(TagGen.axeOrPickaxe())
-            .blockstate((c, p) -> p.simpleBlock(c.getEntry(), AssetLookup.partialBaseModel(c, p)))
-//            .onRegister(AllDisplaySources.assignDataBehaviour(new ItemNameDisplaySource(), "combine_item_names"))
-            .item(AssemblyOperatorBlockItem::new)
-            .model(AssetLookup::customItemModel)
-            .build()
-            .register();
+//    public static final BlockEntry<CastingBasinBlock> CASTING_BASIN = PreciseManufacturing.REGISTRATE
+//            .block("casting_basin", CastingBasinBlock::new)
+//            .initialProperties(SharedProperties::stone)
+//            .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
+//            .transform(TagGen.axeOrPickaxe())
+//            .blockstate((c, p) -> p.simpleBlock(c.getEntry(), AssetLookup.partialBaseModel(c, p)))
+////            .onRegister(AllDisplaySources.assignDataBehaviour(new ItemNameDisplaySource(), "combine_item_names"))
+//            .item(AssemblyOperatorBlockItem::new)
+//            .model(AssetLookup::customItemModel)
+//            .build()
+//            .register();
 
     public static void register(){
 

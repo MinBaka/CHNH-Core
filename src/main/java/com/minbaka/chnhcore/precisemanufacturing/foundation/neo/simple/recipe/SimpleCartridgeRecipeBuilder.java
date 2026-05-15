@@ -11,7 +11,7 @@ import com.minbaka.chnhcore.precisemanufacturing.lib.Reference;
 import com.simibubi.create.content.kinetics.deployer.DeployerApplicationRecipe;
 import com.simibubi.create.content.kinetics.press.PressingRecipe;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeBuilder;
-import net.createmod.catnip.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -23,7 +23,7 @@ public class SimpleCartridgeRecipeBuilder {
     protected final SimpleCartridge cartridge;
     protected SimpleCartridgeRecipeBuilder(String namespaceId, String recipeName, SimpleCartridge resultingCartridge) {
         this.cartridge = resultingCartridge;
-        this.builder = new SequencedAssemblyRecipeBuilder(new ResourceLocation(namespaceId, String.format("simple/cartridge/%s", recipeName)))
+        this.builder = new SequencedAssemblyRecipeBuilder(ResourceLocation.fromNamespaceAndPath(namespaceId, String.format("simple/cartridge/%s", recipeName)))
                 .require(cartridge.getBaseCasing().get())
                 .transitionTo(resultingCartridge.getTransition().get())
                 .loops(1)
@@ -32,7 +32,7 @@ public class SimpleCartridgeRecipeBuilder {
 
     protected SimpleCartridgeRecipeBuilder(String namespaceId, String recipeName, SimpleCartridge resultingCartridge, ItemLike baseItem){
         this.cartridge = resultingCartridge;
-        this.builder = new SequencedAssemblyRecipeBuilder(new ResourceLocation(namespaceId, String.format("simple/cartridge/%s", recipeName)))
+        this.builder = new SequencedAssemblyRecipeBuilder(ResourceLocation.fromNamespaceAndPath(namespaceId, String.format("simple/cartridge/%s", recipeName)))
                 .require(baseItem)
                 .transitionTo(resultingCartridge.getTransition().get())
                 .loops(1)

@@ -3,6 +3,7 @@ package com.minbaka.chnhcore.precisemanufacturing.foundation.data.providers;
 import com.minbaka.chnhcore.precisemanufacturing.foundation.data.generators.recipe.ModRecipesGen;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 
 import java.util.function.Consumer;
@@ -12,8 +13,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 //    private static List<CartridgeBase> cartridgeBases = new ArrayList<>();
 //    private static List<AmmunitionModule> ammunitionModules = new ArrayList<>();
 
-    public ModRecipeProvider(DataGenerator pGenerator) {
-        super(pGenerator.getPackOutput());
+    public ModRecipeProvider(net.minecraft.data.PackOutput pOutput, java.util.concurrent.CompletableFuture<net.minecraft.core.HolderLookup.Provider> pRegistries) {
+        super(pOutput, pRegistries);
     }
 
     @Override

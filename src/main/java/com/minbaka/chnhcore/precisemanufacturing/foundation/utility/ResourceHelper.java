@@ -12,7 +12,7 @@ public class ResourceHelper {
         if(table.containsKey(filePath))
             return table.get(filePath);
 
-        ResourceLocation loc = new ResourceLocation(Reference.MOD_ID, filePath);
+        ResourceLocation loc = ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, filePath);
         table.put(filePath, loc);
         return loc;
     }
@@ -21,7 +21,7 @@ public class ResourceHelper {
         if(table.containsKey(modid + ":" + filePath))
             return table.get(filePath);
 
-        ResourceLocation loc = new ResourceLocation(modid, filePath);
+        ResourceLocation loc = ResourceLocation.fromNamespaceAndPath(modid, filePath);
         table.put(filePath, loc);
         return loc;
     }

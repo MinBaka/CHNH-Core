@@ -18,7 +18,7 @@ import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeBuilder;
 import com.tacz.guns.api.item.builder.AmmoItemBuilder;
 import com.tacz.guns.init.ModItems;
-import net.createmod.catnip.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -60,35 +60,5 @@ public class SimpleAmmo {
     }
 
     public void registerRecipes() {
-        assert cartridge.item != null;
-
-        ItemStack v = new ItemStack((ItemLike) ModItems.AMMO.get());
-        CompoundTag taczTag = new CompoundTag(); // TODO: Not a great way but it works.
-        taczTag.putString("AmmoId", String.format("tacz:%s", ammoId));
-        v.setTag(taczTag);
-        v.setCount(1);
-
-        ModRecipesGen.addSequencedAssemblyRecipe(new SequencedAssemblyRecipeBuilder(ResourceHelper.find(String.format("simple/ammo/%s_head", ammoId)))
-                .require(cartridge.item.get())
-                .transitionTo(transitionItem.get()) // TODO: change this to unfinished gunpowder cartridge
-                .loops(1)
-                .addStep(DeployerApplicationRecipe::new, p -> p.require(bulletHead.get()))
-                .addStep(PressingRecipe::new, p -> p)
-//                .addOutput(AmmoItemBuilder.create()
-//                        .setId(new ResourceLocation("tacz", ammoId))
-//                        .setCount(1)
-//                        .build().getItem(), 1)
-                .addOutput(v, 1) // TODO: Use AmmoItemBuilder later. Right now their builder API Doesn't work for some reason.
-        );
-
-        ModRecipesGen.addCreateRecipe(new ProcessingRecipeBuilder<>(CuttingRecipe::new, ResourceHelper.find(String.format("simple/ammo/%s_head", ammoId)))
-                .require(switch(headMaterial){
-                    case Iron -> AllItems.IRON_SHEET;
-                    case Brass -> AllItems.BRASS_SHEET;
-                    case Copper -> AllItems.COPPER_SHEET;
-                    case Plastic -> Items.PAPER;
-                })
-                .duration(100)
-                .output(bulletHead.get(), resultAmount));
     }
 }

@@ -33,11 +33,6 @@ public class TaczAPIBridge {
     }
 
     public static ItemStack getAmmo(String ammoId) {
-        ItemStack stack = new ItemStack(ModItems.AMMO.get());
-        stack.setCount(1);
-        CompoundTag tag = new CompoundTag();
-        tag.putString("AmmoId", String.format("tacz:%s", ammoId));
-        stack.setTag(tag);
-        return stack;
+        return ItemStack.EMPTY;
     }
 }

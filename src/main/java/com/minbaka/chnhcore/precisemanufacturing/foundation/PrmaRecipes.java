@@ -7,7 +7,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.minecraft.core.registries.BuiltInRegistries;
 
 public class PrmaRecipes {
-    public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Reference.MOD_ID);
+    public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, Reference.MOD_ID);
 
 //    public static final RegistryObject<RecipeSerializer<DecomponentalizingRecipe>> DECOMPONENTALIZING_SERIALIZER = SERIALIZERS.register(DecomponentalizingRecipe.Type.ID, () -> DecomponentalizingRecipe.Serializer.INSTANCE);
 

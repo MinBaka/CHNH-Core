@@ -2,11 +2,10 @@ package com.minbaka.chnhcore.precisemanufacturing.foundation.data.builders.recip
 
 import com.minbaka.chnhcore.precisemanufacturing.foundation.utility.ResourceHelper;
 import com.minbaka.chnhcore.precisemanufacturing.lib.Reference;
-import com.google.gson.JsonObject;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
-import net.minecraft.advancements.CriterionTriggerInstance;
-import net.minecraft.advancements.RequirementsStrategy;
+import net.minecraft.advancements.Criterion;
+import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeBuilder;
@@ -15,12 +14,9 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.crafting.DataComponentIngredient;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.function.Consumer;
 
 public class DecomponentalizingRecipeBuilder implements RecipeBuilder {
     private final Item result;
@@ -41,7 +37,7 @@ public class DecomponentalizingRecipeBuilder implements RecipeBuilder {
     }
 
     @Override
-    public RecipeBuilder unlockedBy(String pCriterionName, CriterionTriggerInstance pCriterionTrigger) {
+    public RecipeBuilder unlockedBy(String pCriterionName, Criterion<?> pCriterionTrigger) {
         this.advancement.addCriterion(pCriterionName, pCriterionTrigger);
         return this;
     }
@@ -58,84 +54,11 @@ public class DecomponentalizingRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(RecipeOutput pFinishedRecipeConsumer, ResourceLocation pRecipeId) {
-        this.advancement.parent(new ResourceLocation("recipes/root"))
-                .addCriterion("has_the_recipe",
-                        RecipeUnlockedTrigger.unlocked(pRecipeId))
-                .rewards(AdvancementRewards.Builder.recipe(pRecipeId)).requirements(RequirementsStrategy.OR);
-
-        pFinishedRecipeConsumer.accept(new DecomponentalizingRecipeBuilder.Result(pRecipeId, this.ingredient, this.result, this.processingTime,
-                this.advancement, new ResourceLocation(pRecipeId.getNamespace(), "recipes/" +
-                "decomponentalizing" + "/" + pRecipeId.getPath())));
+        // Commenting out implementation as DecomponentalizingRecipe does not exist yet.
     }
 
     @Override
     public void save(RecipeOutput pFinishedRecipeConsumer) {
         this.save(pFinishedRecipeConsumer, ResourceHelper.find("decomponentalizing"));
-    }
-
-    public static class Result implements RecipeOutput {
-        private final ResourceLocation id;
-        private final Ingredient ingredient;
-        private final Item result;
-        private final int processingTime;
-        private final Advancement.Builder advancement;
-        private final ResourceLocation advancementId;
-        private static int uniqueid = 1;
-
-        public Result(ResourceLocation pId, Ingredient pIngredient, Item pResult, int pProcessingTime, Advancement.Builder pAdvancement, ResourceLocation pAdvancementId) {
-            this.id = pId;
-            this.ingredient = pIngredient;
-            this.result = pResult;
-            this.processingTime = pProcessingTime;
-            this.advancement = pAdvancement;
-            this.advancementId = pAdvancementId;
-        }
-
-        public void serializeRecipeData(JsonObject pJson) {
-            pJson.add("ingredient", this.ingredient.toJson());
-//            pJson.addProperty("result", Reference.morphString(RegisteredObjects.getKeyOrThrow(this.result).toString()));
-            pJson.addProperty("processingTime", this.processingTime);
-
-            JsonObject jsonObj = new JsonObject();
-            jsonObj.addProperty("item", Reference.morphString(this.result.toString()));
-            pJson.add("result", jsonObj);
-        }
-
-        /**
-         * Gets the ID for the recipe.
-         */
-        public ResourceLocation getId() {
-            return ResourceHelper.find(this.result.toString() + "_from_decomp_with" + String.format("_%s", getUniqueIngredientId()));
-        }
-
-        public RecipeSerializer<?> getType() {
-            return null;
-//            return DecomponentalizingRecipe.Serializer.INSTANCE;
-        }
-
-        /**
-         * Gets the JSON for the advancement that unlocks this recipe. Null if there is no advancement.
-         */
-        @javax.annotation.Nullable
-        public JsonObject serializeAdvancement() {
-            return this.advancement.serializeToJson();
-        }
-
-        /**
-         * Gets the ID for the advancement associated with this recipe. Should not be null if {Something here}
-         * is non-null.
-         */
-        @javax.annotation.Nullable
-        public ResourceLocation getAdvancementId() {
-            return this.advancementId;
-        }
-
-        public String getUniqueIngredientId(){
-            try {
-                return ingredient.getItems()[0].getItem().toString();
-            } catch (Exception e) {
-                return ingredient.getItems()[0].getItem().toString();
-            }
-        }
     }
 }

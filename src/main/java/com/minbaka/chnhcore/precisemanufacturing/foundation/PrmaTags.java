@@ -15,43 +15,29 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.neoforged.neoforge.registries.IForgeRegistry;
+//import net.neoforged.neoforge.registries.IForgeRegistry;
 
 import java.util.Collections;
 
 public class PrmaTags {
-    public static <T> TagKey<T> optionalTag(IForgeRegistry<T> registry,
-                                                                           ResourceLocation id) {
-        return registry.tags()
-                .createOptionalTagKey(id, Collections.emptySet());
-    }
-
-    public static <T> TagKey<T> forgeTag(IForgeRegistry<T> registry, String path) {
-        return optionalTag(registry, new ResourceLocation("forge", path));
-    }
-
-    public static <T> TagKey<T> modTag(IForgeRegistry<T> registry, String path) {
-        return optionalTag(registry, new ResourceLocation(Reference.MOD_ID, path));
-    }
-
     public static TagKey<Block> forgeBlockTag(String path) {
-        return forgeTag(ForgeRegistries.BLOCKS, path);
+        return net.minecraft.tags.BlockTags.create(ResourceLocation.fromNamespaceAndPath("forge", path));
     }
 
     public static TagKey<Item> forgeItemTag(String path) {
-        return forgeTag(ForgeRegistries.ITEMS, path);
+        return ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", path));
     }
 
     public static TagKey<Fluid> forgeFluidTag(String path) {
-        return forgeTag(ForgeRegistries.FLUIDS, path);
+        return FluidTags.create(ResourceLocation.fromNamespaceAndPath("forge", path));
     }
 
     public static TagKey<Item> modItemTag(String path) {
-        return modTag(ForgeRegistries.ITEMS, path);
+        return ItemTags.create(ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, path));
     }
 
     public static TagKey<Fluid> modFluidTag(String path){
-        return modTag(ForgeRegistries.FLUIDS, path);
+        return FluidTags.create(ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, path));
     }
 
     public static void register(){
@@ -146,12 +132,8 @@ public class PrmaTags {
         }
 
         ItemTag(NameSpace namespace, String path, boolean optional, boolean alwaysDatagen) {
-            ResourceLocation id = new ResourceLocation(namespace.id, path == null ? Lang.asId(name()) : path);
-            if (optional) {
-                tag = optionalTag(ForgeRegistries.ITEMS, id);
-            } else {
-                tag = ItemTags.create(id);
-            }
+            ResourceLocation id = ResourceLocation.fromNamespaceAndPath(namespace.id, path == null ? Lang.asId(name()) : path);
+            tag = ItemTags.create(id);
             this.alwaysDatagen = alwaysDatagen;
         }
 
@@ -201,12 +183,8 @@ public class PrmaTags {
         }
 
         FluidTag(NameSpace namespace, String path, boolean optional, boolean alwaysDatagen) {
-            ResourceLocation id = new ResourceLocation(namespace.id, path == null ? Lang.asId(name()) : path);
-            if (optional) {
-                tag = optionalTag(ForgeRegistries.FLUIDS, id);
-            } else {
-                tag = FluidTags.create(id);
-            }
+            ResourceLocation id = ResourceLocation.fromNamespaceAndPath(namespace.id, path == null ? Lang.asId(name()) : path);
+            tag = FluidTags.create(id);
             this.alwaysDatagen = alwaysDatagen;
         }
 

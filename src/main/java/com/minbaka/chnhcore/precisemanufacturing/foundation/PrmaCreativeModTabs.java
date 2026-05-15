@@ -21,7 +21,7 @@ public class PrmaCreativeModTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Reference.MOD_ID);
 
-    public static final RegistryObject<CreativeModeTab> MOD_TAB = CREATIVE_MODE_TABS.register("prma_tab",
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MOD_TAB = CREATIVE_MODE_TABS.register("prma_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(PrmaItems.SULFUR_POWDER.get()))
                     .displayItems(((itemDisplayParameters, output) -> {
                         PrmaItems.ALL_ITEMS.forEach(i -> output.accept(i.get()));
@@ -29,7 +29,7 @@ public class PrmaCreativeModTabs {
                     .title(Component.translatable("itemGroup.prma_tab"))
                     .build());
 
-    public static final RegistryObject<CreativeModeTab> MOD_MATERIALS_TAB = CREATIVE_MODE_TABS.register("prma_materials_tab",
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MOD_MATERIALS_TAB = CREATIVE_MODE_TABS.register("prma_materials_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(PrmaItems.Ammo.SMALL_COPPER_MEDIUM_GUNPOWDER_CARTRIDGE.getItem().get()))
                     .displayItems(((itemDisplayParameters, output) -> {
                         PrmaItems.ALL_MATERIALS.forEach(i -> output.accept(i.get()));
@@ -37,7 +37,7 @@ public class PrmaCreativeModTabs {
                     .title(Component.translatable("itemGroup.prma_materials_tab"))
                     .build());
 
-    public static final RegistryObject<CreativeModeTab> MOD_HIDDEN_TAB = CREATIVE_MODE_TABS.register("prma_hidden_tab",
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MOD_HIDDEN_TAB = CREATIVE_MODE_TABS.register("prma_hidden_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(Items.AIR))
             .title(Component.translatable("itemGroup.prma_hidden_tab"))
             .build());

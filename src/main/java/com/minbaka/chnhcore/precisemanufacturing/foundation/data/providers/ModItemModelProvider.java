@@ -3,9 +3,9 @@ package com.minbaka.chnhcore.precisemanufacturing.foundation.data.providers;
 import com.minbaka.chnhcore.precisemanufacturing.foundation.PrmaItems;
 import com.minbaka.chnhcore.precisemanufacturing.foundation.utility.ResourceHelper;
 import com.minbaka.chnhcore.precisemanufacturing.lib.Reference;
-import net.createmod.catnip.registrate.providers.DataGenContext;
-import net.createmod.catnip.registrate.providers.RegistrateItemModelProvider;
-import java.util.function.BiConsumer;
+import com.tterrag.registrate.providers.DataGenContext;
+import com.tterrag.registrate.providers.RegistrateItemModelProvider;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -47,13 +47,13 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     private ItemModelBuilder simpleItem(Item item) {
         return withExistingParent(item.toString(),
-                new ResourceLocation("item/generated")).texture("layer0",
+                ResourceLocation.parse("item/generated")).texture("layer0",
                 ResourceHelper.find("item/" + item.toString()));
     }
 
-    private ItemModelBuilder handheldItem(Item item) {
+    public ItemModelBuilder handheldItem(Item item) {
         return withExistingParent(item.toString(),
-                new ResourceLocation("item/handheld")).texture("layer0",
+                ResourceLocation.parse("item/handheld")).texture("layer0",
                 ResourceHelper.find("item/" + item.toString()));
     }
 
@@ -62,19 +62,19 @@ public class ModItemModelProvider extends ItemModelProvider {
         for (String string : folders)
             path.append("/").append("_".equals(string) ? item.toString() : string);
         return withExistingParent(item.toString(),
-                new ResourceLocation("item/generated")).texture("layer0",
+                ResourceLocation.parse("item/generated")).texture("layer0",
                 ResourceHelper.find(path.toString()));
     }
 
     private ItemModelBuilder modelBuilder(String path, Item item){
         return withExistingParent(item.toString(),
-                new ResourceLocation("item/generated")).texture("layer0",
+                ResourceLocation.parse("item/generated")).texture("layer0",
                 ResourceHelper.find(path));
     }
 
     private ItemModelBuilder modelBuilder(ResourceLocation path, Item item){
         return withExistingParent(item.toString(),
-                new ResourceLocation("item/generated")).texture("layer0",
+                ResourceLocation.parse("item/generated")).texture("layer0",
                 path);
     }
 
@@ -85,7 +85,7 @@ public class ModItemModelProvider extends ItemModelProvider {
      * @param folders The folder routes
      * @return Data Gen context for the model() method in Registrate's Item Model Builder
      */
-    public static <I extends Item> BiConsumer<DataGenContext<Item, I>, RegistrateItemModelProvider> genericItemModel(boolean generateModel, String... folders) {
+    public static <I extends Item> NonNullBiConsumer<DataGenContext<Item, I>, RegistrateItemModelProvider> genericItemModel(boolean generateModel, String... folders) {
         return (c, p) -> {
             String path = "item";
             for (String string : folders)
@@ -99,17 +99,17 @@ public class ModItemModelProvider extends ItemModelProvider {
         };
     }
 
-    public static <I extends Item> BiConsumer<DataGenContext<Item, I>, RegistrateItemModelProvider> genericItemModel(String... folders) {
+    public static <I extends Item> NonNullBiConsumer<DataGenContext<Item, I>, RegistrateItemModelProvider> genericItemModel(String... folders) {
         return (c, p) -> {
             String path = "item";
             for (String string : folders)
                 path += "/" + ("_".equals(string) ? c.getName() : string);
-            p.withExistingParent(c.getName(), new ResourceLocation("item/generated")).texture("layer0",
+            p.withExistingParent(c.getName(), ResourceLocation.parse("item/generated")).texture("layer0",
                     ResourceHelper.find(path));
         };
     }
 
-    public static <I extends Item> BiConsumer<DataGenContext<Item, I>, RegistrateItemModelProvider> genericExistingParentedItemModel(String... folders) {
+    public static <I extends Item> NonNullBiConsumer<DataGenContext<Item, I>, RegistrateItemModelProvider> genericExistingParentedItemModel(String... folders) {
         return (c, p) -> {
             String path = "item";
             for (String string : folders)
@@ -118,7 +118,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         };
     }
 
-    public static <I extends Item> BiConsumer<DataGenContext<Item, I>, RegistrateItemModelProvider> genericItemModel(boolean generateModel, String[] modelFolders, String[] texturesFolders) {
+    public static <I extends Item> NonNullBiConsumer<DataGenContext<Item, I>, RegistrateItemModelProvider> genericItemModel(boolean generateModel, String[] modelFolders, String[] texturesFolders) {
         return (c, p) -> {
             String modelPath = "item", texturePath = "item";
             for (String string : modelFolders)
@@ -128,14 +128,14 @@ public class ModItemModelProvider extends ItemModelProvider {
             storedItemResourceLocations.add(modelPath);
             storedItemLocations.add(c.getEntry());
             if(generateModel)
-                p.withExistingParent(c.getName(), new ResourceLocation("item/generated")).texture("layer0",
+                p.withExistingParent(c.getName(), ResourceLocation.parse("item/generated")).texture("layer0",
                         ResourceHelper.find(texturePath));
             else
                 p.withExistingParent(c.getName(), p.modLoc(modelPath));
         };
     }
 
-    public static <I extends Item> BiConsumer<DataGenContext<Item, I>, RegistrateItemModelProvider> genericBlockModel(String... folders) {
+    public static <I extends Item> NonNullBiConsumer<DataGenContext<Item, I>, RegistrateItemModelProvider> genericBlockModel(String... folders) {
         return (c, p) -> {
             String path = "block";
             for (String string : folders)

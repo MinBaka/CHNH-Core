@@ -12,8 +12,7 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
-import net.createmod.catnip.registrate.util.entry.ItemEntry;
-import net.minecraft.data.recipes.CraftingRecipeBuilder;
+import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SingleItemRecipeBuilder;
@@ -97,13 +96,13 @@ public class StandardCartridgeComponents {
     public void registerRecipes() {
         for (var mat : materialTypes) {
             // e.g. cutting/ammo_components/small/brass_sheet_to_small_brass_casing
-            ModRecipesGen.addCreateRecipe(new ProcessingRecipeBuilder<>(CuttingRecipe::new, ResourceHelper.find(String.format("cutting/ammo_components/%s/%s_sheet_to_%s_%s_casing",
-                    sizeType.toString(), mat.toString(), sizeType.toString(), mat.toString())))
-                    .require(getMaterialSheet(mat))
-                    .output(getCasing(mat).get(), getCasingSizeOutputNumber(sizeType))
-                    // TODO: For Simple Ver. this is not necessary.
-//                    .output(getHead(mat).get(), getHeadSizeOutputNumber(sizeType))
-            );
+//            ModRecipesGen.addCreateRecipe(new ProcessingRecipeBuilder<>(CuttingRecipe::new, ResourceHelper.find(String.format("cutting/ammo_components/%s/%s_sheet_to_%s_%s_casing",
+//                    sizeType.toString(), mat.toString(), sizeType.toString(), mat.toString())))
+//                    .require(getMaterialSheet(mat))
+//                    .output(getCasing(mat).get(), getCasingSizeOutputNumber(sizeType))
+//                    // TODO: For Simple Ver. this is not necessary.
+////                    .output(getHead(mat).get(), getHeadSizeOutputNumber(sizeType))
+//            );
 //            ModRecipesGen.add(new SingleItemRecipeBuilder(RecipeCategory.MISC, RecipeSerializer.STONECUTTER, Ingredient.of(getMaterialSheet(mat)), getCasing(mat).get(), getCasingSizeOutputNumber(sizeType)));
         }
     }

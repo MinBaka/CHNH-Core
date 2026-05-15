@@ -37,7 +37,8 @@
       "WebSearch",
       "Bash(curl *)",
       "WebFetch(domain:create.wiki)",
-      "Bash(./gradlew dependencies *)"
+      "Bash(./gradlew dependencies *)",
+      "Bash(javap *)"
     ]
   }
 }

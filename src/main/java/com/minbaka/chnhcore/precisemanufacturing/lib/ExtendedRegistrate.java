@@ -2,9 +2,9 @@ package com.minbaka.chnhcore.precisemanufacturing.lib;
 
 import com.simibubi.create.foundation.data.CreateEntityBuilder;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import net.createmod.catnip.registrate.util.nullness.NonNullConsumer;
-import net.createmod.catnip.registrate.util.nullness.NonNullFunction;
-import net.createmod.catnip.registrate.util.nullness.NonNullSupplier;
+import com.tterrag.registrate.util.nullness.NonNullConsumer;
+import com.tterrag.registrate.util.nullness.NonNullFunction;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.createmod.catnip.lang.Lang;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
