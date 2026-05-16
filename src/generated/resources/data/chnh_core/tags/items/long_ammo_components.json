@@ -1,0 +1,10 @@
+{
+  "values": [
+    "chnh_core:long_copper_casing",
+    "chnh_core:long_copper_head",
+    "chnh_core:long_iron_casing",
+    "chnh_core:long_iron_head",
+    "chnh_core:long_brass_casing",
+    "chnh_core:long_brass_head"
+  ]
+}

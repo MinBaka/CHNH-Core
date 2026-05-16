@@ -8,9 +8,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 
-@EventBusSubscriber(modid = com.minbaka.chnhcore.CHNHCore.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class PrmaDataGenerators {
-    @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
         DataGenerator gen = event.getGenerator();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();

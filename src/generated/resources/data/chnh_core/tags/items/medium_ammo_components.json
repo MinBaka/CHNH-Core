@@ -1,0 +1,10 @@
+{
+  "values": [
+    "chnh_core:medium_copper_casing",
+    "chnh_core:medium_copper_head",
+    "chnh_core:medium_iron_casing",
+    "chnh_core:medium_iron_head",
+    "chnh_core:medium_brass_casing",
+    "chnh_core:medium_brass_head"
+  ]
+}

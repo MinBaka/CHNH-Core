@@ -37,6 +37,8 @@ public class PreciseManufacturing {
         eventBus.addListener(this::enqueueIMC);
         // Register the processIMC method for modloading
         eventBus.addListener(this::processIMC);
+        eventBus.addListener(PrmaDataGenerators::gatherData);
+        eventBus.addListener(ClientModEvents::onClientSetup);
 
         // Register ourselves for server and other game events we are interested in
         NeoForge.EVENT_BUS.register(this);
@@ -82,9 +84,7 @@ public class PreciseManufacturing {
         LOGGER.info("HELLO from server starting");
     }
 
-    @EventBusSubscriber(modid = com.minbaka.chnhcore.CHNHCore.MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
     public static class ClientModEvents {
-        @SubscribeEvent
         public static void onClientSetup(final FMLClientSetupEvent event) {
 //            ItemBlockRenderTypes.setRenderLayer(ModBlocks.DECOMPONENTALIZER.get(), RenderType.translucent());
 //            event.enqueueWork(() -> MenuScreens.register(PrmaContainers.DECOMPONENTALIZER_CONTAINER_MENU.get(), DecomponentalizerScreen::new));

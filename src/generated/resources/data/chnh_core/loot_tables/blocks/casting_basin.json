@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "chnh_core:casting_basin"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "chnh_core:blocks/casting_basin"
+}

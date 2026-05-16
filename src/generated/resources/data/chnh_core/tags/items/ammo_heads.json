@@ -1,0 +1,30 @@
+{
+  "values": [
+    "chnh_core:small_copper_head",
+    "chnh_core:small_iron_head",
+    "chnh_core:small_brass_head",
+    "chnh_core:medium_copper_head",
+    "chnh_core:medium_iron_head",
+    "chnh_core:medium_brass_head",
+    "chnh_core:long_copper_head",
+    "chnh_core:long_iron_head",
+    "chnh_core:long_brass_head",
+    "chnh_core:shotgun_bearing",
+    "chnh_core:9mm_head",
+    "chnh_core:30_06_head",
+    "chnh_core:45acp_head",
+    "chnh_core:46x30_head",
+    "chnh_core:50ae_head",
+    "chnh_core:50bmg_head",
+    "chnh_core:57x28_head",
+    "chnh_core:58x42_head",
+    "chnh_core:68x51fury_head",
+    "chnh_core:308_head",
+    "chnh_core:338_head",
+    "chnh_core:357mag_head",
+    "chnh_core:556x45_head",
+    "chnh_core:762x25_head",
+    "chnh_core:762x39_head",
+    "chnh_core:762x54_head"
+  ]
+}

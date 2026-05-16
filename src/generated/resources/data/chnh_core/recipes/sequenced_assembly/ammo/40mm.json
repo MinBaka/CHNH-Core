@@ -1,0 +1,65 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "chnh_core:40mm_casing"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "tacz:ammo",
+      "nbt": {
+        "AmmoId": "tacz:40mm"
+      }
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "chnh_core:40mm_casing"
+        },
+        {
+          "item": "chnh_core:high_power_ammunition_gunpowder"
+        }
+      ],
+      "results": [
+        {
+          "item": "chnh_core:40mm_casing"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "chnh_core:40mm_casing"
+        },
+        {
+          "item": "chnh_core:40mm_slug"
+        }
+      ],
+      "results": [
+        {
+          "item": "chnh_core:40mm_casing"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "chnh_core:40mm_casing"
+        }
+      ],
+      "results": [
+        {
+          "item": "chnh_core:40mm_casing"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "chnh_core:40mm_casing"
+  }
+}

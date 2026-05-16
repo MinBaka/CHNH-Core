@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "prma:molten_copper",
-    "prma:molten_brass",
-    "prma:molten_metal_alloy"
+    "chnh_core:molten_copper",
+    "chnh_core:molten_brass",
+    "chnh_core:molten_metal_alloy"
   ]
 }

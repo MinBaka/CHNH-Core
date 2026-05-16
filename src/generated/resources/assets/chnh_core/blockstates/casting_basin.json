@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "chnh_core:block/casting_basin/block"
+    }
+  }
+}

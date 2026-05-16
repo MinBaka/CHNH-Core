@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "chnh_core:item/simple/ammo/cartridge/iron/small_iron_low_gunpowder_cartridge"
+  }
+}

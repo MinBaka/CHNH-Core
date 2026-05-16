@@ -1,0 +1,8 @@
+
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "chnh_core:item/cartridges/762x25/762x25_casing_cast"
+    }
+}
+        

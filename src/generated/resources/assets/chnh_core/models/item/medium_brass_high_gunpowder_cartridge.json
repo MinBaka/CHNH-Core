@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "chnh_core:item/simple/ammo/cartridge/brass/medium_brass_high_gunpowder_cartridge"
+  }
+}

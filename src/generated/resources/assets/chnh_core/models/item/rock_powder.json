@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "chnh_core:item/powders/rock_powder"
+  }
+}
