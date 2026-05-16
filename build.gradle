@@ -50,6 +50,16 @@ repositories {
         url "https://maven.ithundxr.dev/snapshots"
     }
     maven {
+        url "https://maven.ithundxr.dev/releases"
+    }
+    maven {
+        url "http://maven.engine-room.space/"
+        allowInsecureProtocol = true
+        content {
+            includeGroup "dev.engine_room.flywheel"
+        }
+    }
+    maven {
         url "https://www.cursemaven.com"
         content {
             includeGroup "curse.maven"
@@ -61,7 +71,10 @@ dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
     implementation "com.simibubi.create:create-1.21.1:6.0.11-288"
     compileOnly "curse.maven:tacz-1-21-1-1353462:7374584"
-    implementation "net.createmod.catnip:Catnip-NeoForge-1.21.1:0.8.54"
+    implementation("net.createmod.catnip:Catnip-NeoForge-1.21.1:0.8.54") {
+        exclude group: "dev.engine_room.flywheel"
+        exclude group: "dev.engine-room.flywheel"
+    }
     implementation "com.tterrag.registrate:Registrate:MC1.21-1.3.0+67"
 }
 

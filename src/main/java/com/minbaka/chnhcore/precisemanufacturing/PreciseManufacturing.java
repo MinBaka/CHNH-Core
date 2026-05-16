@@ -22,8 +22,6 @@ import org.slf4j.Logger;
 
 import java.util.stream.Collectors;
 
-// The value here should match an entry in the META-INF/mods.toml file
-@Mod(Reference.MOD_ID)
 public class PreciseManufacturing {
 
     // Directly reference a slf4j logger
@@ -84,7 +82,7 @@ public class PreciseManufacturing {
         LOGGER.info("HELLO from server starting");
     }
 
-    @EventBusSubscriber(modid = Reference.MOD_ID, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = com.minbaka.chnhcore.CHNHCore.MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(final FMLClientSetupEvent event) {
