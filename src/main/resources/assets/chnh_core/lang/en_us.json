@@ -138,6 +138,7 @@
   "item.chnh_core.cartridge_primer": "Cartridge Primer",
 
   "item.chnh_core.9mm_head": "9mm Cartridge Head",
+  "item.chnh_core.22wmr_head": ".22 WMR Cartridge Head",
   "item.chnh_core.45acp_head": ".45 ACP Cartridge Head",
   "item.chnh_core.50ae_head": ".50 AE Cartridge Head",
   "item.chnh_core.357mag_head": ".357 Magnum Cartridge Head",
@@ -156,6 +157,7 @@
   "item.chnh_core.57x28_head": "5.7x28mm Cartridge Head",
 
   "item.chnh_core.9mm_transition": "9mm Cartridge Head Unfinished",
+  "item.chnh_core.22wmr_transition": "Incomplete .22 WMR Cartridge Head",
   "item.chnh_core.45acp_transition": ".45 ACP Cartridge Head Unfinished",
   "item.chnh_core.50ae_transition": ".50 AE Cartridge Head Unfinished",
   "item.chnh_core.357mag_transition": ".357 Magnum Cartridge Head Unfinished",

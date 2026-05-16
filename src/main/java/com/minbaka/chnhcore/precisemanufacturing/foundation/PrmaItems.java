@@ -139,6 +139,7 @@ public class PrmaItems {
         public static final SimpleCartridge LONG_COPPER_HIGH_GUNPOWDER_CARTRIDGE = SimpleCartridgeBuilder.create(AmmoCasingType.Long, AmmoMaterialType.Copper, SimpleAmmoGunpowderAmountStandard.High);
 
         public static final SimpleAmmo NINE_MIL = SimpleAmmo.create(SMALL_BRASS_LOW_GUNPOWDER_CARTRIDGE, AmmoHeadType.Small, AmmoMaterialType.Copper, "9mm", 6);
+        public static final SimpleAmmo TWENTY_TWO_WMR = SimpleAmmo.create(SMALL_BRASS_LOW_GUNPOWDER_CARTRIDGE, AmmoHeadType.Small, AmmoMaterialType.Copper, "22wmr", 6);
         public static final SimpleAmmo THIRTY_ZEO_SIX = SimpleAmmo.create(LONG_IRON_MEDIUM_GUNPOWDER_CARTRIDGE, AmmoHeadType.Long, AmmoMaterialType.Iron, "30_06", 4);
         public static final SimpleAmmo FOUR_FIVE_ACP = SimpleAmmo.create(SMALL_BRASS_MEDIUM_GUNPOWDER_CARTRIDGE, AmmoHeadType.Small, AmmoMaterialType.Copper, "45acp", 5);
         public static final SimpleAmmo FOUR_SIX_THIRTY = SimpleAmmo.create(MEDIUM_BRASS_MEDIUM_GUNPOWDER_CARTRIDGE, AmmoHeadType.Medium, AmmoMaterialType.Copper, "46x30", 3);

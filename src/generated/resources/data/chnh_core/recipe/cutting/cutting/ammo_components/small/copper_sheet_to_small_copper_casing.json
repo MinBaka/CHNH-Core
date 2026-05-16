@@ -1,0 +1,14 @@
+{
+  "type": "create:cutting",
+  "ingredients": [
+    {
+      "item": "create:copper_sheet"
+    }
+  ],
+  "results": [
+    {
+      "count": 7,
+      "id": "chnh_core:small_copper_casing"
+    }
+  ]
+}

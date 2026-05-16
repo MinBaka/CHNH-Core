@@ -1,0 +1,21 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "item": "chnh_core:flint_powder"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:charcoal"
+    }
+  ],
+  "processingTime": 100,
+  "results": [
+    {
+      "count": 4,
+      "id": "minecraft:gunpowder"
+    }
+  ]
+}

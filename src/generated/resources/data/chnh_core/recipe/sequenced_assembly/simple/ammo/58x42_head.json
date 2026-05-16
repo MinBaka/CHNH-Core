@@ -1,0 +1,51 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "chnh_core:medium_iron_medium_gunpowder_cartridge"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "components": {
+        "minecraft:custom_data": {
+          "AmmoId": "tacz:58x42"
+        }
+      },
+      "id": "tacz:ammo"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "chnh_core:58x42_transition"
+        },
+        {
+          "item": "chnh_core:58x42_head"
+        }
+      ],
+      "results": [
+        {
+          "id": "chnh_core:58x42_transition"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "chnh_core:58x42_transition"
+        }
+      ],
+      "results": [
+        {
+          "id": "chnh_core:58x42_transition"
+        }
+      ]
+    }
+  ],
+  "transitional_item": {
+    "id": "chnh_core:58x42_transition"
+  }
+}

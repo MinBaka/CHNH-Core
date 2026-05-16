@@ -1,0 +1,14 @@
+{
+  "type": "create:cutting",
+  "ingredients": [
+    {
+      "item": "create:brass_ingot"
+    }
+  ],
+  "results": [
+    {
+      "count": 7,
+      "id": "chnh_core:small_brass_casing"
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "chnh_core:shotgun_shell_base"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "components": {
+        "minecraft:custom_data": {
+          "AmmoId": "tacz:12g"
+        }
+      },
+      "id": "tacz:ammo"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "chnh_core:shotgun_shell_transition"
+        },
+        {
+          "item": "chnh_core:shotgun_shell"
+        }
+      ],
+      "results": [
+        {
+          "id": "chnh_core:shotgun_shell_transition"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "chnh_core:shotgun_shell_transition"
+        },
+        {
+          "item": "chnh_core:medium_ammunition_gunpowder"
+        }
+      ],
+      "results": [
+        {
+          "id": "chnh_core:shotgun_shell_transition"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "chnh_core:shotgun_shell_transition"
+        },
+        {
+          "item": "chnh_core:shotgun_bearing"
+        }
+      ],
+      "results": [
+        {
+          "id": "chnh_core:shotgun_shell_transition"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "chnh_core:shotgun_shell_transition"
+        },
+        {
+          "item": "chnh_core:shotgun_bearing"
+        }
+      ],
+      "results": [
+        {
+          "id": "chnh_core:shotgun_shell_transition"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "chnh_core:shotgun_shell_transition"
+        }
+      ],
+      "results": [
+        {
+          "id": "chnh_core:shotgun_shell_transition"
+        }
+      ]
+    }
+  ],
+  "transitional_item": {
+    "id": "chnh_core:shotgun_shell_transition"
+  }
+}

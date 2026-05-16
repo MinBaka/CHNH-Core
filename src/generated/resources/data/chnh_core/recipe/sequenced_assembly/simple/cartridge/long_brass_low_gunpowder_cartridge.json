@@ -1,0 +1,33 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "chnh_core:long_brass_casing"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "id": "chnh_core:long_brass_low_gunpowder_cartridge"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "chnh_core:long_brass_low_gunpowder_cartridge_transition"
+        },
+        {
+          "item": "minecraft:gunpowder"
+        }
+      ],
+      "results": [
+        {
+          "id": "chnh_core:long_brass_low_gunpowder_cartridge_transition"
+        }
+      ]
+    }
+  ],
+  "transitional_item": {
+    "id": "chnh_core:long_brass_low_gunpowder_cartridge_transition"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "create:cutting",
+  "ingredients": [
+    {
+      "item": "create:copper_sheet"
+    }
+  ],
+  "processingTime": 100,
+  "results": [
+    {
+      "count": 5,
+      "id": "chnh_core:45acp_head"
+    }
+  ]
+}

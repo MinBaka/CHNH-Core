@@ -140,6 +140,7 @@
   "item.chnh_core.cartridge_primer": "底火激发片",
 
   "item.chnh_core.9mm_head": "9mm弹头",
+  "item.chnh_core.22wmr_head": ".22 WMR弹头",
   "item.chnh_core.45acp_head": ".45 ACP弹头",
   "item.chnh_core.50ae_head": ".50 AE弹头",
   "item.chnh_core.357mag_head": ".357马格南弹头",
@@ -158,6 +159,7 @@
   "item.chnh_core.57x28_head": "5.7x28mm弹头",
 
   "item.chnh_core.9mm_transition": "9mm弹头(未完成)",
+  "item.chnh_core.22wmr_transition": ".22 WMR弹头(未完成)",
   "item.chnh_core.45acp_transition": ".45 ACP弹头(未完成)",
   "item.chnh_core.50ae_transition": ".50 AE弹头(未完成)",
   "item.chnh_core.357mag_transition": ".357马格南弹头(未完成)",

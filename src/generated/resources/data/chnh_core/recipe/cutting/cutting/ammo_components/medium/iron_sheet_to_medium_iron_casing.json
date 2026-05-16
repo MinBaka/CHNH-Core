@@ -1,0 +1,14 @@
+{
+  "type": "create:cutting",
+  "ingredients": [
+    {
+      "item": "create:iron_sheet"
+    }
+  ],
+  "results": [
+    {
+      "count": 5,
+      "id": "chnh_core:medium_iron_casing"
+    }
+  ]
+}

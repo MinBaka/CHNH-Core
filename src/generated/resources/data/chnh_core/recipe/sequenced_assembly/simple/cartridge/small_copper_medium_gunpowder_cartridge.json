@@ -1,0 +1,33 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "chnh_core:small_copper_low_gunpowder_cartridge"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "id": "chnh_core:small_copper_medium_gunpowder_cartridge"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "chnh_core:small_copper_medium_gunpowder_cartridge_transition"
+        },
+        {
+          "item": "minecraft:gunpowder"
+        }
+      ],
+      "results": [
+        {
+          "id": "chnh_core:small_copper_medium_gunpowder_cartridge_transition"
+        }
+      ]
+    }
+  ],
+  "transitional_item": {
+    "id": "chnh_core:small_copper_medium_gunpowder_cartridge_transition"
+  }
+}

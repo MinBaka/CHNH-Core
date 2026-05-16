@@ -1,0 +1,67 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "chnh_core:40mm_casing"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "components": {
+        "minecraft:custom_data": {
+          "AmmoId": "tacz:40mm"
+        }
+      },
+      "id": "tacz:ammo"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "chnh_core:40mm_casing"
+        },
+        {
+          "item": "chnh_core:high_power_ammunition_gunpowder"
+        }
+      ],
+      "results": [
+        {
+          "id": "chnh_core:40mm_casing"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "chnh_core:40mm_casing"
+        },
+        {
+          "item": "chnh_core:40mm_slug"
+        }
+      ],
+      "results": [
+        {
+          "id": "chnh_core:40mm_casing"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "chnh_core:40mm_casing"
+        }
+      ],
+      "results": [
+        {
+          "id": "chnh_core:40mm_casing"
+        }
+      ]
+    }
+  ],
+  "transitional_item": {
+    "id": "chnh_core:40mm_casing"
+  }
+}
