@@ -648,11 +648,11 @@ the "copyright" line and a pointer to where the full notice is found.
 ---
 THIRD-PARTY COMPONENT NOTICE
 
-This project (CHNH-Core) incorporates code derived from a third-party project 
-which is licensed under the MIT License.
+This project (CHNH-Core) incorporates code and assets from the "Precise Manufacturing" mod (https://github.com/CTRL-Neo-Studios/PreciseManufacturing), which is licensed under the MIT License.
 
-MIT License
-Copyright (c) 2026 sighs
+The MIT License (MIT)
+
+Copyright (c) 2024 CTRL-Neo-Studios
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
