@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "chnh_core:item/simple/ammo/head/22wmr_head"
+    "layer0": "chnh_core:item/simple/ammo/head/9mm_head"
   }
 }
