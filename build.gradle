@@ -83,6 +83,7 @@ dependencies {
         exclude group: "dev.engine-room.flywheel"
     }
     implementation "com.tterrag.registrate:Registrate:MC1.21-1.3.0+67"
+    compileOnly fileTree(dir: 'libs', include: ['*.jar'])
 }
 
 // 替换 neoforge.mods.toml 中的占位符

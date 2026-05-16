@@ -1,0 +1,45 @@
+package com.minbaka.chnhcore.precisemanufacturing.mixin;
+
+import de.teamlapen.vampirism.util.Helper;
+import dev.ryanhcode.sable.api.sublevel.SubLevelContainer;
+import dev.ryanhcode.sable.companion.math.BoundingBox3dc;
+import dev.ryanhcode.sable.sublevel.SubLevel;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.LevelAccessor;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.List;
+
+@Mixin(value = Helper.class, remap = false)
+public class MixinVampirismHelper {
+
+    @Inject(method = "gettingSundamge", at = @At("RETURN"), cancellable = true)
+    private static void chnhcore_gettingSundamge(LivingEntity entity, LevelAccessor world, ProfilerFiller profiler, CallbackInfoReturnable<Boolean> cir) {
+        if (cir.getReturnValueZ() && world instanceof Level) {
+            Level level = (Level) world;
+            SubLevelContainer container = SubLevelContainer.getContainer(level);
+            if (container != null) {
+                BlockPos pos = entity.blockPosition();
+                double x = pos.getX() + 0.5;
+                double z = pos.getZ() + 0.5;
+                double y = pos.getY();
+                List<? extends SubLevel> subLevels = container.getAllSubLevels();
+                if (subLevels != null) {
+                    for (SubLevel subLevel : subLevels) {
+                        BoundingBox3dc bb = subLevel.boundingBox();
+                        if (bb != null && bb.minX() <= x && bb.maxX() >= x && bb.minZ() <= z && bb.maxZ() >= z && bb.maxY() >= y) {
+                            cir.setReturnValue(false);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

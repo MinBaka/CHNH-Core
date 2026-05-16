@@ -427,6 +427,7 @@ public class CHNHSparkOverlay {
     }
 
     private static void spawnDriftSpark(double x, double y) {
+        if (SPARKS.size() > 150) return;
         double angle = randomAngle();
         double visualScale = effectScale * EFFECT_RENDER_SCALE;
         double speedAdjust = visualScale / 1.5;
