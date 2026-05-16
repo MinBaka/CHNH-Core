@@ -154,6 +154,10 @@ public class PrmaItems {
         public static final SimpleAmmo FIVE_FIVE_SIX_FOUR_FIVE = SimpleAmmo.create(MEDIUM_BRASS_MEDIUM_GUNPOWDER_CARTRIDGE, AmmoHeadType.Medium, AmmoMaterialType.Copper, "556x45", 3);
         public static final SimpleAmmo SEVEN_SIX_TWO_TWO_FIVE = SimpleAmmo.create(MEDIUM_IRON_LOW_GUNPOWDER_CARTRIDGE, AmmoHeadType.Medium, AmmoMaterialType.Iron, "762x25", 4);
         public static final SimpleAmmo SEVEN_SIX_TWO_THREE_NINE = SimpleAmmo.create(MEDIUM_IRON_MEDIUM_GUNPOWDER_CARTRIDGE, AmmoHeadType.Medium, AmmoMaterialType.Iron, "762x39", 3);
+        public static final SimpleAmmo FIVE_FOUR_FIVE_THIRTY_NINE = SimpleAmmo.create(MEDIUM_IRON_MEDIUM_GUNPOWDER_CARTRIDGE, AmmoHeadType.Medium, AmmoMaterialType.Iron, "545x39", 3);
+        public static final SimpleAmmo SEVEN_NINE_FIVE_FIFTY_SEVEN = SimpleAmmo.create(LONG_BRASS_HIGH_GUNPOWDER_CARTRIDGE, AmmoHeadType.Long, AmmoMaterialType.Iron, "795x57", 2);
+        public static final SimpleAmmo FIVE_HUNDRED_MAGNUM = SimpleAmmo.create(SMALL_BRASS_HIGH_GUNPOWDER_CARTRIDGE, AmmoHeadType.Small, AmmoMaterialType.Copper, "500mag", 2);
+        public static final SimpleAmmo FOUR_FIVE_SEVENTY = SimpleAmmo.create(SMALL_BRASS_HIGH_GUNPOWDER_CARTRIDGE, AmmoHeadType.Small, AmmoMaterialType.Iron, "45_70", 2);
         public static final SimpleAmmo SEVEN_SIX_TWO_FIVE_FOUR = SimpleAmmo.create(MEDIUM_IRON_HIGH_GUNPOWDER_CARTRIDGE, AmmoHeadType.Medium, AmmoMaterialType.Iron, "762x54", 3);
 
         public static SimpleCartridge getCartridge(AmmoCasingType casingType, AmmoMaterialType materialType, SimpleAmmoGunpowderAmountStandard simpleAmmoGunpowderAmountStandard){

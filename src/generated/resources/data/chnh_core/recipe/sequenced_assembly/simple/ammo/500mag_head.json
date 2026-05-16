@@ -1,0 +1,51 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "chnh_core:small_brass_high_gunpowder_cartridge"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "components": {
+        "minecraft:custom_data": {
+          "AmmoId": "tacz:500mag"
+        }
+      },
+      "id": "tacz:ammo"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "chnh_core:500mag_transition"
+        },
+        {
+          "item": "chnh_core:500mag_head"
+        }
+      ],
+      "results": [
+        {
+          "id": "chnh_core:500mag_transition"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "chnh_core:500mag_transition"
+        }
+      ],
+      "results": [
+        {
+          "id": "chnh_core:500mag_transition"
+        }
+      ]
+    }
+  ],
+  "transitional_item": {
+    "id": "chnh_core:500mag_transition"
+  }
+}

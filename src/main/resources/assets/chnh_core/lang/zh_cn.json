@@ -4,13 +4,11 @@
   "itemGroup.chnh_core_casts_tab": "精制工艺铸模",
   "itemGroup.chnh_core_components_tab": "精制工艺组件",
   "itemGroup.chnh_core_blueprints_tab": "精制工艺蓝图",
-
   "item.chnh_core.ammo_placeholder": "弹药占位符",
   "item.chnh_core.modern_kinetic_gun_placeholder": "现代动能枪占位符",
   "item.chnh_core.blank_blueprint": "空白蓝图",
   "item.chnh_core.blank_cast": "空白铸模",
   "item.chnh_core.ingot_cast": "锭模具",
-
   "item.chnh_core.raw_copper_powder": "粗制铜粉",
   "item.chnh_core.raw_zinc_powder": "粗制锌粉",
   "item.chnh_core.raw_sulfur_powder": "粗制硫磺粉",
@@ -18,18 +16,15 @@
   "item.chnh_core.basalt_powder": "玄武岩粉",
   "item.chnh_core.flint_powder": "燧石粉",
   "item.chnh_core.rock_powder": "岩石粉",
-
   "item.chnh_core.small_ammunition_gunpowder": "小型弹药火药",
   "item.chnh_core.medium_ammunition_gunpowder": "中型弹药火药",
   "item.chnh_core.long_ammunition_gunpowder": "长型弹药火药",
-
   "item.chnh_core.molten_copper_bucket": "熔融铜桶",
   "item.chnh_core.molten_metal_alloy_bucket": "熔融合金桶",
   "item.chnh_core.molten_iron_bucket": "熔融铁桶",
   "item.chnh_core.molten_aluminum_bucket": "熔融铝桶",
   "item.chnh_core.molten_strong_aluminum_alloy_bucket": "熔融强化铝桶",
   "item.chnh_core.molten_zinc_bucket": "熔融锌桶",
-
   "item.chnh_core.crushed_basalt": "粉碎的玄武岩",
   "item.chnh_core.unformed_basalt": "未成形的湿玄武岩混合物",
   "item.chnh_core.flat_head_screw": "平头螺丝",
@@ -41,48 +36,39 @@
   "item.chnh_core.thick_small_rod": "粗小杆",
   "item.chnh_core.thin_small_rod": "细小杆",
   "item.chnh_core.iron_pellet_cluster": "一簇铁质弹丸",
-
   "item.chnh_core.shotgun_shell": "霰弹壳",
   "item.chnh_core.shotgun_shell_base": "霰弹壳底座",
   "item.chnh_core.shotgun_shell_transition": "未完成的霰弹壳",
   "item.chnh_core.shotgun_bearing": "霰弹弹丸",
-
   "item.chnh_core.40mm_slug": "40mm榴弹头",
   "item.chnh_core.40mm_casing": "40mm榴弹壳",
-
   "item.chnh_core.small_brass_casing": "小口径黄铜弹壳",
   "item.chnh_core.small_brass_transition": "未完成的小口径黄铜弹壳",
   "item.chnh_core.small_copper_casing": "小口径铜质弹壳",
   "item.chnh_core.small_copper_transition": "未完成的小口径铜质弹壳",
   "item.chnh_core.small_iron_casing": "小口径铁质弹壳",
   "item.chnh_core.small_iron_transition": "未完成的小口径铁质弹壳",
-
   "item.chnh_core.medium_brass_casing": "中口径黄铜弹壳",
   "item.chnh_core.medium_brass_transition": "未完成的中口径黄铜弹壳",
   "item.chnh_core.medium_iron_casing": "中口径铁质弹壳",
   "item.chnh_core.medium_iron_transition": "未完成的中口径铁质弹壳",
   "item.chnh_core.medium_copper_casing": "中口径铜质弹壳",
   "item.chnh_core.medium_copper_transition": "未完成的中口径铜质弹壳",
-
   "item.chnh_core.long_brass_casing": "大口径黄铜弹壳",
   "item.chnh_core.long_brass_transition": "未完成的大口径黄铜弹壳",
   "item.chnh_core.long_iron_casing": "大口径铁质弹壳",
   "item.chnh_core.long_iron_transition": "未完成的大口径铁质弹壳",
   "item.chnh_core.long_copper_casing": "大口径铜质弹壳",
   "item.chnh_core.long_copper_transition": "未完成的大口径铜质弹壳",
-
   "item.chnh_core.small_brass_head": "小口径黄铜弹头",
   "item.chnh_core.small_copper_head": "小口径铜质弹头",
   "item.chnh_core.small_iron_head": "小口径铁质弹头",
-
   "item.chnh_core.medium_brass_head": "中口径黄铜弹头",
   "item.chnh_core.medium_copper_head": "中口径铜质弹头",
   "item.chnh_core.medium_iron_head": "中口径铁质弹头",
-
   "item.chnh_core.long_brass_head": "大口径黄铜弹头",
   "item.chnh_core.long_copper_head": "大口径铜质弹头",
   "item.chnh_core.long_iron_head": "大口径铁质弹头",
-
   "item.chnh_core.small_brass_low_gunpowder_cartridge": "低火药小型黄铜弹壳",
   "item.chnh_core.small_brass_medium_gunpowder_cartridge": "中火药小型黄铜弹壳",
   "item.chnh_core.small_brass_high_gunpowder_cartridge": "高火药小型黄铜弹壳",
@@ -92,7 +78,6 @@
   "item.chnh_core.small_copper_low_gunpowder_cartridge": "低火药小型铜质弹壳",
   "item.chnh_core.small_copper_medium_gunpowder_cartridge": "中火药小型铜质弹壳",
   "item.chnh_core.small_copper_high_gunpowder_cartridge": "高火药小型铜质弹壳",
-
   "item.chnh_core.medium_brass_low_gunpowder_cartridge": "低火药中型黄铜弹壳",
   "item.chnh_core.medium_brass_medium_gunpowder_cartridge": "中火药中型黄铜弹壳",
   "item.chnh_core.medium_brass_high_gunpowder_cartridge": "高火药中型黄铜弹壳",
@@ -102,14 +87,12 @@
   "item.chnh_core.medium_copper_low_gunpowder_cartridge": "低火药中型铜质弹壳",
   "item.chnh_core.medium_copper_medium_gunpowder_cartridge": "中火药中型铜质弹壳",
   "item.chnh_core.medium_copper_high_gunpowder_cartridge": "高火药中型铜质弹壳",
-
   "item.chnh_core.long_brass_low_gunpowder_cartridge": "低火药长型黄铜弹壳",
   "item.chnh_core.long_brass_medium_gunpowder_cartridge": "中火药长型黄铜弹壳",
   "item.chnh_core.long_brass_high_gunpowder_cartridge": "高火药长型黄铜弹壳",
   "item.chnh_core.long_iron_low_gunpowder_cartridge": "低火药长型铁质弹壳",
   "item.chnh_core.long_iron_medium_gunpowder_cartridge": "中火药长型铁质弹壳",
   "item.chnh_core.long_iron_high_gunpowder_cartridge": "高火药长型铁质弹壳",
-
   "item.chnh_core.small_brass_low_gunpowder_cartridge_transition": "低火药小型黄铜弹壳(未完成)",
   "item.chnh_core.small_brass_medium_gunpowder_cartridge_transition": "中火药小型黄铜弹壳(未完成)",
   "item.chnh_core.small_brass_high_gunpowder_cartridge_transition": "高火药小型黄铜弹壳(未完成)",
@@ -119,7 +102,6 @@
   "item.chnh_core.small_copper_low_gunpowder_cartridge_transition": "低火药小型铜质弹壳(未完成)",
   "item.chnh_core.small_copper_medium_gunpowder_cartridge_transition": "中火药小型铜质弹壳(未完成)",
   "item.chnh_core.small_copper_high_gunpowder_cartridge_transition": "高火药小型铜质弹壳(未完成)",
-
   "item.chnh_core.medium_brass_low_gunpowder_cartridge_transition": "低火药中型黄铜弹壳(未完成)",
   "item.chnh_core.medium_brass_medium_gunpowder_cartridge_transition": "中火药中型黄铜弹壳(未完成)",
   "item.chnh_core.medium_brass_high_gunpowder_cartridge_transition": "高火药中型黄铜弹壳(未完成)",
@@ -129,16 +111,13 @@
   "item.chnh_core.medium_copper_low_gunpowder_cartridge_transition": "低火药中型铜质弹壳(未完成)",
   "item.chnh_core.medium_copper_medium_gunpowder_cartridge_transition": "中火药中型铜质弹壳(未完成)",
   "item.chnh_core.medium_copper_high_gunpowder_cartridge_transition": "高火药中型铜质弹壳(未完成)",
-
   "item.chnh_core.long_brass_low_gunpowder_cartridge_transition": "低火药长型黄铜弹壳(未完成)",
   "item.chnh_core.long_brass_medium_gunpowder_cartridge_transition": "中火药长型黄铜弹壳(未完成)",
   "item.chnh_core.long_brass_high_gunpowder_cartridge_transition": "高火药长型黄铜弹壳(未完成)",
   "item.chnh_core.long_iron_low_gunpowder_cartridge_transition": "低火药长型铁质弹壳(未完成)",
   "item.chnh_core.long_iron_medium_gunpowder_cartridge_transition": "中火药长型铁质弹壳(未完成)",
   "item.chnh_core.long_iron_high_gunpowder_cartridge_transition": "高火药长型铁质弹壳(未完成)",
-
   "item.chnh_core.cartridge_primer": "底火激发片",
-
   "item.chnh_core.9mm_head": "9mm弹头",
   "item.chnh_core.22wmr_head": ".22 WMR弹头",
   "item.chnh_core.45acp_head": ".45 ACP弹头",
@@ -157,7 +136,6 @@
   "item.chnh_core.762x39_head": "7.62x39mm弹头",
   "item.chnh_core.762x54_head": "7.62x54mm弹头",
   "item.chnh_core.57x28_head": "5.7x28mm弹头",
-
   "item.chnh_core.9mm_transition": "9mm弹头(未完成)",
   "item.chnh_core.22wmr_transition": ".22 WMR弹头(未完成)",
   "item.chnh_core.45acp_transition": ".45 ACP弹头(未完成)",
@@ -176,22 +154,26 @@
   "item.chnh_core.762x39_transition": "7.62x39mm弹头(未完成)",
   "item.chnh_core.762x54_transition": "7.62x54mm弹头(未完成)",
   "item.chnh_core.57x28_transition": "5.7x28mm弹头(未完成)",
-
   "item.chnh_core.strong_aluminum_alloy_ingot": "强化铝合金锭",
   "item.chnh_core.aluminum_ingot": "铝锭",
   "item.chnh_core.metal_alloy_ingot": "铁合金锭",
   "item.chnh_core.lead_ingot": "铅锭",
   "item.chnh_core.crushed_raw_aluminum": "粉碎生铝",
   "item.chnh_core.crushed_raw_lead": "粉碎生铅",
-
   "fluid.chnh_core.molten_copper": "熔融铜",
   "fluid.chnh_core.molten_metal_alloy": "熔融合金",
   "fluid.chnh_core.molten_iron": "熔融铁",
   "fluid.chnh_core.molten_strong_aluminum_alloy": "熔融强化铝",
   "fluid.chnh_core.molten_aluminum": "熔融铝",
   "fluid.chnh_core.molten_zinc": "熔融锌",
-
   "block.chnh_core.casting_basin": "铸模床",
-
-  "recipe_category.chnh_core.decomponentalizing": "分解组件"
+  "recipe_category.chnh_core.decomponentalizing": "分解组件",
+  "item.chnh_core.545x39_head": "5.45x39mm弹头",
+  "item.chnh_core.795x57_head": "7.95x57mm弹头",
+  "item.chnh_core.500mag_head": ".500马格南弹头",
+  "item.chnh_core.45_70_head": ".45-70弹头",
+  "item.chnh_core.545x39_transition": "5.45x39mm弹头(未完成)",
+  "item.chnh_core.795x57_transition": "7.95x57mm弹头(未完成)",
+  "item.chnh_core.500mag_transition": ".500马格南弹头(未完成)",
+  "item.chnh_core.45_70_transition": ".45-70弹头(未完成)"
 }

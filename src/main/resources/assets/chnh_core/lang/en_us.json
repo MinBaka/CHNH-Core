@@ -4,15 +4,11 @@
   "itemGroup.chnh_core_casts_tab": "Precise Manufacturing Casts",
   "itemGroup.chnh_core_components_tab": "Precise Manufacturing Components",
   "itemGroup.chnh_core_blueprints_tab": "Precise Manufacturing Blueprints",
-
-
   "item.chnh_core.ammo_placeholder": "Ammo Placeholder",
   "item.chnh_core.modern_kinetic_gun_placeholder": "Modern Kinetic Gun Placeholder",
   "item.chnh_core.blank_blueprint": "Blank Blueprint",
   "item.chnh_core.blank_cast": "Blank Cast",
   "item.chnh_core.ingot_cast": "Ingot Cast",
-
-
   "item.chnh_core.raw_copper_powder": "Raw Crushed Copper Powder",
   "item.chnh_core.raw_zinc_powder": "Raw Crushed Zinc Powder",
   "item.chnh_core.raw_sulfur_powder": "Raw Sulfur Powder",
@@ -20,18 +16,15 @@
   "item.chnh_core.basalt_powder": "Basalt Powder",
   "item.chnh_core.flint_powder": "Flint Powder",
   "item.chnh_core.rock_powder": "Rock Powder",
-
   "item.chnh_core.small_ammunition_gunpowder": "Small Ammunition Gunpowder",
   "item.chnh_core.medium_ammunition_gunpowder": "Medium Ammunition Gunpowder",
   "item.chnh_core.long_ammunition_gunpowder": "Long Ammunition Gunpowder",
-
   "item.chnh_core.molten_copper_bucket": "Bucket of Molten Copper",
   "item.chnh_core.molten_metal_alloy_bucket": "Bucket of Molten Metal Alloy",
   "item.chnh_core.molten_iron_bucket": "Bucket of Molten Iron",
   "item.chnh_core.molten_aluminum_bucket": "Bucket of Molten Aluminum",
   "item.chnh_core.molten_strong_aluminum_alloy_bucket": "Bucket of Molten Strong Aluminum Alloy",
   "item.chnh_core.molten_zinc_bucket": "Bucket of Molten Zinc",
-
   "item.chnh_core.crushed_basalt": "Crushed Basalt",
   "item.chnh_core.unformed_basalt": "Unformed Wet Basalt Mixture",
   "item.chnh_core.flat_head_screw": "Head Screw",
@@ -43,48 +36,39 @@
   "item.chnh_core.thick_small_rod": "Thick Small Rod",
   "item.chnh_core.thin_small_rod": "Thin Small Rod",
   "item.chnh_core.iron_pellet_cluster": "A Cluster of Iron Pellets",
-
   "item.chnh_core.shotgun_shell": "Shotgun Shell",
   "item.chnh_core.shotgun_shell_base": "Shotgun Shell Base",
   "item.chnh_core.shotgun_shell_transition": "Unfinished Shotgun Shell",
   "item.chnh_core.shotgun_bearing": "Shotgun Bearing",
-
   "item.chnh_core.40mm_slug": "40mm Slug",
   "item.chnh_core.40mm_casing": "40mm Casing",
-
   "item.chnh_core.small_brass_casing": "Small Brass Casing",
   "item.chnh_core.small_brass_transition": "Unfinished Small Brass Casing",
   "item.chnh_core.small_copper_casing": "Small Copper Casing",
   "item.chnh_core.small_copper_transition": "Unfinished Small Copper Casing",
   "item.chnh_core.small_iron_casing": "Small Iron Casing",
   "item.chnh_core.small_iron_transition": "Unfinished Small Iron Casing",
-
   "item.chnh_core.medium_brass_casing": "Medium Brass Casing",
   "item.chnh_core.medium_brass_transition": "Unfinished Medium Brass Casing",
   "item.chnh_core.medium_iron_casing": "Medium Iron Casing",
   "item.chnh_core.medium_iron_transition": "Unfinished Medium Iron Casing",
   "item.chnh_core.medium_copper_casing": "Medium Copper Casing",
   "item.chnh_core.medium_copper_transition": "Unfinished Medium Copper Casing",
-
   "item.chnh_core.long_brass_casing": "Long Brass Casing",
   "item.chnh_core.long_brass_transition": "Unfinished Long Brass Casing",
   "item.chnh_core.long_iron_casing": "Long Iron Casing",
   "item.chnh_core.long_iron_transition": "Unfinished Long Iron Casing",
   "item.chnh_core.long_copper_casing": "Long Copper Casing",
   "item.chnh_core.long_copper_transition": "Unfinished Long Copper Casing",
-
   "item.chnh_core.small_brass_head": "Small Brass Head",
   "item.chnh_core.small_copper_head": "Small Copper Head",
   "item.chnh_core.small_iron_head": "Small Iron Head",
-
   "item.chnh_core.medium_brass_head": "Medium Brass Head",
   "item.chnh_core.medium_copper_head": "Medium Copper Head",
   "item.chnh_core.medium_iron_head": "Medium Iron Head",
-
   "item.chnh_core.long_brass_head": "Long Brass Head",
   "item.chnh_core.long_copper_head": "Long Copper Head",
   "item.chnh_core.long_iron_head": "Long Iron Head",
-
   "item.chnh_core.small_brass_low_gunpowder_cartridge": "Low Gunpowder Small Brass Cartridge",
   "item.chnh_core.small_brass_medium_gunpowder_cartridge": "Medium Gunpowder Small Brass Cartridge",
   "item.chnh_core.small_brass_high_gunpowder_cartridge": "High Gunpowder Small Brass Cartridge",
@@ -109,7 +93,6 @@
   "item.chnh_core.long_iron_low_gunpowder_cartridge": "Low Gunpowder Long Iron Cartridge",
   "item.chnh_core.long_iron_medium_gunpowder_cartridge": "Medium Gunpowder Long Iron Cartridge",
   "item.chnh_core.long_iron_high_gunpowder_cartridge": "High Gunpowder Long Iron Cartridge",
-
   "item.chnh_core.small_brass_low_gunpowder_cartridge_transition": "Low Gunpowder Small Brass Cartridge Unfinished",
   "item.chnh_core.small_brass_medium_gunpowder_cartridge_transition": "Medium Gunpowder Small Brass Cartridge Unfinished",
   "item.chnh_core.small_brass_high_gunpowder_cartridge_transition": "High Gunpowder Small Brass Cartridge Unfinished",
@@ -134,9 +117,7 @@
   "item.chnh_core.long_iron_low_gunpowder_cartridge_transition": "Low Gunpowder Long Iron Cartridge Unfinished",
   "item.chnh_core.long_iron_medium_gunpowder_cartridge_transition": "Medium Gunpowder Long Iron Cartridge Unfinished",
   "item.chnh_core.long_iron_high_gunpowder_cartridge_transition": "High Gunpowder Long Iron Cartridge Unfinished",
-
   "item.chnh_core.cartridge_primer": "Cartridge Primer",
-
   "item.chnh_core.9mm_head": "9mm Cartridge Head",
   "item.chnh_core.22wmr_head": ".22 WMR Cartridge Head",
   "item.chnh_core.45acp_head": ".45 ACP Cartridge Head",
@@ -155,7 +136,6 @@
   "item.chnh_core.762x39_head": "7.62x39mm Cartridge Head",
   "item.chnh_core.762x54_head": "7.62x54mm Cartridge Head",
   "item.chnh_core.57x28_head": "5.7x28mm Cartridge Head",
-
   "item.chnh_core.9mm_transition": "9mm Cartridge Head Unfinished",
   "item.chnh_core.22wmr_transition": "Incomplete .22 WMR Cartridge Head",
   "item.chnh_core.45acp_transition": ".45 ACP Cartridge Head Unfinished",
@@ -174,23 +154,26 @@
   "item.chnh_core.762x39_transition": "7.62x39mm Cartridge Head Unfinished",
   "item.chnh_core.762x54_transition": "7.62x54mm Cartridge Head Unfinished",
   "item.chnh_core.57x28_transition": "5.7x28mm Cartridge Head Unfinished",
-
   "item.chnh_core.strong_aluminum_alloy_ingot": "Strong Aluminum Alloy Ingot",
   "item.chnh_core.aluminum_ingot": "Aluminum Ingot",
   "item.chnh_core.metal_alloy_ingot": "Metal Alloy Ingot",
   "item.chnh_core.lead_ingot": "Lead Ingot",
-
   "item.chnh_core.crushed_raw_aluminum": "Crushed Aluminum",
   "item.chnh_core.crushed_raw_lead": "Crushed Lead",
-
   "fluid.chnh_core.molten_copper": "Molten Copper",
   "fluid.chnh_core.molten_metal_alloy": "Molten Metal Alloy",
   "fluid.chnh_core.molten_iron": "Molten Iron",
   "fluid.chnh_core.molten_strong_aluminum_alloy": "Molten Strong Aluminum Alloy",
   "fluid.chnh_core.molten_aluminum": "Molten Aluminum",
   "fluid.chnh_core.molten_zinc": "Molten Zinc",
-
   "block.chnh_core.casting_basin": "Casting Basin",
-
-  "recipe_category.chnh_core.decomponentalizing": "Decomponentalizing"
+  "recipe_category.chnh_core.decomponentalizing": "Decomponentalizing",
+  "item.chnh_core.545x39_head": "5.45x39mm Cartridge Head",
+  "item.chnh_core.795x57_head": "7.95x57mm Cartridge Head",
+  "item.chnh_core.500mag_head": ".500 Magnum Cartridge Head",
+  "item.chnh_core.45_70_head": ".45-70 Cartridge Head",
+  "item.chnh_core.545x39_transition": "5.45x39mm Cartridge Head Unfinished",
+  "item.chnh_core.795x57_transition": "7.95x57mm Cartridge Head Unfinished",
+  "item.chnh_core.500mag_transition": ".500 Magnum Cartridge Head Unfinished",
+  "item.chnh_core.45_70_transition": ".45-70 Cartridge Head Unfinished"
 }
