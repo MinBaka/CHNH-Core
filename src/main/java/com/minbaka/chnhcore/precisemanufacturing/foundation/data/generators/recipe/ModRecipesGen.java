@@ -22,6 +22,7 @@ import com.simibubi.create.content.kinetics.press.PressingRecipe;
 import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
+import com.simibubi.create.content.processing.recipe.StandardProcessingRecipe;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeBuilder;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import net.minecraft.data.recipes.*;
@@ -33,7 +34,7 @@ import java.util.function.Consumer;
 
 public class ModRecipesGen {
     private static List<RecipeBuilder> recipeBuilders = new ArrayList<>();
-    private static List<ProcessingRecipeBuilder<?, ?, ?>> createCompatRecipeBuilders = new ArrayList<>();
+    private static List<StandardProcessingRecipe.Builder<?>> createCompatRecipeBuilders = new ArrayList<>();
     private static List<SequencedAssemblyRecipeBuilder> sequencedAssemblyRecipeBuilders = new ArrayList<>();
     private static List<SimpleCartridge> simpleCartridges = new ArrayList<>();
     private static List<SimpleAmmo> simpleAmmos = new ArrayList<>();
@@ -72,7 +73,7 @@ public class ModRecipesGen {
 //                .unlockedBy(RegistrateRecipeProvider.getHasName(Items.PAPER), RegistrateRecipeProvider.has(Items.PAPER)));
     }
 
-    public static void addCreateRecipe(ProcessingRecipeBuilder<?, ?, ?> generatedRecipe){
+    public static void addCreateRecipe(StandardProcessingRecipe.Builder<?> generatedRecipe){
         createCompatRecipeBuilders.add(generatedRecipe);
     }
 

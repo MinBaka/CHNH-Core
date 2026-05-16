@@ -7,8 +7,10 @@
   "results": [
     {
       "item": "tacz:ammo",
-      "nbt": {
-        "AmmoId": "tacz:357mag"
+      "components": {
+        "minecraft:custom_data": {
+          "AmmoId": "tacz:357mag"
+        }
       }
     }
   ],

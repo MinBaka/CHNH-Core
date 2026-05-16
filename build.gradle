@@ -67,6 +67,13 @@ repositories {
     }
 }
 
+configurations.all {
+    resolutionStrategy.force 'org.ow2.asm:asm:9.8'
+    resolutionStrategy.force 'org.ow2.asm:asm-tree:9.8'
+    resolutionStrategy.force 'org.ow2.asm:asm-commons:9.8'
+    resolutionStrategy.force 'org.ow2.asm:asm-util:9.8'
+    resolutionStrategy.force 'org.ow2.asm:asm-analysis:9.8'
+}
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
     implementation "com.simibubi.create:create-1.21.1:6.0.11-288"

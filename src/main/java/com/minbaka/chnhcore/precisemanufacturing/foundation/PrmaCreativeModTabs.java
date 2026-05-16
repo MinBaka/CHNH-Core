@@ -23,19 +23,19 @@ public class PrmaCreativeModTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Reference.MOD_ID);
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MOD_TAB = CREATIVE_MODE_TABS.register("prma_tab",
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MOD_TAB = CREATIVE_MODE_TABS.register("chnh_core_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(PrmaItems.SULFUR_POWDER.get()))
-                    .title(Component.translatable("itemGroup.prma_tab"))
+                    .title(Component.translatable("itemGroup.chnh_core_tab"))
                     .build());
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MOD_MATERIALS_TAB = CREATIVE_MODE_TABS.register("prma_materials_tab",
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MOD_MATERIALS_TAB = CREATIVE_MODE_TABS.register("chnh_core_materials_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(PrmaItems.Ammo.SMALL_COPPER_MEDIUM_GUNPOWDER_CARTRIDGE.getItem().get()))
-                    .title(Component.translatable("itemGroup.prma_materials_tab"))
+                    .title(Component.translatable("itemGroup.chnh_core_materials_tab"))
                     .build());
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MOD_HIDDEN_TAB = CREATIVE_MODE_TABS.register("prma_hidden_tab",
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MOD_HIDDEN_TAB = CREATIVE_MODE_TABS.register("chnh_core_hidden_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(Items.AIR))
-            .title(Component.translatable("itemGroup.prma_hidden_tab"))
+            .title(Component.translatable("itemGroup.chnh_core_hidden_tab"))
             .build());
 
     public static void register(IEventBus eventBus) {

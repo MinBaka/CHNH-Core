@@ -15,6 +15,7 @@ import com.simibubi.create.content.kinetics.deployer.DeployerApplicationRecipe;
 import com.simibubi.create.content.kinetics.press.PressingRecipe;
 import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
+import com.simibubi.create.content.processing.recipe.StandardProcessingRecipe;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeBuilder;
 import com.tacz.guns.api.item.builder.AmmoItemBuilder;
 import com.tacz.guns.init.ModItems;
@@ -60,5 +61,28 @@ public class SimpleAmmo {
     }
 
     public void registerRecipes() {
+        ItemStack v = AmmoItemBuilder.create()
+                .setId(ResourceLocation.parse("tacz:" + ammoId))
+                .setCount(1)
+                .build();
+
+        ModRecipesGen.addSequencedAssemblyRecipe(new SequencedAssemblyRecipeBuilder(ResourceHelper.find(String.format("simple/ammo/%s_head", ammoId)))
+                .require(cartridge.getItem().get())
+                .transitionTo(transitionItem.get())
+                .loops(1)
+                .addStep(DeployerApplicationRecipe::new, p -> p.require(bulletHead.get()))
+                .addStep(PressingRecipe::new, p -> p)
+                .addOutput(v, 1)
+        );
+
+        ModRecipesGen.addCreateRecipe(new StandardProcessingRecipe.Builder<>(CuttingRecipe::new, ResourceHelper.find(String.format("simple/ammo/%s_head", ammoId)))
+                .require(switch(headMaterial){
+                    case Iron -> AllItems.IRON_SHEET.get();
+                    case Brass -> AllItems.BRASS_SHEET.get();
+                    case Copper -> AllItems.COPPER_SHEET.get();
+                    case Plastic -> Items.PAPER;
+                })
+                .duration(100)
+                .output(bulletHead.get(), resultAmount));
     }
 }
