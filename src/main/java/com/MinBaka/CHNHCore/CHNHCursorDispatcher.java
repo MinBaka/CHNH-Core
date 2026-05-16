@@ -19,7 +19,10 @@ public final class CHNHCursorDispatcher {
 
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Pre event) {
-        syncCursor();
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.screen == null) {
+            CHNHCursorController.hide();
+        }
         CHNHCursorController.tick();
     }
 
@@ -69,14 +72,6 @@ public final class CHNHCursorDispatcher {
         if (hovered instanceof AbstractButton button)
             return button.isActive() ? CHNHCursorController.CursorStyle.LINK : CHNHCursorController.CursorStyle.BLOCK;
         if (hovered instanceof AbstractWidget widget && !widget.isActive())
-            return CHNHCursorController.CursorStyle.BLOCK;
-
-        GuiEventListener focused = screen.getFocused();
-        if (focused instanceof EditBox)
-            return CHNHCursorController.CursorStyle.TEXT;
-        if (focused instanceof AbstractButton button)
-            return button.isActive() ? CHNHCursorController.CursorStyle.ALTERNATE_SELECT : CHNHCursorController.CursorStyle.BLOCK;
-        if (focused instanceof AbstractWidget widget && !widget.isActive())
             return CHNHCursorController.CursorStyle.BLOCK;
 
         return CHNHCursorController.CursorStyle.NORMAL;
