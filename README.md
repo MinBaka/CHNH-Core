@@ -1,25 +1,19 @@
+# CHNH-Core
 
-Installation information
-=======
+CHNH-Core is a foundational library/core mod for the Cogwheel Heavyworks: New Horizons (CHNH) modpack on NeoForge 1.21.1. It provides essential integrations, fixes, and utilities that glue various features together.
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+## Features
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+- **Custom Cursor System:** Enhances the game's UI with custom cursor textures for various states and interactions.
+- **Precise Manufacturing Integration:** Incorporates code from [Precise Manufacturing](https://github.com/CTRL-Neo-Studios/PreciseManufacturing) (MIT License) to manage specific manufacturing, recipes, and item handling pipelines.
+- **Smooth Swapping Integration:** Incorporates the mechanics from [Smooth Swapping](https://github.com/shwg/Smooth-Swapping) (LGPL v3), adapted from Fabric to NeoForge 1.21.1 with custom optimizations, fixing animation rendering bugs for Sophisticated Backpacks and custom container screens.
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+## License
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
+This project itself is licensed under the **GNU Affero General Public License v3.0** (AGPL-3.0). See the [LICENSE](LICENSE) file for more details.
 
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+This project also incorporates components from other open-source projects:
+- **Precise Manufacturing:** Licensed under the MIT License.
+- **Smooth Swapping:** Licensed under the GNU Lesser General Public License v3.0 (LGPL-3.0).
+
+Details of third-party licenses are included at the bottom of the `LICENSE` file.
