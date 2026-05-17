@@ -1,0 +1,56 @@
+package com.minbaka.chnhcore.smoothswapping.swaps;
+
+import com.minbaka.chnhcore.smoothswapping.Vec2;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.inventory.Slot;
+
+public class ItemToCursorInventorySwap extends InventorySwap {
+    private boolean startedRender;
+    private int copiedStackHash;
+    private int targetStackHash;
+    private boolean arrived;
+
+    public ItemToCursorInventorySwap(Slot fromSlot, Vec2 relativeCursorPos, ItemStack fromStack, boolean checked, int amount) {
+        // slot has fixed size: 16
+        // defined in net.minecraft.client.gui.screens.inventory.AbstractContainerScreen#drawSlot(
+        //      com.mojang.blaze3d.vertex.PoseStack matrices,
+        //      net.minecraft.world.inventory.Slot slot
+        // )
+        super(new Vec2(fromSlot.x + 8, fromSlot.y + 8), relativeCursorPos, fromStack, checked, amount);
+        startedRender = false;
+        arrived = false;
+        targetStackHash = -1;
+    }
+
+    public boolean isStartedRender() {
+        return startedRender;
+    }
+
+    public void setStartedRender(boolean startedRender) {
+        this.startedRender = startedRender;
+    }
+
+    public int getCopiedStackHash() {
+        return copiedStackHash;
+    }
+
+    public void setCopiedStackHash(int copiedStackHash) {
+        this.copiedStackHash = copiedStackHash;
+    }
+
+    public int getTargetStackHash() {
+        return targetStackHash;
+    }
+
+    public void setTargetStackHash(int targetStackHash) {
+        this.targetStackHash = targetStackHash;
+    }
+
+    public boolean isArrived() {
+        return arrived;
+    }
+
+    public void setArrived(boolean arrived) {
+        this.arrived = arrived;
+    }
+}

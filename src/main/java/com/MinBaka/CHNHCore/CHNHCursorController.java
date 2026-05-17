@@ -100,21 +100,18 @@ public class CHNHCursorController {
             Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(loc);
             if (res.isPresent()) {
                 try (InputStream is = res.get().open()) {
-                    NativeImage image = NativeImage.read(is);
+                    NativeImage originalImage = NativeImage.read(is);
+                    int origW = originalImage.getWidth();
+                    int origH = originalImage.getHeight();
+
                     GLFWImage glfwImage = GLFWImage.malloc();
-                    glfwImage.width(image.getWidth());
-                    glfwImage.height(image.getHeight());
-                    
-                    // We need to pass the pixels. NativeImage pixels are usually accessible via memory
-                    // But NativeImage has a private pointer.
-                    // We can manually copy to a ByteBuffer
-                    ByteBuffer buffer = MemoryUtil.memAlloc(image.getWidth() * image.getHeight() * 4);
-                    for (int y = 0; y < image.getHeight(); y++) {
-                        for (int x = 0; x < image.getWidth(); x++) {
-                            int rgba = image.getPixelRGBA(x, y);
-                            // NativeImage is ABGR or RGBA depending on endianness.
-                            // getPixelRGBA returns ABGR format. 
-                            // GLFW wants RGBA (byte 0=R, 1=G, 2=B, 3=A)
+                    glfwImage.width(origW);
+                    glfwImage.height(origH);
+
+                    ByteBuffer buffer = MemoryUtil.memAlloc(origW * origH * 4);
+                    for (int y = 0; y < origH; y++) {
+                        for (int x = 0; x < origW; x++) {
+                            int rgba = originalImage.getPixelRGBA(x, y);
                             byte a = (byte) ((rgba >> 24) & 0xFF);
                             byte b = (byte) ((rgba >> 16) & 0xFF);
                             byte g = (byte) ((rgba >> 8) & 0xFF);
@@ -124,13 +121,11 @@ public class CHNHCursorController {
                     }
                     buffer.flip();
                     glfwImage.pixels(buffer);
-                    
-                    long handle = GLFW.glfwCreateCursor(glfwImage, hotX, hotY);
+
+                    long handle = GLFW.glfwCreateCursor(glfwImage, (int)(hotX * 1.25f), (int)(hotY * 1.25f));
                     glfwImage.free();
-                    // NOTE: we leak the buffer here slightly if we don't track it, but cursors are loaded once.
-                    // Actually we can free the buffer after createCursor because GLFW copies it!
                     MemoryUtil.memFree(buffer);
-                    image.close();
+                    originalImage.close();
                     return handle;
                 }
             }
