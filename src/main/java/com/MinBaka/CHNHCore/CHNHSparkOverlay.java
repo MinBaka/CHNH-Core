@@ -470,7 +470,7 @@ public class CHNHSparkOverlay {
         double ang = randomAngle();
         final RingSegment[] segs = {
                 new RingSegment(-0.25 * Math.PI, 1.15 * Math.PI),
-                new RingSegment(0.0, 1.15 * Math.PI),
+                new RingSegment(0.0, 1.152 * Math.PI),
                 new RingSegment(0.25 * Math.PI, 1.15 * Math.PI)
         };
         double life, maxLife = 30.0, rs = 0.08;
