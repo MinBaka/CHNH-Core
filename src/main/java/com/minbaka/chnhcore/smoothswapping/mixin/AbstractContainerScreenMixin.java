@@ -39,7 +39,7 @@ public abstract class AbstractContainerScreenMixin {
     protected AbstractContainerMenu menu;
 
     @Shadow
-    protected int x, y;
+    protected int leftPos, topPos;
 
     @Unique
     private Screen smooth_Swapping$currentScreen = null;
@@ -133,7 +133,7 @@ public abstract class AbstractContainerScreenMixin {
                     SmoothSwapping.clickSwapStack = null;
                 }
                 if (moreStacks.isEmpty()) {
-                    SwapUtil.assignI2CSwaps(lessStacks, new Vec2(mouseX - x, mouseY - y), menu);
+                    SwapUtil.assignI2CSwaps(lessStacks, new Vec2(mouseX - leftPos, mouseY - topPos), menu);
                 } else {
                     SwapUtil.assignI2ISwaps(moreStacks, lessStacks, menu);
                 }
@@ -157,7 +157,7 @@ public abstract class AbstractContainerScreenMixin {
                                         || currentStack.isEmpty()
                         ) {
                             SwapStacks lessStack = new SwapStacks(changedStack.getKey(), oldStack, currentStack, getCount(oldStack) - getCount(currentStack));
-                            SwapUtil.assignI2CSwaps(List.of(lessStack), new Vec2(mouseX - x, mouseY - y), menu);
+                            SwapUtil.assignI2CSwaps(List.of(lessStack), new Vec2(mouseX - leftPos, mouseY - topPos), menu);
                         }
                     });
                 }
