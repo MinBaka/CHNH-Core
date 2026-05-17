@@ -58,10 +58,10 @@ public class SwapUtil {
     public static void addI2IInventorySwap(int index, Slot fromSlot, Slot toSlot, boolean checked, int amount) {
         List<InventorySwap> swaps = SmoothSwapping.swaps.getOrDefault(index, new ArrayList<>());
 
-        if (ItemStack.isSameItem(toSlot.getStack(), Items.AIR.getDefaultStack()))
+        if (ItemStack.isSameItem(toSlot.getItem(), ItemStack.EMPTY))
             return;
 
-        ItemStack swapStack = toSlot.getStack().copy();
+        ItemStack swapStack = toSlot.getItem().copy();
         ((ItemStackAccessor) (Object) swapStack).smooth_Swapping$setIsSwapStack(true);
 
         swaps.add(new ItemToItemInventorySwap(fromSlot, toSlot, checked, amount, swapStack));
@@ -75,7 +75,7 @@ public class SwapUtil {
             Slot lessSlot = handler.getSlot(lessStack.getSlotID());
             List<InventorySwap> swaps = SmoothSwapping.swaps.getOrDefault(ASSUME_CURSOR_STACK_SLOT_INDEX, new ArrayList<>());
 
-            if (ItemStack.isSameItem(cursorStack, Items.AIR.getDefaultStack()))
+            if (ItemStack.isSameItem(cursorStack, ItemStack.EMPTY))
                 return;
 
             ItemStack swapStack = lessStack.getOldStack().copy();
@@ -121,7 +121,7 @@ public class SwapUtil {
     }
 
     public static int getCount(ItemStack stack) {
-        return ItemStack.isSameItem(stack, Items.AIR.getDefaultStack()) ? 0 : stack.getCount();
+        return ItemStack.isSameItem(stack, ItemStack.EMPTY) ? 0 : stack.getCount();
     }
 
     public static void copyStacks(NonNullList<ItemStack> src, NonNullList<ItemStack> dst) {

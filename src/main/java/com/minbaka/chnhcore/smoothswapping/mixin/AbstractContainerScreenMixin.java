@@ -36,7 +36,7 @@ public abstract class AbstractContainerScreenMixin {
 
     @Shadow
     @Final
-    protected AbstractContainerMenu handler;
+    protected AbstractContainerMenu menu;
 
     @Shadow
     protected int x, y;
@@ -65,15 +65,15 @@ public abstract class AbstractContainerScreenMixin {
 
         Minecraft client = Minecraft.getInstance();
 
-        if (client.player == null || client.player.currentAbstractContainerMenu == null) {
+        if (client.player == null || client.player.containerMenu == null) {
             return;
         }
 
-        SmoothSwapping.currentStacks = client.player.currentAbstractContainerMenu.getItems();
+        SmoothSwapping.currentStacks = client.player.containerMenu.getItems();
 
         try {
             SmoothSwapping.currentCursorStackLock.lock();
-            ItemStack cursorStack = client.player.currentAbstractContainerMenu.getCarried();
+            ItemStack cursorStack = client.player.containerMenu.getCarried();
             ItemStack prevStack = SmoothSwapping.currentCursorStack.get();
             if (
                     prevStack == null
@@ -116,26 +116,26 @@ public abstract class AbstractContainerScreenMixin {
 
                     //whether the stack got more items or less and if slot is output slot
                     if (getCount(newStack) > getCount(oldStack)
-                            && handler.getSlot(slotID).mayPickup(Minecraft.getInstance().player)) {
+                            && menu.getSlot(slotID).mayPickup(Minecraft.getInstance().player)) {
                         moreStacks.add(new SwapStacks(slotID, oldStack, newStack, getCount(oldStack) - getCount(newStack)));
                         totalAmount += getCount(newStack) - getCount(oldStack);
                     } else if (getCount(newStack) < getCount(oldStack)
-                            && handler.getSlot(slotID).mayPickup(Minecraft.getInstance().player)
+                            && menu.getSlot(slotID).mayPickup(Minecraft.getInstance().player)
                             && SmoothSwapping.clickSwapStack == null) {
                         lessStacks.add(new SwapStacks(slotID, oldStack, newStack, getCount(oldStack) - getCount(newStack)));
                     }
                 }
                 if (SmoothSwapping.clickSwapStack != null) {
                     lessStacks.clear();
-                    ItemStack newStack = handler.getSlot(SmoothSwapping.clickSwapStack).getStack();
+                    ItemStack newStack = menu.getSlot(SmoothSwapping.clickSwapStack).getItem();
                     ItemStack oldStack = SmoothSwapping.oldStacks.get(SmoothSwapping.clickSwapStack);
                     lessStacks.add(new SwapStacks(SmoothSwapping.clickSwapStack, oldStack, newStack, totalAmount));
                     SmoothSwapping.clickSwapStack = null;
                 }
                 if (moreStacks.isEmpty()) {
-                    SwapUtil.assignI2CSwaps(lessStacks, new Vec2(mouseX - x, mouseY - y), handler);
+                    SwapUtil.assignI2CSwaps(lessStacks, new Vec2(mouseX - x, mouseY - y), menu);
                 } else {
-                    SwapUtil.assignI2ISwaps(moreStacks, lessStacks, handler);
+                    SwapUtil.assignI2ISwaps(moreStacks, lessStacks, menu);
                 }
             } else if (changedStacksSize == 1) {
                 ItemStack currentCursorStack = SmoothSwapping.currentCursorStack.get();
@@ -154,10 +154,10 @@ public abstract class AbstractContainerScreenMixin {
                         //LOGGER.info("old slot stack: " + oldStack + ", current slot stack: " + currentStack);
                         if (
                                 (oldStack.getItem() == currentStack.getItem() && oldStack.getCount() - currentStack.getCount() == cursorStackCountDiff)
-                                        || currentStack.getItem() == Items.AIR
+                                        || currentStack.isEmpty()
                         ) {
                             SwapStacks lessStack = new SwapStacks(changedStack.getKey(), oldStack, currentStack, getCount(oldStack) - getCount(currentStack));
-                            SwapUtil.assignI2CSwaps(List.of(lessStack), new Vec2(mouseX - x, mouseY - y), handler);
+                            SwapUtil.assignI2CSwaps(List.of(lessStack), new Vec2(mouseX - x, mouseY - y), menu);
                         }
                     });
                 }

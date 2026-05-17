@@ -32,7 +32,7 @@ public class SmoothSwapping {
     public static void init() {
         ConfigManager.initializeConfig();
         swaps = new HashMap<>();
-        oldStacks = NonNullList.of();
-        currentStacks = NonNullList.of();
+        oldStacks = NonNullList.create();
+        currentStacks = NonNullList.create();
     }
 }

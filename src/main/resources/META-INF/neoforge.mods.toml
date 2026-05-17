@@ -47,3 +47,6 @@ side = "BOTH"
 
 [[mixins]]
 config = "precisemanufacturing.mixins.json"
+
+[[mixins]]
+config = "smoothswapping.mixins.json"

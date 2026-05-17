@@ -3,10 +3,8 @@ package com.minbaka.chnhcore.smoothswapping.mixin;
 import com.minbaka.chnhcore.smoothswapping.ItemStackAccessor;
 import com.minbaka.chnhcore.smoothswapping.SmoothSwapping;
 import com.minbaka.chnhcore.smoothswapping.SwapUtil;
-import com.minbaka.chnhcore.smoothswapping.config.CatmullRomWidget;
 import com.minbaka.chnhcore.smoothswapping.config.Config;
 import com.minbaka.chnhcore.smoothswapping.config.ConfigManager;
-import com.minbaka.chnhcore.smoothswapping.config.ConfigScreen;
 import com.minbaka.chnhcore.smoothswapping.swaps.InventorySwap;
 import com.minbaka.chnhcore.smoothswapping.swaps.ItemToCursorInventorySwap;
 import net.minecraft.client.Minecraft;
@@ -51,14 +49,14 @@ public abstract class GuiGraphicsMixin {
     public abstract void drawItem(ItemStack item, int x, int y);
     @Shadow public abstract void drawItemInSlot(Font textRenderer, ItemStack stack, int x, int y, @Nullable String countOverride);
 
-    @Inject(method = "drawItem(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;IIII)V", at = @At("HEAD"), cancellable = true)
-    public void onItemDraw(LivingEntity entity, World world, ItemStack stack, int x, int y, int seed, int z, CallbackInfo cbi) {
+    @Inject(method = "drawItem(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;IIII)V", at = @At("HEAD"), cancellable = true)
+    public void onItemDraw(LivingEntity entity, Level world, ItemStack stack, int x, int y, int seed, int z, CallbackInfo cbi) {
         if (smooth_Swapping$isRendering) return;
 
         try {
             smooth_Swapping$isRendering = true;
 
-            if (smooth_Swapping$isHotbar() && !(client.screen instanceof ConfigScreen)) return;
+            if (smooth_Swapping$isHotbar()) return;
             if (((ItemStackAccessor) (Object) stack).smooth_Swapping$isSwapStack()) return;
 
             smooth_Swapping$doSwap(stack, x, y, cbi);
@@ -116,7 +114,7 @@ public abstract class GuiGraphicsMixin {
                 if (swapListIndexOf(swapList, (swap) -> ((ItemToCursorInventorySwap) swap).getCopiedStackHash() == stack.hashCode()) == -1) {
                     LocalPlayer player = Minecraft.getInstance().player;
                     AbstractContainerMenu handler = null;
-                    if (player != null) handler = player.currentAbstractContainerMenu;
+                    if (player != null) handler = player.containerMenu;
                     //LOGGER.info("cursor stack hash: " + handler.getCarried().hashCode());
 
                     for (InventorySwap inventorySwap : swapList) { // assign initial renders
@@ -167,14 +165,12 @@ public abstract class GuiGraphicsMixin {
 
         double progress = 1D - SwapUtil.map(Math.hypot(swapX, swapY), 0, swap.getDistance(), 1D, 0D);
 
-        List<CatmullRomWidget.CatmullRomSpline> splines = config.getSplines();
-
-        double ease = CatmullRomWidget.getProgress(progress, splines);
+        double ease = Math.pow(progress, 2.0); // simple ease-in
 
         double renderX = -swap.getStartX() - Math.cos(angle) * swap.getDistance() * ease;
         double renderY = swap.getStartY() + Math.sin(angle) * swap.getDistance() * ease;
 
-        matrices.push();
+        matrices.pushPose();
         matrices.translate(renderX, -renderY, 350);
 
         drawItem(copiedStack, x, y);
@@ -183,12 +179,12 @@ public abstract class GuiGraphicsMixin {
 
         swap.setX(swapX + lastFrameDuration * speed * Math.cos(angle));
         swap.setY(swapY + lastFrameDuration * speed * Math.sin(angle));
-        matrices.pop();
+        matrices.popPose();
     }
 
-    @Inject(method = "drawItemInSlot(Lnet/minecraft/client/font/Font;Lnet/minecraft/item/ItemStack;IILjava/lang/String;)V", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "drawItemInSlot(Lnet/minecraft/client/gui/Font;Lnet/minecraft/item/ItemStack;IILjava/lang/String;)V", at = @At("HEAD"), cancellable = true)
     public void onDrawItemInSlot(Font textRenderer, ItemStack stack, int x, int y, String countOverride, CallbackInfo cbi) {
-        if (smooth_Swapping$isHotbar() && !(client.screen instanceof ConfigScreen)) return;
+        if (smooth_Swapping$isHotbar()) return;
 
         if (((ItemStackAccessor) (Object) stack).smooth_Swapping$isSwapStack()) return;
 
@@ -220,7 +216,7 @@ public abstract class GuiGraphicsMixin {
                     renderToSlot = false;
                 }
 
-                if (swap.getAmount() > 1 || stack.isItemBarVisible()) {
+                if (swap.getAmount() > 1 || stack.isBarVisible()) {
                     String amount = String.valueOf(swap.getAmount());
                     double swapX = swap.getX();
                     double swapY = swap.getY();
@@ -228,22 +224,20 @@ public abstract class GuiGraphicsMixin {
 
                     double progress = 1D - SwapUtil.map(Math.hypot(swapX, swapY), 0, swap.getDistance(), 1D, 0D);
 
-                    List<CatmullRomWidget.CatmullRomSpline> splines = config.getSplines();
-
-                    double ease = CatmullRomWidget.getProgress(progress, splines);
+                    double ease = Math.pow(progress, 2.0);
 
                     double renderX = -swap.getStartX() - (Math.cos(angle) * swap.getDistance() * ease);
                     double renderY = swap.getStartY() + (Math.sin(angle) * swap.getDistance() * ease);
 
-                    matrices.push();
+                    matrices.pushPose();
                     matrices.translate(renderX, -renderY, 350);
 
-                    if (stack.isItemBarVisible())
+                    if (stack.isBarVisible())
                         drawItemInSlot(client.font, stack.copy(), x, y, null);
                     else
                         drawItemInSlot(client.font, stack.copy(), x, y, amount);
 
-                    matrices.pop();
+                    matrices.popPose();
                 }
 
             }
@@ -258,8 +252,6 @@ public abstract class GuiGraphicsMixin {
 
     @Unique
     private boolean smooth_Swapping$isHotbar() {
-        Vector3f zOffset = new Vector3f();
-        matrices.peek().getPositionMatrix().getColumn(3, zOffset);
-        return zOffset.round().x <= 0;
+        return client.screen == null;
     }
 }

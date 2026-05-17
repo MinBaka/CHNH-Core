@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.inventory.SlotActionType;
+import net.minecraft.world.inventory.ClickType;
 import net.minecraft.core.NonNullList;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -28,7 +28,7 @@ public class ClickSlotPacketMixin {
 
     @Shadow
     @Final
-    private SlotActionType actionType;
+    private ClickType actionType;
 
     @Shadow
     @Final
@@ -39,22 +39,22 @@ public class ClickSlotPacketMixin {
     @Final
     private int slot;
 
-    @Inject(method = "<init>(IIIILnet/minecraft/screen/slot/SlotActionType;Lnet/minecraft/item/ItemStack;Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;)V", at = @At("TAIL"))
+    @Inject(method = "<init>(IIIILnet/minecraft/screen/slot/ClickType;Lnet/minecraft/item/ItemStack;Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;)V", at = @At("TAIL"))
     public void onInit(CallbackInfo cbi) {
         if (!ConfigManager.getConfig().getToggleMod())
             return;
         //remove swap when stack gets moved before it arrived
         SmoothSwapping.swaps.remove(slot);
 
-        if ((actionType == SlotActionType.QUICK_MOVE || actionType == SlotActionType.SWAP) && modifiedStacks.size() > 1 && Minecraft.getInstance().screen instanceof AbstractContainerScreen) {
+        if ((actionType == ClickType.QUICK_MOVE || actionType == ClickType.SWAP) && modifiedStacks.size() > 1 && Minecraft.getInstance().screen instanceof AbstractContainerScreen) {
             assert Minecraft.getInstance().player != null;
             LocalPlayer player = Minecraft.getInstance().player;
-            AbstractContainerMenu screenHandler = player.currentAbstractContainerMenu;
+            AbstractContainerMenu screenHandler = player.containerMenu;
 
             if (slot >= 0 && slot < screenHandler.slots.size()) {
                 Slot mouseHoverSlot = screenHandler.getSlot(slot);
 
-                if (actionType == SlotActionType.QUICK_MOVE && !mouseHoverSlot.mayPickup(player)) {
+                if (actionType == ClickType.QUICK_MOVE && !mouseHoverSlot.mayPickup(player)) {
 
                     ItemStack newMouseStack = modifiedStacks.get(slot);
                     ItemStack oldMouseStack = smooth_Swapping$getSafeOldStack(slot);
@@ -63,7 +63,7 @@ public class ClickSlotPacketMixin {
                     if (newMouseStack != null && oldMouseStack != null && newMouseStack.getCount() - oldMouseStack.getCount() <= 0) {
                         SmoothSwapping.clickSwapStack = slot;
                     }
-                } else if (actionType == SlotActionType.SWAP) {
+                } else if (actionType == ClickType.SWAP) {
                     SmoothSwapping.clickSwap = true;
 
                     for (Map.Entry<Integer, ItemStack> stackEntry : modifiedStacks.int2ObjectEntrySet()) {
@@ -76,14 +76,14 @@ public class ClickSlotPacketMixin {
 
                             if (!mouseHoverSlot.mayPickup(player) && destinationSlot.mayPickup(player)) {
                                 if (destinationOldStack.isEmpty()) {
-                                    SwapUtil.addI2IInventorySwap(destinationSlotID, mouseHoverSlot, destinationSlot, false, destinationSlot.getStack().getCount());
+                                    SwapUtil.addI2IInventorySwap(destinationSlotID, mouseHoverSlot, destinationSlot, false, destinationSlot.getItem().getCount());
                                 }
                             } else if (mouseHoverSlot.mayPickup(player) && destinationSlot.mayPickup(player)) {
-                                if (destinationSlot.hasStack()) {
-                                    SwapUtil.addI2IInventorySwap(destinationSlotID, mouseHoverSlot, destinationSlot, false, destinationSlot.getStack().getCount());
+                                if (destinationSlot.hasItem()) {
+                                    SwapUtil.addI2IInventorySwap(destinationSlotID, mouseHoverSlot, destinationSlot, false, destinationSlot.getItem().getCount());
                                 }
-                                if (mouseHoverSlot.hasStack()) {
-                                    SwapUtil.addI2IInventorySwap(slot, destinationSlot, mouseHoverSlot, false, mouseHoverSlot.getStack().getCount());
+                                if (mouseHoverSlot.hasItem()) {
+                                    SwapUtil.addI2IInventorySwap(slot, destinationSlot, mouseHoverSlot, false, mouseHoverSlot.getItem().getCount());
                                 }
                             }
                         }
@@ -97,7 +97,7 @@ public class ClickSlotPacketMixin {
     private ItemStack smooth_Swapping$getSafeOldStack(int slot) {
         NonNullList<ItemStack> oldStacks = SmoothSwapping.oldStacks;
         if (oldStacks == null) {
-            oldStacks = NonNullList.of();
+            oldStacks = NonNullList.create();
             SmoothSwapping.oldStacks = oldStacks;
         }
         if (slot < 0 || slot >= oldStacks.size()) {
