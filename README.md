@@ -6,7 +6,7 @@ CHNH-Core is a foundational library/core mod for the Cogwheel Heavyworks: New Ho
 
 - **Custom Cursor System:** Enhances the game's UI with custom cursor textures for various states and interactions.
 - **Precise Manufacturing Integration:** Incorporates code from [Precise Manufacturing](https://github.com/CTRL-Neo-Studios/PreciseManufacturing) (MIT License) to manage specific manufacturing, recipes, and item handling pipelines.
-- **Smooth Swapping Integration:** Incorporates the mechanics from [Smooth Swapping](https://github.com/shwg/Smooth-Swapping) (LGPL v3), adapted from Fabric to NeoForge 1.21.1 with custom optimizations, fixing animation rendering bugs for Sophisticated Backpacks and custom container screens.
+- **Smooth Swapping Integration:** Incorporates the mechanics from [Smooth Swapping](https://github.com/Schauweg/Smooth-Swapping) (LGPL v3), adapted from Fabric to NeoForge 1.21.1 with custom optimizations, fixing animation rendering bugs for Sophisticated Backpacks and custom container screens.
 
 ## License
 
@@ -28,7 +28,7 @@ CHNH-Core 是专为《齿轮重工：新视界》(Cogwheel Heavyworks: New Horiz
 
 - **自定义鼠标指针系统：** 为游戏内的不同交互状态和操作提供自定义的鼠标指针贴图，增强 UI 体验。
 - **Precise Manufacturing 集成：** 引入了 [Precise Manufacturing](https://github.com/CTRL-Neo-Studios/PreciseManufacturing) (MIT 协议) 的相关代码，用于管理特定的制造配方和物品处理管线。
-- **平滑转移 (Smooth Swapping) 集成：** 移植了 [Smooth Swapping](https://github.com/shwg/Smooth-Swapping) (LGPL v3 协议) 的物品平滑转移机制。我们将该功能从 Fabric 移植到了 NeoForge 1.21.1 平台，并进行了针对性优化，彻底修复了“精妙背包”(Sophisticated Backpacks)及各类自定义容器界面的动画渲染问题。
+- **平滑转移 (Smooth Swapping) 集成：** 移植了 [Smooth Swapping](https://github.com/Schauweg/Smooth-Swapping) (LGPL v3 协议) 的物品平滑转移机制。我们将该功能从 Fabric 移植到了 NeoForge 1.21.1 平台，并进行了针对性优化，彻底修复了“精妙背包”(Sophisticated Backpacks)及各类自定义容器界面的动画渲染问题。
 
 ## 开源协议声明
 
