@@ -22,7 +22,7 @@ Details of third-party licenses are included at the bottom of the `LICENSE` file
 
 # 中文说明 / Chinese Declaration
 
-CHNH-Core 是专为《齿轮重工：新地平线》(Cogwheel Heavyworks: New Horizons, 简称 CHNH) 整合包开发的基础核心模组，基于 NeoForge 1.21.1。它提供了基本的集成、修复以及多种实用工具，用于将整合包内的各项功能紧密结合在一起。
+CHNH-Core 是专为《齿轮重工：新视界》(Cogwheel Heavyworks: New Horizons, 简称 CHNH) 整合包开发的基础核心模组，基于 NeoForge 1.21.1。它提供了基本的集成、修复以及多种实用工具，用于将整合包内的各项功能紧密结合在一起。
 
 ## 核心功能
 
