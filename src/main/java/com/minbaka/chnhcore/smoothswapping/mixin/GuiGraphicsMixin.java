@@ -37,19 +37,15 @@ public abstract class GuiGraphicsMixin {
 
     @Final
     @Shadow
-    private PoseStack matrices;
-    @Final
-    @Shadow
-    private Minecraft client;
-
+    private PoseStack pose;
     @Unique
     private static boolean smooth_Swapping$isRendering = false;
 
     @Shadow
-    public abstract void drawItem(ItemStack item, int x, int y);
-    @Shadow public abstract void drawItemInSlot(Font textRenderer, ItemStack stack, int x, int y, @Nullable String countOverride);
+    public abstract void renderItem(ItemStack item, int x, int y);
+    @Shadow public abstract void renderItemDecorations(Font textRenderer, ItemStack stack, int x, int y, @Nullable String countOverride);
 
-    @Inject(method = "drawItem(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;IIII)V", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "renderItem(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;IIII)V", at = @At("HEAD"), cancellable = true)
     public void onItemDraw(LivingEntity entity, Level world, ItemStack stack, int x, int y, int seed, int z, CallbackInfo cbi) {
         if (smooth_Swapping$isRendering) return;
 
@@ -98,7 +94,7 @@ public abstract class GuiGraphicsMixin {
 
             //whether the destination slot should be rendered
             if (renderDestinationSlot) {
-                drawItem(stack.copy(), x, y);
+                renderItem(stack.copy(), x, y);
             }
             if (swapList.isEmpty())
                 SmoothSwapping.swaps.remove(index);
@@ -156,7 +152,7 @@ public abstract class GuiGraphicsMixin {
 
     @Unique
     private void smooth_Swapping$renderSwap(InventorySwap swap, int x, int y, ItemStack copiedStack) {
-        float lastFrameDuration = client.getTimer().getGameTimeDeltaTicks();
+        float lastFrameDuration = Minecraft.getInstance().getTimer().getGameTimeDeltaTicks();
         Config config = ConfigManager.getConfig();
 
         double swapX = swap.getX();
@@ -170,20 +166,20 @@ public abstract class GuiGraphicsMixin {
         double renderX = -swap.getStartX() - Math.cos(angle) * swap.getDistance() * ease;
         double renderY = swap.getStartY() + Math.sin(angle) * swap.getDistance() * ease;
 
-        matrices.pushPose();
-        matrices.translate(renderX, -renderY, 350);
+        pose.pushPose();
+        pose.translate(renderX, -renderY, 350);
 
-        drawItem(copiedStack, x, y);
+        renderItem(copiedStack, x, y);
 
         double speed = swap.getDistance() / 10 * config.getAnimationSpeedFormatted();
 
         swap.setX(swapX + lastFrameDuration * speed * Math.cos(angle));
         swap.setY(swapY + lastFrameDuration * speed * Math.sin(angle));
-        matrices.popPose();
+        pose.popPose();
     }
 
-    @Inject(method = "drawItemInSlot(Lnet/minecraft/client/gui/Font;Lnet/minecraft/item/ItemStack;IILjava/lang/String;)V", at = @At("HEAD"), cancellable = true)
-    public void onDrawItemInSlot(Font textRenderer, ItemStack stack, int x, int y, String countOverride, CallbackInfo cbi) {
+    @Inject(method = "renderItemDecorations(Lnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;IILjava/lang/String;)V", at = @At("HEAD"), cancellable = true)
+    public void onRenderItemDecorations(Font textRenderer, ItemStack stack, int x, int y, String countOverride, CallbackInfo cbi) {
         if (smooth_Swapping$isHotbar()) return;
 
         if (((ItemStackAccessor) (Object) stack).smooth_Swapping$isSwapStack()) return;
@@ -229,21 +225,21 @@ public abstract class GuiGraphicsMixin {
                     double renderX = -swap.getStartX() - (Math.cos(angle) * swap.getDistance() * ease);
                     double renderY = swap.getStartY() + (Math.sin(angle) * swap.getDistance() * ease);
 
-                    matrices.pushPose();
-                    matrices.translate(renderX, -renderY, 350);
+                    pose.pushPose();
+                    pose.translate(renderX, -renderY, 350);
 
                     if (stack.isBarVisible())
-                        drawItemInSlot(client.font, stack.copy(), x, y, null);
+                        renderItemDecorations(Minecraft.getInstance().font, stack.copy(), x, y, null);
                     else
-                        drawItemInSlot(client.font, stack.copy(), x, y, amount);
+                        renderItemDecorations(Minecraft.getInstance().font, stack.copy(), x, y, amount);
 
-                    matrices.popPose();
+                    pose.popPose();
                 }
 
             }
 
             if (renderToSlot && stackCount > 1) {
-                drawItemInSlot(client.font, stack.copy(), x, y, String.valueOf(stackCount));
+                renderItemDecorations(Minecraft.getInstance().font, stack.copy(), x, y, String.valueOf(stackCount));
             }
             cbi.cancel();
         }
@@ -252,6 +248,6 @@ public abstract class GuiGraphicsMixin {
 
     @Unique
     private boolean smooth_Swapping$isHotbar() {
-        return client.screen == null;
+        return Minecraft.getInstance().screen == null;
     }
 }

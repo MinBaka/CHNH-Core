@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(SimpleContainer.class)
 public interface SimpleContainerAccessor {
 
-    @Accessor("heldStacks")
+    @Accessor("items")
     NonNullList<ItemStack> getStacks();
 
 }

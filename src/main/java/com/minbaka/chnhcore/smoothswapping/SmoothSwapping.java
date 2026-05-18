@@ -28,6 +28,7 @@ public class SmoothSwapping {
     public static ItemStack oldCursorStack;
     public static AtomicReference<ItemStack> currentCursorStack = new AtomicReference<>(null);
     public static final ReentrantLock currentCursorStackLock = new ReentrantLock();
+    public static int currentlyRenderingSlotIndex = -1;
 
     public static void init() {
         ConfigManager.initializeConfig();

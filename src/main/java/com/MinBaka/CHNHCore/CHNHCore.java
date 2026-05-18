@@ -1,6 +1,7 @@
 package com.minbaka.chnhcore;
 
 import com.minbaka.chnhcore.precisemanufacturing.PreciseManufacturing;
+import com.minbaka.chnhcore.smoothswapping.SmoothSwapping;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 
@@ -10,5 +11,6 @@ public class CHNHCore {
 
     public CHNHCore(IEventBus modEventBus) {
         new PreciseManufacturing(modEventBus);
+        SmoothSwapping.init();
     }
 }
