@@ -39,7 +39,7 @@ public abstract class GuiGraphicsMixin {
     @Shadow
     private PoseStack pose;
     @Unique
-    private static boolean smooth_Swapping$isRendering = false;
+    private boolean smooth_Swapping$isRendering = false;
 
     @Shadow
     public abstract void renderItem(ItemStack item, int x, int y);
@@ -180,14 +180,18 @@ public abstract class GuiGraphicsMixin {
 
     @Inject(method = "renderItemDecorations(Lnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;IILjava/lang/String;)V", at = @At("HEAD"), cancellable = true)
     public void onRenderItemDecorations(Font textRenderer, ItemStack stack, int x, int y, String countOverride, CallbackInfo cbi) {
+        if (smooth_Swapping$isRendering) return;
         if (smooth_Swapping$isHotbar()) return;
 
         if (((ItemStackAccessor) (Object) stack).smooth_Swapping$isSwapStack()) return;
 
         try {
+            smooth_Swapping$isRendering = true;
             smooth_Swapping$doOverlayRender(stack, x, y, cbi);
         } catch (Exception e) {
             SwapUtil.reset();
+        } finally {
+            smooth_Swapping$isRendering = false;
         }
     }
 

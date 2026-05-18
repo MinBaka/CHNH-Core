@@ -1,14 +1,22 @@
 package com.minbaka.chnhcore.smoothswapping.config;
 
 public class Config {
+    private boolean toggleMod = true;
+    private double animationSpeed = 1.0;
+
     public boolean getToggleMod() {
-        return true;
+        return toggleMod;
     }
 
     public double getAnimationSpeedFormatted() {
-        return 1.0;
+        return animationSpeed;
     }
 
-    // Default Catmull-Rom splines, mapped to simple values or we can just simplify CatmullRomWidget progress check
-    // Wait, the progress check is used in GuiGraphicsMixin
+    public void setToggleMod(boolean toggleMod) {
+        this.toggleMod = toggleMod;
+    }
+
+    public void setAnimationSpeed(double animationSpeed) {
+        this.animationSpeed = animationSpeed;
+    }
 }

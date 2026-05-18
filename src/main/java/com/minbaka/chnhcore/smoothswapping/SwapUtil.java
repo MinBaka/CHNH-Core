@@ -33,9 +33,12 @@ public class SwapUtil {
     }
 
     public static int getSlotIndex(ItemStack stack) {
+        if (SmoothSwapping.currentlyRenderingSlotIndex != -1) {
+            return SmoothSwapping.currentlyRenderingSlotIndex;
+        }
         for (int i = 0; i < currentStacks.size(); i++) {
             ItemStack s = currentStacks.get(i);
-            if (s.hashCode() == stack.hashCode())
+            if (s == stack)
                 return i;
         }
         return -1;

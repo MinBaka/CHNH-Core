@@ -44,8 +44,8 @@ public abstract class AbstractContainerScreenMixin {
     @Unique
     private Screen smooth_Swapping$currentScreen = null;
 
-    @Inject(method = "render", at = @At("HEAD"))
-    public void onRender(GuiGraphics context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+    @Inject(method = "renderBackground", at = @At("HEAD"))
+    public void onRenderBackground(GuiGraphics context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         try {
             smooth_Swapping$doRender(mouseX, mouseY);
         } catch (Exception e) {
@@ -199,5 +199,13 @@ public abstract class AbstractContainerScreenMixin {
         return true;
     }
 
+    @Inject(method = "renderSlot", at = @At("HEAD"))
+    public void onRenderSlotHead(GuiGraphics p_281607_, net.minecraft.world.inventory.Slot p_282613_, CallbackInfo ci) {
+        SmoothSwapping.currentlyRenderingSlotIndex = p_282613_.index;
+    }
 
+    @Inject(method = "renderSlot", at = @At("TAIL"))
+    public void onRenderSlotTail(GuiGraphics p_281607_, net.minecraft.world.inventory.Slot p_282613_, CallbackInfo ci) {
+        SmoothSwapping.currentlyRenderingSlotIndex = -1;
+    }
 }
