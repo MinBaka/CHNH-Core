@@ -116,11 +116,11 @@ public abstract class AbstractContainerScreenMixin {
 
                     //whether the stack got more items or less and if slot is output slot
                     if (getCount(newStack) > getCount(oldStack)
-                            && menu.getSlot(slotID).mayPickup(Minecraft.getInstance().player)) {
+                            && smooth_Swapping$mayPickup(menu.getSlot(slotID))) {
                         moreStacks.add(new SwapStacks(slotID, oldStack, newStack, getCount(oldStack) - getCount(newStack)));
                         totalAmount += getCount(newStack) - getCount(oldStack);
                     } else if (getCount(newStack) < getCount(oldStack)
-                            && menu.getSlot(slotID).mayPickup(Minecraft.getInstance().player)
+                            && smooth_Swapping$mayPickup(menu.getSlot(slotID))
                             && SmoothSwapping.clickSwapStack == null) {
                         lessStacks.add(new SwapStacks(slotID, oldStack, newStack, getCount(oldStack) - getCount(newStack)));
                     }
@@ -168,6 +168,13 @@ public abstract class AbstractContainerScreenMixin {
             SwapUtil.copyStacks(SmoothSwapping.currentStacks, SmoothSwapping.oldStacks);
             oldCursorStack = SmoothSwapping.currentCursorStack.get();
         }
+    }
+
+    @Unique
+    private boolean smooth_Swapping$mayPickup(net.minecraft.world.inventory.Slot slot) {
+        if (slot.mayPickup(Minecraft.getInstance().player)) return true;
+        String name = slot.getClass().getSimpleName();
+        return name.equals("RepoSlot") || name.equals("AppEngSlot");
     }
 
     @Unique

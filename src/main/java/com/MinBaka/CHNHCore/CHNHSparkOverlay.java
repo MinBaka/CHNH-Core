@@ -46,6 +46,9 @@ public class CHNHSparkOverlay {
     @SubscribeEvent
     public static void onMouseButton(InputEvent.MouseButton.Pre event) {
         if (event.getButton() != 0) return;
+        Screen screen = Minecraft.getInstance().screen;
+        if (screen != null && screen.getClass().getName().toLowerCase().contains("xaero")) return;
+
         TrailPos pos = getMousePosition();
         if (event.getAction() == InputConstants.PRESS) {
             mouseDown = true;
@@ -60,6 +63,9 @@ public class CHNHSparkOverlay {
     @SubscribeEvent
     public static void onScreenMousePress(ScreenEvent.MouseButtonPressed.Pre event) {
         if (event.getButton() != 0) return;
+        Screen screen = Minecraft.getInstance().screen;
+        if (screen != null && screen.getClass().getName().toLowerCase().contains("xaero")) return;
+
         TrailPos pos = getMousePosition();
         mouseDown = true;
         lastTrailPos = pos;
@@ -80,7 +86,8 @@ public class CHNHSparkOverlay {
 
     @SubscribeEvent
     public static void drawScreen(ScreenEvent.Render.Post event) {
-        if (Minecraft.getInstance().screen != null) {
+        Screen screen = Minecraft.getInstance().screen;
+        if (screen != null && !screen.getClass().getName().toLowerCase().contains("xaero")) {
             renderFrame(event.getGuiGraphics());
         }
     }

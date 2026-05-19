@@ -8,9 +8,11 @@
   ],
   "client": [
     "AbstractContainerScreenMixin",
+    "AEBaseScreenMixin",
     "ClickSlotPacketMixin",
     "GuiGraphicsMixin",
     "ItemStackMixin",
+    "MEStorageScreenMixin",
     "SimpleContainerAccessor"
   ],
   "injectors": {

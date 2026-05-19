@@ -39,7 +39,7 @@ public abstract class GuiGraphicsMixin {
     @Shadow
     private PoseStack pose;
     @Unique
-    private boolean smooth_Swapping$isRendering = false;
+    private static final ThreadLocal<Boolean> smooth_Swapping$isRendering = ThreadLocal.withInitial(() -> false);
 
     @Shadow
     public abstract void renderItem(ItemStack item, int x, int y);
@@ -47,10 +47,10 @@ public abstract class GuiGraphicsMixin {
 
     @Inject(method = "renderItem(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;IIII)V", at = @At("HEAD"), cancellable = true)
     public void onItemDraw(LivingEntity entity, Level world, ItemStack stack, int x, int y, int seed, int z, CallbackInfo cbi) {
-        if (smooth_Swapping$isRendering) return;
+        if (smooth_Swapping$isRendering.get()) return;
 
         try {
-            smooth_Swapping$isRendering = true;
+            smooth_Swapping$isRendering.set(true);
 
             if (smooth_Swapping$isHotbar()) return;
             if (((ItemStackAccessor) (Object) stack).smooth_Swapping$isSwapStack()) return;
@@ -59,7 +59,7 @@ public abstract class GuiGraphicsMixin {
         } catch (Exception e) {
             SwapUtil.reset();
         } finally {
-            smooth_Swapping$isRendering = false;
+            smooth_Swapping$isRendering.set(false);
         }
     }
 
@@ -180,18 +180,18 @@ public abstract class GuiGraphicsMixin {
 
     @Inject(method = "renderItemDecorations(Lnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;IILjava/lang/String;)V", at = @At("HEAD"), cancellable = true)
     public void onRenderItemDecorations(Font textRenderer, ItemStack stack, int x, int y, String countOverride, CallbackInfo cbi) {
-        if (smooth_Swapping$isRendering) return;
+        if (smooth_Swapping$isRendering.get()) return;
         if (smooth_Swapping$isHotbar()) return;
 
         if (((ItemStackAccessor) (Object) stack).smooth_Swapping$isSwapStack()) return;
 
         try {
-            smooth_Swapping$isRendering = true;
+            smooth_Swapping$isRendering.set(true);
             smooth_Swapping$doOverlayRender(stack, x, y, cbi);
         } catch (Exception e) {
             SwapUtil.reset();
         } finally {
-            smooth_Swapping$isRendering = false;
+            smooth_Swapping$isRendering.set(false);
         }
     }
 
