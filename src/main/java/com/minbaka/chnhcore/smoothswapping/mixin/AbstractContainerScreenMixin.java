@@ -69,7 +69,17 @@ public abstract class AbstractContainerScreenMixin {
             return;
         }
 
-        SmoothSwapping.currentStacks = client.player.containerMenu.getItems();
+        NonNullList<net.minecraft.world.inventory.Slot> slots = client.player.containerMenu.slots;
+        if (SmoothSwapping.currentStacks.size() != slots.size()) {
+            SmoothSwapping.currentStacks.clear();
+            for (int i = 0; i < slots.size(); i++) {
+                SmoothSwapping.currentStacks.add(slots.get(i).getItem());
+            }
+        } else {
+            for (int i = 0; i < slots.size(); i++) {
+                SmoothSwapping.currentStacks.set(i, slots.get(i).getItem());
+            }
+        }
 
         try {
             SmoothSwapping.currentCursorStackLock.lock();
@@ -88,6 +98,8 @@ public abstract class AbstractContainerScreenMixin {
 
         Screen screen = client.screen;
 
+        boolean stacksEqual = smooth_Swapping$areStacksEqual(SmoothSwapping.oldStacks, SmoothSwapping.currentStacks);
+
         if (SmoothSwapping.clickSwap) {
             SmoothSwapping.clickSwap = false;
             SwapUtil.copyStacks(SmoothSwapping.currentStacks, SmoothSwapping.oldStacks);
@@ -101,8 +113,8 @@ public abstract class AbstractContainerScreenMixin {
             return;
         }
 
-        Map<Integer, ItemStack> changedStacks = smooth_Swapping$getChangedStacks(SmoothSwapping.oldStacks, SmoothSwapping.currentStacks);
-        if (!SmoothSwapping.clickSwap) {
+        if (!stacksEqual) {
+            Map<Integer, ItemStack> changedStacks = smooth_Swapping$getChangedStacks(SmoothSwapping.oldStacks, SmoothSwapping.currentStacks);
             int changedStacksSize = changedStacks.size();
             if (changedStacksSize > 1) {
                 List<SwapStacks> moreStacks = new ArrayList<>();
@@ -164,7 +176,7 @@ public abstract class AbstractContainerScreenMixin {
             }
         }
 
-        if (!smooth_Swapping$areStacksEqual(SmoothSwapping.oldStacks, SmoothSwapping.currentStacks)) {
+        if (!stacksEqual) {
             SwapUtil.copyStacks(SmoothSwapping.currentStacks, SmoothSwapping.oldStacks);
             oldCursorStack = SmoothSwapping.currentCursorStack.get();
         }

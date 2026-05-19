@@ -128,8 +128,16 @@ public class SwapUtil {
     }
 
     public static void copyStacks(NonNullList<ItemStack> src, NonNullList<ItemStack> dst) {
-        dst.clear();
-        src.stream().map(ItemStack::copy).forEach(dst::add);
+        if (dst.size() != src.size()) {
+            dst.clear();
+            for (int i = 0; i < src.size(); i++) {
+                dst.add(src.get(i).copy());
+            }
+        } else {
+            for (int i = 0; i < src.size(); i++) {
+                dst.set(i, src.get(i).copy());
+            }
+        }
     }
 
     public static int swapListIndexOf(List<InventorySwap> list, Function<InventorySwap, Boolean> prediction) {
