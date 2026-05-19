@@ -61,15 +61,13 @@ public abstract class AbstractContainerScreenMixin {
         @SuppressWarnings({"rawtypes", "DataFlowIssue"})
         AbstractContainerScreen handledScreen = (AbstractContainerScreen) (Object) this;
 
-        if (handledScreen instanceof CreativeModeInventoryScreen) return;
-
         Minecraft client = Minecraft.getInstance();
 
-        if (client.player == null || client.player.containerMenu == null) {
+        if (client.player == null) {
             return;
         }
 
-        NonNullList<net.minecraft.world.inventory.Slot> slots = client.player.containerMenu.slots;
+        NonNullList<net.minecraft.world.inventory.Slot> slots = menu.slots;
         if (SmoothSwapping.currentStacks.size() != slots.size()) {
             SmoothSwapping.currentStacks.clear();
             for (int i = 0; i < slots.size(); i++) {
@@ -83,7 +81,7 @@ public abstract class AbstractContainerScreenMixin {
 
         try {
             SmoothSwapping.currentCursorStackLock.lock();
-            ItemStack cursorStack = client.player.containerMenu.getCarried();
+            ItemStack cursorStack = menu.getCarried();
             ItemStack prevStack = SmoothSwapping.currentCursorStack.get();
             if (
                     prevStack == null
