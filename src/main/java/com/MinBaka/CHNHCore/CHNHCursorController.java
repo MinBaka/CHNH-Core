@@ -122,7 +122,7 @@ public class CHNHCursorController {
                     buffer.flip();
                     glfwImage.pixels(buffer);
 
-                    long handle = GLFW.glfwCreateCursor(glfwImage, (int)(hotX * 1.25f), (int)(hotY * 1.25f));
+                    long handle = GLFW.glfwCreateCursor(glfwImage, hotX, hotY);
                     glfwImage.free();
                     MemoryUtil.memFree(buffer);
                     originalImage.close();
