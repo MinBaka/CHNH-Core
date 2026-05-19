@@ -67,6 +67,10 @@ public abstract class AbstractContainerScreenMixin {
             return;
         }
 
+        if (handledScreen instanceof CreativeModeInventoryScreen creativeScreen) {
+            if (!creativeScreen.isInventoryOpen()) return;
+        }
+
         NonNullList<net.minecraft.world.inventory.Slot> slots = menu.slots;
         if (SmoothSwapping.currentStacks.size() != slots.size()) {
             SmoothSwapping.currentStacks.clear();
@@ -218,7 +222,7 @@ public abstract class AbstractContainerScreenMixin {
 
     @Inject(method = "renderSlot", at = @At("HEAD"))
     public void onRenderSlotHead(GuiGraphics p_281607_, net.minecraft.world.inventory.Slot p_282613_, CallbackInfo ci) {
-        SmoothSwapping.currentlyRenderingSlotIndex = p_282613_.index;
+        SmoothSwapping.currentlyRenderingSlotIndex = menu.slots.indexOf(p_282613_);
     }
 
     @Inject(method = "renderSlot", at = @At("TAIL"))
