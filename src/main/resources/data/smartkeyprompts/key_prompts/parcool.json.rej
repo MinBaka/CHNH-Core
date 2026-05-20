@@ -1,0 +1,11 @@
+--- parcool.json
++++ parcool.json
+@@ -3,7 +3,7 @@
+   "vars": {
+     "modLoaded": "true",
+-    "screenOpen": "false",
++    "screenOpen": "isScreenOpen()",
+     "isSprinting": "isSprinting()",
+     "isCrouching": "isCrouching()",
+     "onGround": "onGround()",
+ 
