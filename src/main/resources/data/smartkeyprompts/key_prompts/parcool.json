@@ -4,7 +4,8 @@
     "modLoaded": "true",
     "screenOpen": "isScreenOpen()",
     "isCrouching": "isCrouching()",
-    "isFallingFast": "fallDistance() > 3.0"
+    "isFallingFast": "fallDistance() > 3.0",
+    "hasTaczGun": "mainHandItem() == 'tacz:modern_kinetic_gun'"
   },
   "entries": [
     {
@@ -12,12 +13,30 @@
         "modLoaded": "true",
         "screenOpen": "false",
         "isCrouching": "false",
-        "isFallingFast": "false"
+        "isFallingFast": "false",
+        "hasTaczGun": "false"
       },
       "then": [
+        "show('parcool', 'key.jump')",
+        "show('parcool', 'key.sprint')",
+        "show('parcool', 'key.parcool.Vault')",
         "show('parcool', 'key.parcool.FastRun')",
         "show('parcool', 'key.parcool.Dodge')",
+        "show('parcool', 'key.parcool.WallJump')"
+      ]
+    },
+    {
+      "when": {
+        "modLoaded": "true",
+        "screenOpen": "false",
+        "isCrouching": "false",
+        "isFallingFast": "false",
+        "hasTaczGun": "true"
+      },
+      "then": [
         "show('parcool', 'key.parcool.Vault')",
+        "show('parcool', 'key.parcool.FastRun')",
+        "show('parcool', 'key.parcool.Dodge')",
         "show('parcool', 'key.parcool.WallJump')"
       ]
     },
