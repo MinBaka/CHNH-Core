@@ -1,48 +1,24 @@
 {
   "modid": "parcool",
   "vars": {
-    "modLoaded": "true",
+    "modLoaded": "isModLoaded('parcool')",
     "screenOpen": "isScreenOpen()",
-    "isSprinting": "isSprinting()",
     "isCrouching": "isCrouching()",
-    "onGround": "onGround()",
-    "isFalling": "fallDistance() > 1.5"
+    "isFallingFast": "fallDistance() > 3.0"
   },
   "entries": [
     {
       "when": {
         "modLoaded": "true",
         "screenOpen": "false",
-        "isSprinting": "true"
+        "isCrouching": "false",
+        "isFallingFast": "false"
       },
       "then": [
-        "show('parcool', 'key.parcool.Vault')",
         "show('parcool', 'key.parcool.FastRun')",
         "show('parcool', 'key.parcool.Dodge')",
-        "show('parcool', 'key.parcool.Crawl')"
-      ]
-    },
-    {
-      "when": {
-        "modLoaded": "true",
-        "screenOpen": "false",
-        "isFalling": "true"
-      },
-      "then": [
-        "show('parcool', 'key.parcool.Breakfall')",
-        "show('parcool', 'key.parcool.ClingToCliff')"
-      ]
-    },
-    {
-      "when": {
-        "modLoaded": "true",
-        "screenOpen": "false",
-        "onGround": "false",
-        "isFalling": "false"
-      },
-      "then": [
-        "show('parcool', 'key.parcool.WallJump')",
-        "show('parcool', 'key.parcool.HangDown')"
+        "show('parcool', 'key.parcool.Vault')",
+        "show('parcool', 'key.parcool.WallJump')"
       ]
     },
     {
@@ -53,20 +29,20 @@
       },
       "then": [
         "show('parcool', 'key.parcool.Crawl')",
-        "show('parcool', 'key.parcool.Flipping')"
+        "show('parcool', 'key.parcool.Flipping')",
+        "show('parcool', 'key.parcool.HideInBlock')"
       ]
     },
     {
       "when": {
         "modLoaded": "true",
         "screenOpen": "false",
-        "isSprinting": "false",
-        "isCrouching": "false",
-        "onGround": "true"
+        "isFallingFast": "true"
       },
       "then": [
-        "show('parcool', 'key.parcool.Vault')",
-        "show('parcool', 'key.parcool.ClimbPoles')"
+        "show('parcool', 'key.parcool.Breakfall')",
+        "show('parcool', 'key.parcool.ClingToCliff')",
+        "show('parcool', 'key.parcool.HangDown')"
       ]
     }
   ]
