@@ -12,13 +12,23 @@
       "when": {
         "modLoaded": "true",
         "screenOpen": "false",
+        "hasTaczGun": "true"
+      },
+      "then": [
+        "show('parcool', 'key.parcool.Dodge')"
+      ]
+    },
+    {
+      "when": {
+        "modLoaded": "true",
+        "screenOpen": "false",
         "isCrouching": "false",
         "isFallingFast": "false",
         "hasTaczGun": "false"
       },
       "then": [
         "show('parcool', 'key.jump')",
-        "show('parcool', 'key.sprint')",
+        "show('parcool', 'key.forward')",
         "show('parcool', 'key.parcool.Vault')",
         "show('parcool', 'key.parcool.FastRun')",
         "show('parcool', 'key.parcool.Dodge')",
@@ -29,22 +39,8 @@
       "when": {
         "modLoaded": "true",
         "screenOpen": "false",
-        "isCrouching": "false",
-        "isFallingFast": "false",
-        "hasTaczGun": "true"
-      },
-      "then": [
-        "show('parcool', 'key.parcool.Vault')",
-        "show('parcool', 'key.parcool.FastRun')",
-        "show('parcool', 'key.parcool.Dodge')",
-        "show('parcool', 'key.parcool.WallJump')"
-      ]
-    },
-    {
-      "when": {
-        "modLoaded": "true",
-        "screenOpen": "false",
-        "isCrouching": "true"
+        "isCrouching": "true",
+        "hasTaczGun": "false"
       },
       "then": [
         "show('parcool', 'key.parcool.Crawl')",
@@ -56,7 +52,8 @@
       "when": {
         "modLoaded": "true",
         "screenOpen": "false",
-        "isFallingFast": "true"
+        "isFallingFast": "true",
+        "hasTaczGun": "false"
       },
       "then": [
         "show('parcool', 'key.parcool.Breakfall')",
