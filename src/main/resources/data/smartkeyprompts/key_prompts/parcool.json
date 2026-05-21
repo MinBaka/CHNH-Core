@@ -16,6 +16,7 @@
         "isSprinting": "true"
       },
       "then": [
+        "show('parcool', 'key.parcool.Vault')",
         "show('parcool', 'key.parcool.FastRun')",
         "show('parcool', 'key.parcool.Dodge')",
         "show('parcool', 'key.parcool.Crawl')"
