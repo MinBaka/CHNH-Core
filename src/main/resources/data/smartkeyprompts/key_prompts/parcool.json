@@ -1,7 +1,7 @@
 {
   "modid": "parcool",
   "vars": {
-    "modLoaded": "isModLoaded('parcool')",
+    "modLoaded": "true",
     "screenOpen": "isScreenOpen()",
     "isCrouching": "isCrouching()",
     "isFallingFast": "fallDistance() > 3.0"
