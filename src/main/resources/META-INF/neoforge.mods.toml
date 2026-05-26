@@ -50,3 +50,5 @@ config = "precisemanufacturing.mixins.json"
 
 [[mixins]]
 config = "smoothswapping.mixins.json"
+[[mixins]]
+config = "colortooltips.mixins.json"

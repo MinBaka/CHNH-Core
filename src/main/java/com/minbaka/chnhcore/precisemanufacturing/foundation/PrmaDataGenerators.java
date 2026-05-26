@@ -6,7 +6,6 @@ import net.minecraft.data.DataGenerator;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 
 public class PrmaDataGenerators {
     public static void gatherData(GatherDataEvent event) {

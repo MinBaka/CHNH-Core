@@ -17,7 +17,6 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.InterModEnqueueEvent;
 import net.neoforged.fml.event.lifecycle.InterModProcessEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import org.slf4j.Logger;
 
 import java.util.stream.Collectors;

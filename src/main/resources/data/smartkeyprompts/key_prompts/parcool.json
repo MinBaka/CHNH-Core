@@ -5,7 +5,7 @@
     "screenOpen": "isScreenOpen()",
     "isCrouching": "isCrouching()",
     "isFallingFast": "fallDistance() > 3.0",
-    "hasTaczGun": "holdingTaczGun()",
+    "hasTaczGun": "mainHandItem() == 'tacz:modern_kinetic_gun'",
     "isSprinting": "isSprinting()"
   },
   "entries": [
