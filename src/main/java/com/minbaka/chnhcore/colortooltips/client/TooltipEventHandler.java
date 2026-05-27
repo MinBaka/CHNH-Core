@@ -54,7 +54,7 @@ public class TooltipEventHandler {
         }
 
         // 神化模组兼容：重铸结果槽 / 回收台不干涉
-        if (ApotheosisCompat.shouldSkipTooltip(Minecraft.getInstance().screen, 
+        if (ApotheosisCompat.shouldSkipTooltip(Minecraft.getInstance().screen,
             Minecraft.getInstance().screen instanceof AbstractContainerScreen<?> s ? s.getSlotUnderMouse() : null)) {
             return;
         }
@@ -287,17 +287,17 @@ public class TooltipEventHandler {
         TooltipRenderer.drawOuterBorder(graphics, renderX, renderY, width, height, darkenedBorderColor, fadeAlpha);
         if (Config.BORDER_GRADIENT_ENABLED.get()) {
             // borderColor为动画插值色作渐变基色，targetRawBorderColor为稳定稀有度色作随机偏移缓存key，避免插值时闪烁
-            graphics.drawManaged(() -> TooltipRenderer.drawGradientScrollingBorder(graphics, renderX, renderY, width, height, borderColor, targetRawBorderColor, fadeAlpha, TooltipAnimationSystem.getTargetWidthInt(), TooltipAnimationSystem.getTargetHeightInt()));
+            TooltipRenderer.drawGradientScrollingBorder(graphics, renderX, renderY, width, height, borderColor, targetRawBorderColor, fadeAlpha, TooltipAnimationSystem.getTargetWidthInt(), TooltipAnimationSystem.getTargetHeightInt());
         } else {
             TooltipRenderer.drawRarityBorder(graphics, renderX, renderY, width, height, borderColor, fadeAlpha);
         }
         TooltipRenderer.drawInnerBorder(graphics, renderX, renderY, width, height, darkenedBorderColor, fadeAlpha);
 
-        graphics.drawManaged(() -> TooltipRenderer.drawBackground(graphics, renderX, renderY, width, height, bgColor, fadeAlpha));
+        TooltipRenderer.drawBackground(graphics, renderX, renderY, width, height, bgColor, fadeAlpha);
 
         // 标题栏渐变：仅在有 RarityCore 时显示
         if (hasValidItem && Config.TITLEBAR_GRADIENT_ENABLED.get() && RarityCoreProxy.isLoaded()) {
-            graphics.drawManaged(() -> TooltipRenderer.drawGradientTitleBar(graphics, renderX, renderY, width, height, borderColor, targetRawBorderColor, fadeAlpha, TooltipAnimationSystem.getTargetWidthInt(), TooltipAnimationSystem.getTargetHeightInt(), components.isEmpty() ? 24 : components.get(0).getHeight()));
+            TooltipRenderer.drawGradientTitleBar(graphics, renderX, renderY, width, height, borderColor, targetRawBorderColor, fadeAlpha, TooltipAnimationSystem.getTargetWidthInt(), TooltipAnimationSystem.getTargetHeightInt(), components.isEmpty() ? 24 : components.get(0).getHeight());
         }
 
         int componentX = innerX;
@@ -334,7 +334,7 @@ public class TooltipEventHandler {
 
         float switchFlashProgress = TooltipAnimationSystem.getSwitchFlashProgress();
         if (switchFlashProgress >= 0.0f) {
-            graphics.drawManaged(() -> TooltipRenderer.drawEntryAnimation(graphics, renderX, renderY, width, height, switchFlashProgress, fadeAlpha, isLeft));
+            TooltipRenderer.drawEntryAnimation(graphics, renderX, renderY, width, height, switchFlashProgress, fadeAlpha, isLeft);
         }
 
         // 在关闭裁剪前提交缓冲区，确保裁剪范围生效
