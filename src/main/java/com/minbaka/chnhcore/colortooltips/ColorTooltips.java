@@ -30,12 +30,7 @@ public class ColorTooltips {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public ColorTooltips(IEventBus modEventBus, net.neoforged.fml.ModContainer modContainer) {
-        
-
         modEventBus.addListener(this::commonSetup);
-
-        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.register(this);
-
         modContainer.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, Config.SPEC);
     }
 
