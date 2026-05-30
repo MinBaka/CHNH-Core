@@ -15,5 +15,6 @@ public class CHNHCore {
         new PreciseManufacturing(modEventBus);
         new ColorTooltips(modEventBus, modContainer);
         SmoothSwapping.init();
+        com.minbaka.chnhcore.raritycore.api.RarityCoreAPI.init();
     }
 }

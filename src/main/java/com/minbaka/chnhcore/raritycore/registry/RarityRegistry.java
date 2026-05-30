@@ -273,17 +273,15 @@ public class RarityRegistry {
         }
 
         if (com.minbaka.chnhcore.raritycore.config.ServerConfigManager.isCheckVanillaRarity()) {
-            if (false) {
-                try {
-                    net.minecraft.world.item.ItemStack stackForRarity = item.getDefaultInstance();
-                    Rarity vanillaRarity = stackForRarity.getRarity();
-                    Integer mappedVanilla = mapVanillaRarity(vanillaRarity);
-                    if (mappedVanilla > 1) {
-                        return mappedVanilla;
-                    }
-                } catch (Throwable e) {
-                    org.slf4j.LoggerFactory.getLogger("RarityCore").debug("Error checking vanilla rarity for item: {}", itemId, e);
+            try {
+                net.minecraft.world.item.ItemStack stackForRarity = item.getDefaultInstance();
+                Rarity vanillaRarity = stackForRarity.getRarity();
+                Integer mappedVanilla = mapVanillaRarity(vanillaRarity);
+                if (mappedVanilla > 1) {
+                    return mappedVanilla;
                 }
+            } catch (Throwable e) {
+                org.slf4j.LoggerFactory.getLogger("RarityCore").debug("Error checking vanilla rarity for item: {}", itemId, e);
             }
         }
 
@@ -492,23 +490,21 @@ public class RarityRegistry {
      */
     private static Integer checkVanillaRarity(@Nullable ItemStack itemStack, Item item) {
         if (com.minbaka.chnhcore.raritycore.config.ServerConfigManager.isCheckVanillaRarity()) {
-            if (false) {
-                try {
-                    Rarity vanillaRarity;
-                    if (itemStack != null) {
-                        vanillaRarity = itemStack.getRarity();
-                    } else if (item != null) {
-                        vanillaRarity = item.getDefaultInstance().getRarity();
-                    } else {
-                        return null;
-                    }
-                    Integer mappedVanilla = mapVanillaRarity(vanillaRarity);
-                    if (mappedVanilla > 1) {
-                        return mappedVanilla;
-                    }
-                } catch (Throwable e) {
-                    org.slf4j.LoggerFactory.getLogger("RarityCore").debug("Error checking vanilla rarity", e);
+            try {
+                Rarity vanillaRarity;
+                if (itemStack != null) {
+                    vanillaRarity = itemStack.getRarity();
+                } else if (item != null) {
+                    vanillaRarity = item.getDefaultInstance().getRarity();
+                } else {
+                    return null;
                 }
+                Integer mappedVanilla = mapVanillaRarity(vanillaRarity);
+                if (mappedVanilla > 1) {
+                    return mappedVanilla;
+                }
+            } catch (Throwable e) {
+                org.slf4j.LoggerFactory.getLogger("RarityCore").debug("Error checking vanilla rarity", e);
             }
         }
         return null;

@@ -45,6 +45,17 @@ public final class RarityCoreAPI {
     private RarityCoreAPI() {}
 
     // ══════════════════════════════════════════════════════
+    // 初始化
+    // ══════════════════════════════════════════════════════
+
+    public static void init() {
+        com.minbaka.chnhcore.raritycore.config.ConfigManager.initializeConfigs();
+        com.minbaka.chnhcore.raritycore.config.RarityConfigLoader.loadConfigRarityData();
+        com.minbaka.chnhcore.raritycore.config.FinalRarityConfigFolderLoader.loadFinalRarityConfigFolder();
+        com.minbaka.chnhcore.raritycore.cache.DualCacheManager.initialize();
+    }
+
+    // ══════════════════════════════════════════════════════
     // 稀有度注册与查询
     // ══════════════════════════════════════════════════════
 
