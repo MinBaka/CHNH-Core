@@ -11,7 +11,7 @@ import java.io.IOException;
 public class ConfigManager {
     private static Config CONFIG = new Config();
     private static File getConfigFile() {
-        return new File(Minecraft.getInstance().gameDirectory, "config/chnh-smoothswapping.json");
+        return new File(Minecraft.getInstance().gameDirectory, "config/chnh_core/smoothswapping.json");
     }
 
     public static void initializeConfig() {

@@ -53,18 +53,12 @@ public class ConfigLoaderUtils {
                         // 注意:不再限制最大稀有度值,允许8-10级等高级稀有度
                         
                         ResourceLocation itemId = ResourceLocation.parse(itemIdString);
-                        net.minecraft.world.item.Item item = BuiltInRegistries.ITEM.get(itemId);
-                        
-                        if (item == null || itemId.equals(BuiltInRegistries.ITEM.getDefaultKey())) {
-                            org.slf4j.LoggerFactory.getLogger("RarityCore").warn("Unknown item '{}' in file '{}'", itemIdString, fileName);
-                            continue;
-                        }
-                        
+
                         // 处理物品稀有度
                         itemProcessor.accept(itemIdString, rarity);
                         itemCount++;
                     } else {
-                        org.slf4j.LoggerFactory.getLogger("RarityCore").warn("Invalid rarity data format for item '{}' in file '{}'", 
+                        org.slf4j.LoggerFactory.getLogger("RarityCore").warn("Invalid rarity data format for item '{}' in file '{}'",
                             itemIdString, fileName);
                     }
                 }
@@ -75,10 +69,10 @@ public class ConfigLoaderUtils {
         } catch (JsonParseException e) {
             org.slf4j.LoggerFactory.getLogger("RarityCore").error("Config file format error: {}", fileName, e);
         }
-        
+
         return itemCount;
     }
-    
+
     /**
      * 带批处理支持的配置加载方法
      * @param configFile 配置文件路径
@@ -89,16 +83,16 @@ public class ConfigLoaderUtils {
     public static int loadJsonConfigFileWithBatch(Path configFile, String fileName, boolean useBatchProcessing) {
         return loadJsonConfigFile(configFile, fileName, (itemIdString, rarity) -> {
             ResourceLocation itemId = ResourceLocation.parse(itemIdString);
-            
+
             if (useBatchProcessing) {
-                // 使用批处理管理器
-                
-                
+                // 直接注册到稀有度注册表
+                if (itemId != null) {
+                    com.minbaka.chnhcore.raritycore.registry.RarityRegistry.register(itemId, rarity, false);
+                }
             } else {
                 // 直接注册到稀有度注册表
-                net.minecraft.world.item.Item item = BuiltInRegistries.ITEM.get(itemId);
-                if (item != null) {
-                    com.minbaka.chnhcore.raritycore.registry.RarityRegistry.register(item, rarity, false);
+                if (itemId != null) {
+                    com.minbaka.chnhcore.raritycore.registry.RarityRegistry.register(itemId, rarity, false);
                 }
             }
         });

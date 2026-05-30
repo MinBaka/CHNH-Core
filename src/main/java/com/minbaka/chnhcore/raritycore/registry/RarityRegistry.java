@@ -81,6 +81,12 @@ public class RarityRegistry {
         }
     }
 
+    public static void register(ResourceLocation itemId, int rarity, boolean syncToClients) {
+        if (itemId != null) {
+            ITEM_RARITY_MAP.put(itemId, rarity);
+        }
+    }
+
     /**
      * 删除物品的稀有度注册
      * @param item 要删除稀有度注册的物品
@@ -92,6 +98,12 @@ public class RarityRegistry {
             if (itemId != null && !itemId.equals(BuiltInRegistries.ITEM.getDefaultKey())) {
                 ITEM_RARITY_MAP.remove(itemId);
             }
+        }
+    }
+
+    public static void unregister(ResourceLocation itemId, boolean syncToClients) {
+        if (itemId != null) {
+            ITEM_RARITY_MAP.remove(itemId);
         }
     }
     
@@ -310,7 +322,8 @@ public class RarityRegistry {
 
         // 预读取 NBT tag 一次，避免后续 checkNbtRarity/checkApotheosisRarity/checkIronSpellbooksRarity
         // 各自重复调用 itemStack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA)/getTag()（Forge 中 getTag() 可能创建防御性副本）
-        CompoundTag tag = (itemStack != null && itemStack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA)) ? itemStack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA).getUnsafe() : null;
+        net.minecraft.world.item.component.CustomData customData = (itemStack != null && itemStack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA)) ? itemStack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA) : null;
+        CompoundTag tag = customData != null ? customData.copyTag() : null;
         
         if (tag != null) {
             // NBT 稀有度控制（最高优先级）—— 直接使用已读取的 tag，跳过 NbtRarityControlHandler 内部的重复 hasTag/getTag

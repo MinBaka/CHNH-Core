@@ -123,7 +123,8 @@ public class DualCacheManager {
 
         // 一次获取 tag 引用，避免后续重复调用 getTag() 导致的重复序列化
         // 使用 CompoundTag.contains(key) 做 O(1) 键查找，而非 toString().contains() 做全量序列化
-        net.minecraft.nbt.CompoundTag tag = itemStack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA) ? itemStack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA).getUnsafe() : null;
+        net.minecraft.world.item.component.CustomData customData = itemStack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA) ? itemStack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA) : null;
+        net.minecraft.nbt.CompoundTag tag = customData != null ? customData.copyTag() : null;
         boolean hasNbtData = tag != null;
 
         // 优先检查NBT缓存（放在神化/铁魔法绕过之前，确保这两类物品也能命中NBT缓存）
@@ -181,7 +182,8 @@ public class DualCacheManager {
         }
         
         // 一次获取 tag 引用，使用 O(1) 键查找代替全量 toString() 序列化
-        net.minecraft.nbt.CompoundTag tag = itemStack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA) ? itemStack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA).getUnsafe() : null;
+        net.minecraft.world.item.component.CustomData customData = itemStack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA) ? itemStack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA) : null;
+        net.minecraft.nbt.CompoundTag tag = customData != null ? customData.copyTag() : null;
         boolean hasApotheosisData = tag != null && tag.contains("affix_data");
         boolean hasIronsData = tag != null && tag.contains("irons_spellbooks:spell_container");
         
@@ -284,7 +286,8 @@ public class DualCacheManager {
         // 神化物品(affix_data)或铁魔法物品(spell_container)通过NBT数据决定稀有度
         // 即使没有NBT匹配规则，也需要在缓存键中包含NBT哈希来区分不同变体
         if (itemStack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA)) {
-            net.minecraft.nbt.CompoundTag tag = itemStack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA).getUnsafe();
+            net.minecraft.world.item.component.CustomData customData = itemStack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
+            net.minecraft.nbt.CompoundTag tag = customData != null ? customData.copyTag() : null;
             if (tag != null && (tag.contains("affix_data") || tag.contains("irons_spellbooks:spell_container"))) {
                 return false;
             }
@@ -308,8 +311,9 @@ public class DualCacheManager {
 
         StringBuilder key = new StringBuilder(itemId.toString());
 
-        if (itemStack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA) && itemStack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA).getUnsafe() != null) {
-            net.minecraft.nbt.CompoundTag tag = itemStack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA).getUnsafe();
+        if (itemStack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA)) {
+            net.minecraft.world.item.component.CustomData customData = itemStack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
+            net.minecraft.nbt.CompoundTag tag = customData != null ? customData.copyTag() : null;
             if (tag != null) {
                 // 使用 CompoundTag.hashCode() 替代 toString()+MD5
                 // hashCode() 遍历 NBT 树使用原始类型操作，无需字符串序列化

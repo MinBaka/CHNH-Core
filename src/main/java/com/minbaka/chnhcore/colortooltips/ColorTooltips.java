@@ -31,7 +31,7 @@ public class ColorTooltips {
 
     public ColorTooltips(IEventBus modEventBus, net.neoforged.fml.ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
-        modContainer.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, Config.SPEC);
+        modContainer.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, Config.SPEC, "chnh_core/common.toml");
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

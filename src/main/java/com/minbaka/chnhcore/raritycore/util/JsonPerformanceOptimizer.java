@@ -49,16 +49,15 @@ public class JsonPerformanceOptimizer {
                 
                 // 注册物品稀有度或删除稀有度
                 ResourceLocation itemId = ResourceLocation.parse(itemIdString);
-                net.minecraft.world.item.Item item = BuiltInRegistries.ITEM.get(itemId);
-                
-                if (item != null && !itemId.equals(BuiltInRegistries.ITEM.getDefaultKey())) {
+
+                if (itemId != null) {
                     if (rarity == 0) {
                         // 稀有度为0表示删除该物品的稀有度配置
-                        RarityRegistry.unregister(item, false);
+                        RarityRegistry.unregister(itemId, false);
                         org.slf4j.LoggerFactory.getLogger("RarityCore").debug("Removed rarity configuration for item: {}", itemIdString);
                     } else {
                         // 正常注册稀有度
-                        RarityRegistry.register(item, rarity, false);
+                        RarityRegistry.register(itemId, rarity, false);
                     }
                     itemCount++;
                 } else {

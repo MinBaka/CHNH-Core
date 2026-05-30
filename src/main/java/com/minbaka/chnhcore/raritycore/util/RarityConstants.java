@@ -16,7 +16,7 @@ public class RarityConstants {
     public static final int RARITY_UNIQUE = 7;      // 唯一
     
     // 配置文件相关常量
-    public static final String CONFIG_DIR_PARENT = "config";
+    public static final String CONFIG_DIR_PARENT = "config/chnh_core";
     public static final String CONFIG_DIR_NAME = "raritycore";
     public static final String CLIENT_CONFIG_FILE_NAME = "client.json";
     public static final String SERVER_CONFIG_FILE_NAME = "server.json";

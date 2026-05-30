@@ -27,7 +27,7 @@ public final class RarityCoreProxy {
     }
 
     public static int getRarityArgbColor(int rarity) {
-        int color = RarityCoreAPI.getRarityRgbColor(rarity);
+        int color = RarityCoreAPI.getRarityColor(rarity);
         // Ensure alpha channel is present
         return color | 0xFF000000;
     }
