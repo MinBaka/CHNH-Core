@@ -6,8 +6,7 @@
   "refmap": "colortooltips.refmap.json",
   "mixins": [],
   "client": [
-    "GuiGraphicsMixin",
-    "MinecraftMixin"
+    "GuiGraphicsMixin"
   ],
   "injectors": {
     "defaultRequire": 1
